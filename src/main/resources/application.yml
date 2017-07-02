@@ -1,0 +1,15 @@
+server:
+  port: 8066
+spring:
+  freemarker:
+    cache: false
+    allow-request-override: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+  http:
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 100Mb
