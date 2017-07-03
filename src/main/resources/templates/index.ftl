@@ -17,5 +17,8 @@
         文件:<input type="file" name="file"/><br/>
         <input type="submit" value="提交"/>
     </form>
+
+    <h1>富邦华一登录人数明细报表</h1>
+    <a href="/fbhy/loginreport">点击下载</a>
 </body>
 </html>
