@@ -1,5 +1,7 @@
 package cn.coderss.jysy.service;
 
+import java.io.FileInputStream;
+
 /**
  * Created with report.
  * User: shenwei
@@ -9,4 +11,5 @@ package cn.coderss.jysy.service;
  */
 public interface FbhyService {
     public String loginLogReport();
+    public FileInputStream loginLogReportStream();
 }

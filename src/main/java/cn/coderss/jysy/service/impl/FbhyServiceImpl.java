@@ -6,8 +6,8 @@ import cn.coderss.jysy.utility.ExcelUtilitys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -26,5 +26,11 @@ public class FbhyServiceImpl implements FbhyService{
     public String loginLogReport() {
         ArrayList<LinkedHashMap<String,String>> data = (ArrayList<LinkedHashMap<String, String>>) fbhyRespository.getLoginlog();
         return ExcelUtilitys.writeExcel("./downloads", data);
+    }
+
+
+    public FileInputStream loginLogReportStream(){
+        ArrayList<LinkedHashMap<String,String>> data = (ArrayList<LinkedHashMap<String, String>>) fbhyRespository.getLoginlog();
+        return ExcelUtilitys.writeExcelStream("./downloads", data);
     }
 }

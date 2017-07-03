@@ -2,9 +2,11 @@ package cn.coderss.jysy.controller;
 
 import cn.coderss.jysy.service.FbhyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.InputStream;
 
 /**
  * Created with report.
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Time: 下午2:47
  * Blog: http://www.coderss.cn
  */
-@Controller
+@RestController
 @RequestMapping("/fbhy")
 public class FbhyController {
     @Autowired
@@ -24,4 +26,9 @@ public class FbhyController {
         String fileName = fbhyService.loginLogReport();
         return "redirect:/"+fileName;
     }
+
+//    @GetMapping(value = "/loginreport_stream")
+//    public InputStream getLoginDataStream(){
+//        fbhyService.loginLogReportStream();
+//    }
 }
