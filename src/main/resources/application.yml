@@ -9,16 +9,8 @@ spring:
     content-type: text/html
     template-loader-path: classpath:/templates/
     suffix: .ftl
-  http:
-    multipart:
-      maxFileSize: 10Mb
-      maxRequestSize: 100Mb
   datasource:
     url: jdbc:mysql://vmobel003.mysql.rds.aliyuncs.com/vmobel
     username: testdb
     password: vmobel2015
     driver-class-name: com.mysql.jdbc.Driver
-  mvc:
-    static-path-pattern: /static/**
-  resources:
-    static-locations: classpath:/static/
