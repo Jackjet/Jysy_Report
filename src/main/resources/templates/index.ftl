@@ -23,6 +23,17 @@
 </head>
 <body>
     <div class="container">
+        ${name}
+        <div class="row">
+            <h1>微信服务号 - 解绑</h1>
+            <blockquote>
+                解绑
+            </blockquote>
+            <form action="/wechat/del" method="post">
+                解绑用户:<input class="form-control" name="content" type="text"><br/>
+                <input class="btn btn-primary" type="submit" value="提交"/>
+            </form>
+        </div>
         <div class="row">
             <h1>复旦 - 教育事业</h1>
             <blockquote>
