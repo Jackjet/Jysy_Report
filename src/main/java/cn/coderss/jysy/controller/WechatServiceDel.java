@@ -1,5 +1,7 @@
 package cn.coderss.jysy.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -7,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +27,8 @@ public class WechatServiceDel {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    Logger logger = LoggerFactory.getLogger(WechatServiceDel.class);
+
     @CrossOrigin(value = "*")
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public String delService(String content){
@@ -39,13 +42,15 @@ public class WechatServiceDel {
             }
         }
         stringBuilder.delete(stringBuilder.length()-1,stringBuilder.length());
+        logger.info("go ing ");
 
-        stringBuilder.delete(stringBuilder.length()-1,stringBuilder.length());
         String sql = "SELECT `info`.`infoid`\n" +
                 "FROM `vmb_account` as `account`\n" +
                 "INNER JOIN `wechat_service`.`wechat_user_info` as `info` on `info`.`accountId`  = `account`.`accountId` \n" +
                 "WHERE `account`.`name` in (\n" +
                 stringBuilder.toString()+");\n";
+
+        logger.info(sql);
 
         List<String> data =this.jdbcTemplate.query(sql, (rs, num)->
             new String("delete from `wechat_service`.`wechat_user_info` " +
@@ -53,6 +58,7 @@ public class WechatServiceDel {
         );
 
         for (String itemSql : data){
+            logger.info(itemSql);
             this.jdbcTemplate.execute(itemSql);
         }
 
@@ -62,6 +68,8 @@ public class WechatServiceDel {
                 "INNER JOIN `wechat_service`.`wechat_service_token`  as `token` on `token`.`accountId`  = `account`.`accountId` \n" +
                 "WHERE `account`.`name` in (\n" +
                 stringBuilder+");";
+        logger.info(sql);
+
         data = this.jdbcTemplate.query(sql ,(rs, num)->
                 new String("delete from `wechat_service`.`wechat_service_token` " +
                 "where `tokenid` ="+rs.getString("tokenid"))
@@ -69,8 +77,8 @@ public class WechatServiceDel {
 
         for (String itemSql : data){
             this.jdbcTemplate.execute(itemSql);
+            logger.info(itemSql);
         }
-
         return "ok";
     }
 

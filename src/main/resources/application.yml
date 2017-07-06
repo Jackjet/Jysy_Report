@@ -14,3 +14,6 @@ spring:
     username: testdb
     password: vmobel2015
     driver-class-name: com.mysql.jdbc.Driver
+logging:
+  file: ./springboot.log
+  level: info
