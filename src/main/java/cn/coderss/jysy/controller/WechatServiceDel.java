@@ -1,5 +1,7 @@
 package cn.coderss.jysy.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.regex.Pattern;
  * Time: 下午3:42
  * Blog: http://www.coderss.cn
  */
+@Api("微信端解绑")
 @RestController
 @RequestMapping("/wechat")
 public class WechatServiceDel {
@@ -29,6 +32,7 @@ public class WechatServiceDel {
 
     Logger logger = LoggerFactory.getLogger(WechatServiceDel.class);
 
+    @ApiOperation(value = "微信端解绑行为-删除")
     @CrossOrigin(value = "*")
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public String delService(String content){

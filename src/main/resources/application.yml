@@ -14,6 +14,10 @@ spring:
     username: testdb
     password: vmobel2015
     driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 50MB
 logging:
   file: ./springboot.log
-  level: info
+  level:
+    cn.coderss: INFO

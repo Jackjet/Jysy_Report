@@ -4,12 +4,17 @@ import cn.coderss.jysy.domain.JysyModel;
 import cn.coderss.jysy.service.ReportDetailService;
 import cn.coderss.jysy.utility.Character2PinyinUtil;
 import cn.coderss.jysy.utility.FileUtilitys;
+import com.github.stuxuhai.jpinyin.PinyinException;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +34,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     public static HashMap<String, ArrayList<JysyModel>> data = new HashMap<String, ArrayList<JysyModel>>();
     public static ArrayList<String> array_province = new ArrayList<String>();
     public static ArrayList<String> head_title = new ArrayList<String>();
+    Logger logger = LoggerFactory.getLogger(ReportDetailServiceImpl.class);
     @Override
     public void readExcel(String filename) throws IOException {
         InputStream inputStream = null;
@@ -152,13 +158,26 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             }
             if (provinceName != "省"){
                 if (filepath.charAt(filepath.length()-1) == '/'){
-                    outStream = new FileOutputStream(filepath+ Character2PinyinUtil.getInstance().character2Pinyin(provinceName)+".xlsx");
+                    try {
+                        outStream = new FileOutputStream(filepath+ PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
+                    } catch (PinyinException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else{
-                    outStream = new FileOutputStream(filepath+"/"+Character2PinyinUtil.getInstance().character2Pinyin(provinceName)+".xlsx");
+                    try {
+                        outStream = new FileOutputStream(filepath+"/"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
+                    } catch (PinyinException e) {
+                        e.printStackTrace();
+                    }
                 }
-
+                try {
+                    logger.info("文件地址:"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
+                } catch (PinyinException e) {
+                    e.printStackTrace();
+                }
                 wb.write(outStream);
+                outStream.flush();
                 outStream.close();
             }
         }
@@ -167,8 +186,9 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     @Override
     public String doExcel(MultipartFile file) throws UnsupportedEncodingException {
         String fileEncode = System.getProperty("file.encoding");
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-        String datePath = format.format(new Date());
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        String nowTime = format.format(new Date());
+        String datePath = "downloads/"+nowTime;
         String uuid = UUID.randomUUID().toString();
         String fileName = datePath +"/"+uuid+"/"+ file.getOriginalFilename();
         String dirs = datePath +"/"+uuid +"/";
@@ -185,9 +205,9 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                 this.writeExcel(dirs);
 
                 //打包传送出来
-                FileUtilitys.fileToZip(dirs, dirs, datePath);
+                FileUtilitys.fileToZip(dirs, dirs, nowTime);
 
-                return "成功上传" + dirs + datePath + ".zip";
+                return "redirect:/report/" + dirs + nowTime + ".zip";
             } catch (Exception e) {
                 return "上传失败 " + fileName + " => " + e.getMessage();
             }

@@ -4,6 +4,8 @@ import cn.coderss.jysy.domain.JysyProvinceModel;
 import cn.coderss.jysy.service.ReportProvinceService;
 import cn.coderss.jysy.utility.Character2PinyinUtil;
 import cn.coderss.jysy.utility.FileUtilitys;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -333,7 +335,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 sheet.addMergedRegion(new CellRangeAddress(2, 2, 4,6));
 
 
-                stream = new FileOutputStream(new File(filepath+Character2PinyinUtil.getInstance().character2Pinyin("省份统计 - "+provinceStr)+".xlsx"));
+                stream = new FileOutputStream(new File(filepath+ PinyinHelper.convertToPinyinString("省份统计 - "+provinceStr, "", PinyinFormat.WITHOUT_TONE)+".xlsx"));
                 wb.write(stream);
             }
         }
@@ -344,8 +346,9 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
     @Override
     public String doExcel(MultipartFile file) throws UnsupportedEncodingException {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-        String datePath = format.format(new Date());
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        String nowTime = format.format(new Date());
+        String datePath = "downloads/"+nowTime;
         String uuid = UUID.randomUUID().toString();
         String fileName = datePath +"/"+uuid+"/"+ file.getOriginalFilename();
         String dirs = datePath +"/"+uuid +"/";
@@ -361,9 +364,9 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 this.writeExcel(dirs);
 
                 //打包传送出来
-                FileUtilitys.fileToZip(dirs, dirs, datePath);
-
-                return "成功上传" + dirs + datePath + ".zip";
+                FileUtilitys.fileToZip(dirs, dirs, nowTime);
+                System.out.println(dirs + datePath + ".zip");
+                return "redirect:/report/" + dirs + nowTime + ".zip";
             } catch (Exception e) {
                 return "上传失败 " + fileName + " => " + e.getMessage();
             }
