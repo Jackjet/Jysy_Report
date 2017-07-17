@@ -10,9 +10,9 @@ spring:
     template-loader-path: classpath:/templates/
     suffix: .ftl
   datasource:
-    url: jdbc:mysql://vmobel003.mysql.rds.aliyuncs.com/vmobel
-    username: testdb
-    password: vmobel2015
+    url: jdbc:mysql://rm-bp1x467d7h08xi13do.mysql.rds.aliyuncs.com/vmobel
+    username: swread
+    password: Shenwei123
     driver-class-name: com.mysql.jdbc.Driver
   servlet:
     multipart:

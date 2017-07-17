@@ -216,9 +216,11 @@ public class JysyController {
                 put("cer_code", rs.getString("cer_code"));
             }};
         });
+        System.out.println(data);
+//        service.readOnlineExcel(data);
+//        System.out.println(ReportDetailServiceImpl.data);
         try {
-            service.readOnlineExcel(data);
-            System.out.println(ReportDetailServiceImpl.data);
+            return service.readOnlineExcel(data);
         } catch (IOException e) {
             e.printStackTrace();
         }

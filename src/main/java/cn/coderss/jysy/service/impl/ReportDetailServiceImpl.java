@@ -109,7 +109,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     }
 
     @Override
-    public void readOnlineExcel(List<LinkedHashMap<String, String>> onlineData) throws IOException {
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData) throws IOException {
         head_title.add("省");
         head_title.add("市");
         head_title.add("县");
@@ -134,46 +134,39 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         head_title.add("证书获得时间");
         head_title.add("证书编码");
 
-        for (LinkedHashMap<String, String> map: onlineData){
-            String province = map.get("province").toString();
-            if (!array_province.contains(province)){
-                array_province.add(province);
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("tmp");
+        for (int i=0; i<onlineData.size(); i++){
+            XSSFRow row = sheet.createRow(i);
+            LinkedHashMap<String,String> map = onlineData.get(i);
+            int index = 0;
+            for (Map.Entry<String,String> m : map.entrySet()){
+                row.createCell(index++).setCellValue(m.getValue());
             }
         }
 
-        for (String province_str:array_province){
-            ArrayList<JysyModel> da = new ArrayList<JysyModel>();
-            for (int i =0; i<onlineData.size(); i++){
-                LinkedHashMap<String,String> item = onlineData.get(i);
-                String province = item.get("province").toString();
-                if(province_str.equals(province)){
-                    JysyModel model = new JysyModel(item.get("province").toString(),
-                            item.get("city").toString(),
-                            item.get("country").toString(),
-                            item.get("org_custom_name").toString(),
-                            item.get("org_name_second").toString(),
-                            item.get("org_name").toString(),
-                            item.get("name").toString(),
-                            item.get("fullname").toString(),
-                            item.get("sex").toString(),
-                            item.get("birthday").toString(),
-                            item.get("mail").toString(),
-                            item.get("position").toString(),
-                            item.get("sign_ways").toString(),
-                            item.get("createtime").toString(),
-                            item.get("order_states").toString(),
-                            item.get("pay_ways").toString(),
-                            item.get("pay_time").toString(),
-                            item.get("org_custom_name").toString(),
-                            item.get("address").toString(),
-                            item.get("periods").toString(),
-                            item.get("cer_states").toString(),
-                            item.get("cer_time").toString(),
-                            item.get("cer_code").toString());
-                    da.add(model);
-                }
-            }
-            data.put(province_str,da);
+
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        String nowTime = format.format(new Date());
+        String datePath = "downloads/"+nowTime;
+        String uuid = UUID.randomUUID().toString();
+        String dirs = datePath +"/"+uuid +"/";
+        FileUtilitys.makeDir(dirs);
+        String filepath = datePath +"/"+uuid+"/detail.xlsx";
+        FileOutputStream outStream = new FileOutputStream(filepath);
+        wb.write(outStream);
+        outStream.flush();
+        outStream.close();
+        try {
+            this.readExcel(filepath);
+            this.writeExcel(dirs);
+
+            //打包传送出来
+            FileUtilitys.fileToZip(dirs, dirs, nowTime);
+
+            return "redirect:/report/" + dirs + nowTime + ".zip";
+        } catch (Exception e) {
+            return "上传失败 " + filepath + " => " + e.getMessage();
         }
 
     }
