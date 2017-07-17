@@ -2,7 +2,6 @@ package cn.coderss.jysy.service.impl;
 
 import cn.coderss.jysy.domain.JysyModel;
 import cn.coderss.jysy.service.ReportDetailService;
-import cn.coderss.jysy.utility.Character2PinyinUtil;
 import cn.coderss.jysy.utility.FileUtilitys;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
@@ -35,6 +34,10 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     public static ArrayList<String> array_province = new ArrayList<String>();
     public static ArrayList<String> head_title = new ArrayList<String>();
     Logger logger = LoggerFactory.getLogger(ReportDetailServiceImpl.class);
+
+
+
+
     @Override
     public void readExcel(String filename) throws IOException {
         InputStream inputStream = null;
@@ -103,6 +106,76 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         finally {
             inputStream.close();
         }
+    }
+
+    @Override
+    public void readOnlineExcel(List<LinkedHashMap<String, String>> onlineData) throws IOException {
+        head_title.add("省");
+        head_title.add("市");
+        head_title.add("县");
+        head_title.add("单位");
+        head_title.add("单位类型_1");
+        head_title.add("单位类型_2");
+        head_title.add("用户名");
+        head_title.add("姓名");
+        head_title.add("性别");
+        head_title.add("出生年月");
+        head_title.add("邮箱");
+        head_title.add("职务");
+        head_title.add("报名方式");
+        head_title.add("注册时间");
+        head_title.add("支付状态");
+        head_title.add("支付方式");
+        head_title.add("支付时间");
+        head_title.add("发票信息");
+        head_title.add("详细地址");
+        head_title.add("已完成课时");
+        head_title.add("证书获得状态");
+        head_title.add("证书获得时间");
+        head_title.add("证书编码");
+
+        for (LinkedHashMap<String, String> map: onlineData){
+            String province = map.get("province").toString();
+            if (!array_province.contains(province)){
+                array_province.add(province);
+            }
+        }
+
+        for (String province_str:array_province){
+            ArrayList<JysyModel> da = new ArrayList<JysyModel>();
+            for (int i =0; i<onlineData.size(); i++){
+                LinkedHashMap<String,String> item = onlineData.get(i);
+                String province = item.get("province").toString();
+                if(province_str.equals(province)){
+                    JysyModel model = new JysyModel(item.get("province").toString(),
+                            item.get("city").toString(),
+                            item.get("country").toString(),
+                            item.get("org_custom_name").toString(),
+                            item.get("org_name_second").toString(),
+                            item.get("org_name").toString(),
+                            item.get("name").toString(),
+                            item.get("fullname").toString(),
+                            item.get("sex").toString(),
+                            item.get("birthday").toString(),
+                            item.get("mail").toString(),
+                            item.get("position").toString(),
+                            item.get("sign_ways").toString(),
+                            item.get("createtime").toString(),
+                            item.get("order_states").toString(),
+                            item.get("pay_ways").toString(),
+                            item.get("pay_time").toString(),
+                            item.get("org_custom_name").toString(),
+                            item.get("address").toString(),
+                            item.get("periods").toString(),
+                            item.get("cer_states").toString(),
+                            item.get("cer_time").toString(),
+                            item.get("cer_code").toString());
+                    da.add(model);
+                }
+            }
+            data.put(province_str,da);
+        }
+
     }
 
     @Override

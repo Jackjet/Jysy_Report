@@ -33,10 +33,15 @@ public class App extends WebMvcConfigurerAdapter {
         dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
         dataSource.setInitialSize(2);
         dataSource.setMaxActive(20);
-        dataSource.setMinIdle(0);
+        dataSource.setMinIdle(10);
         dataSource.setMaxWait(60000);
+        dataSource.setMinEvictableIdleTimeMillis(320000);
+        dataSource.setMaxEvictableIdleTimeMillis(320000);
+        dataSource.setTimeBetweenEvictionRunsMillis(300000);
         dataSource.setValidationQuery("SELECT 1");
-        dataSource.setTestOnBorrow(false);
+        dataSource.setRemoveAbandoned(true);
+        dataSource.setRemoveAbandonedTimeout(300);
+        dataSource.setTestOnBorrow(true);
         dataSource.setTestWhileIdle(true);
         dataSource.setPoolPreparedStatements(false);
         return dataSource;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
@@ -50,5 +51,11 @@ public class IndexController {
     @PostMapping("/province")
     public String province(MultipartFile file) throws UnsupportedEncodingException {
         return reportProvinceService.doExcel(file);
+    }
+
+
+    @GetMapping("/report_detail")
+    public String reportDetail(){
+        return "report_detail";
     }
 }
