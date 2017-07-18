@@ -136,8 +136,12 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("tmp");
+        XSSFRow headRow = sheet.createRow(0);
+        for (int j=0; j<head_title.size(); j++){
+            headRow.createCell(j).setCellValue(head_title.get(j));
+        }
         for (int i=0; i<onlineData.size(); i++){
-            XSSFRow row = sheet.createRow(i);
+            XSSFRow row = sheet.createRow(i+1);
             LinkedHashMap<String,String> map = onlineData.get(i);
             int index = 0;
             for (Map.Entry<String,String> m : map.entrySet()){

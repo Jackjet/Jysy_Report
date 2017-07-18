@@ -1,8 +1,9 @@
 package cn.coderss.jysy.controller;
 
 import cn.coderss.jysy.service.ReportDetailService;
-import cn.coderss.jysy.service.impl.ReportDetailServiceImpl;
+import cn.coderss.jysy.service.ReportProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,10 @@ public class JysyController {
     ReportDetailService service;
 
     @Autowired
+    ReportProvinceService provinceService;
+
+    @Autowired
+    @Qualifier("primaryJdbcTemplate")
     JdbcTemplate jdbcTemplate;
 
     @RequestMapping("/detail")
@@ -216,11 +221,68 @@ public class JysyController {
                 put("cer_code", rs.getString("cer_code"));
             }};
         });
-        System.out.println(data);
+//        System.out.println(data);
 //        service.readOnlineExcel(data);
 //        System.out.println(ReportDetailServiceImpl.data);
         try {
             return service.readOnlineExcel(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "ok";
+    }
+
+
+    @RequestMapping("/province")
+    public String province(){
+        String getAllSql = "SELECT `province_name` as `province_name`,`city_name` as `city_name`,`county_name` as `county_name`,\n" +
+                "CASE WHEN `city_id` = 0 AND `county_id` = 0\n" +
+                "THEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
+                "WHEN `county_id` = 0\n" +
+                "THEN `manager_city`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
+                "ELSE `manager`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
+                "END  as `sum`,\n" +
+                "`hight_edu` as `hight_edu`,`sec_edu` as `sec_edu`,`base_edu` as `base_edu`,`sci_edu` as `sci_edu`,`manager` as `manager`\n" +
+                "FROM `tempdata`.`tmp_jysy_all`;";
+
+        List<LinkedHashMap<String,String>> all = this.jdbcTemplate.query(getAllSql, (rs, num)->{
+            return new LinkedHashMap<String,String>(){{
+                put("province_name",rs.getString("province_name"));
+                put("city_name",rs.getString("city_name"));
+                put("county_name",rs.getString("county_name"));
+                put("sum",rs.getString("sum"));
+                put("hight_edu",rs.getString("hight_edu"));
+                put("sec_edu",rs.getString("sec_edu"));
+                put("base_edu",rs.getString("base_edu"));
+                put("sci_edu",rs.getString("sci_edu"));
+                put("manager",rs.getString("manager"));
+            }};
+        });
+
+        String getProvinceSql = "SELECT `province_name` as `province_name`,`city_name` as `市`,`county_name` as `county_name`,\n" +
+                "CASE WHEN `city_id` = 0 AND `county_id` = 0\n" +
+                "THEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
+                "WHEN `county_id` = 0\n" +
+                "THEN `manager_city`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
+                "ELSE `manager`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
+                "END  as `sum`,\n" +
+                "`hight_edu` as `hight_edu`,`sec_edu` as `sec_edu`,`base_edu` as `base_edu`,`sci_edu` as `sci_edu`,`manager` as `manager`\n" +
+                "FROM `tempdata`.`tmp_jysy_all`\n" +
+                "where `city_id`=0;";
+        List<LinkedHashMap<String,String>> province = this.jdbcTemplate.query(getProvinceSql,(rs, num)->{
+            return new LinkedHashMap<String,String>(){{
+                put("province_name", rs.getString("province_name"));
+                put("sum", rs.getString("sum"));
+                put("hight_edu", rs.getString("hight_edu"));
+                put("sec_edu", rs.getString("sec_edu"));
+                put("base_edu", rs.getString("base_edu"));
+                put("sci_edu", rs.getString("sci_edu"));
+                put("manager", rs.getString("manager"));
+            }};
+        });
+
+        try {
+            return provinceService.readOnlineExcel(all, province);
         } catch (IOException e) {
             e.printStackTrace();
         }

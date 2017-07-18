@@ -2,7 +2,10 @@ package cn.coderss.jysy.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created with report.
@@ -14,5 +17,7 @@ import java.io.UnsupportedEncodingException;
 public interface ReportProvinceService {
     public void readExcel(String inputFile);
     public void writeExcel(String outFile);
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> data,
+                                  List<LinkedHashMap<String, String>> province) throws IOException;
     public String doExcel(MultipartFile file) throws UnsupportedEncodingException;
 }

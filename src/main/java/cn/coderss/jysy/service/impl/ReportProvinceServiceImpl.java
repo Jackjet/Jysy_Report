@@ -56,26 +56,32 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 }
 
                 //替换省份数据
-                if (row.getCell(0) != null && !row.getCell(0).toString().equals(nowProvinceStr)){
+                if (!row.getCell(0).toString().equals("") && !row.getCell(0).toString().equals(nowProvinceStr)){
                     //替换数据
                     nowProvinceStr = row.getCell(0).toString();
                     arrayModel = new ArrayList<JysyProvinceModel>();
                     excelData.put(nowProvinceStr, arrayModel);
                     provinceList.add(nowProvinceStr);
                 }
-
+                System.out.println("readXlsx:"+row.getCell(0).toString());
+                System.out.println("readXlsx:"+row.getCell(1).toString());
+                System.out.println("readXlsx:"+row.getCell(2).toString());
+                System.out.println("readXlsx:"+row.getCell(3).toString());
+                System.out.println("readXlsx:"+row.getCell(4).toString());
+                System.out.println("readXlsx:"+row.getCell(5).toString());
+                System.out.println("readXlsx:"+row.getCell(6).toString());
                 //新增model
                 try {
                     JysyProvinceModel model = new JysyProvinceModel(
                             row.getCell(0) != null ? row.getCell(0).getStringCellValue() : "",
                             row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "",
                             row.getCell(2) != null ? row.getCell(2).getStringCellValue() : "",
-                            row.getCell(3) != null ? Integer.valueOf((int)row.getCell(3).getNumericCellValue()).toString() : "",
-                            row.getCell(4) != null ? Integer.valueOf((int)row.getCell(4).getNumericCellValue()).toString() : "",
-                            row.getCell(5) != null ? Integer.valueOf((int)row.getCell(5).getNumericCellValue()).toString() : "",
-                            row.getCell(6) != null ? Integer.valueOf((int)row.getCell(6).getNumericCellValue()).toString() : "",
-                            row.getCell(7) != null ? Integer.valueOf((int)row.getCell(7).getNumericCellValue()).toString() : "",
-                            row.getCell(8) != null ? row.getCell(8).toString().indexOf(")") != -1? row.getCell(8).toString() : Integer.valueOf((int)row.getCell(8).getNumericCellValue()).toString() : "");
+                            row.getCell(3) != null ? Integer.valueOf(row.getCell(3).getStringCellValue()).toString() : "",
+                            row.getCell(4) != null ? Integer.valueOf(row.getCell(4).getStringCellValue()).toString() : "",
+                            row.getCell(5) != null ? Integer.valueOf(row.getCell(5).getStringCellValue()).toString() : "",
+                            row.getCell(6) != null ? Integer.valueOf(row.getCell(6).getStringCellValue()).toString() : "",
+                            row.getCell(7) != null ? Integer.valueOf(row.getCell(7).getStringCellValue()).toString() : "",
+                            row.getCell(8) != null ? row.getCell(8).toString().indexOf(")") != -1? row.getCell(8).toString() : Integer.valueOf(row.getCell(8).getStringCellValue()).toString() : "");
                     if (arrayModel != null){
                         arrayModel.add(model);
                     }
@@ -345,6 +351,90 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     }
 
     @Override
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData,
+                                  List<LinkedHashMap<String, String>> province) throws IOException {
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        String nowTime = format.format(new Date());
+        String datePath = "downloads/"+nowTime;
+        String uuid = UUID.randomUUID().toString();
+        String fileName = datePath +"/"+uuid+"/"+ "all.xlsx";
+        String dirs = datePath +"/"+uuid +"/";
+        FileUtilitys.makeDir(dirs);
+
+
+        /**
+         * all
+         */
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("tmp");
+        XSSFRow headRow = sheet.createRow(0);
+        headRow.createCell(0).setCellValue("省");
+        headRow.createCell(1).setCellValue("市");
+        headRow.createCell(2).setCellValue("县");
+        headRow.createCell(3).setCellValue("总人数");
+        headRow.createCell(4).setCellValue("高教人数");
+        headRow.createCell(5).setCellValue("中职人数");
+        headRow.createCell(6).setCellValue("基教人数");
+        headRow.createCell(7).setCellValue("科研机构人数");
+        headRow.createCell(8).setCellValue("管理人数");
+
+        for (int i=0; i<onlineData.size(); i++){
+            XSSFRow row = sheet.createRow(i+1);
+            LinkedHashMap<String,String> map = onlineData.get(i);
+            int index = 0;
+            for (Map.Entry<String,String> m : map.entrySet()){
+                row.createCell(index++).setCellValue(m.getValue());
+            }
+        }
+        FileOutputStream outStream = new FileOutputStream(fileName);
+        wb.write(outStream);
+        outStream.flush();
+        outStream.close();
+
+
+        /**
+         * province
+         */
+        XSSFWorkbook wbProvince = new XSSFWorkbook();
+        XSSFSheet sheetProvince = wbProvince.createSheet("tmp");
+        XSSFRow headRowProvince = sheetProvince.createRow(0);
+        headRowProvince.createCell(0).setCellValue("省");
+        headRowProvince.createCell(1).setCellValue("总人数");
+        headRowProvince.createCell(2).setCellValue("高教人数");
+        headRowProvince.createCell(3).setCellValue("中职人数");
+        headRowProvince.createCell(4).setCellValue("基教人数");
+        headRowProvince.createCell(5).setCellValue("科研机构人数");
+        headRowProvince.createCell(6).setCellValue("管理人数");
+
+        for (int i=0; i<province.size(); i++){
+            XSSFRow rowProvince = sheetProvince.createRow(i+1);
+            LinkedHashMap<String,String> map = province.get(i);
+            int index = 0;
+            for (Map.Entry<String,String> m : map.entrySet()){
+                rowProvince.createCell(index++).setCellValue(m.getValue());
+            }
+        }
+        String provinceFileName = datePath +"/"+uuid+"/"+ "province.xlsx";
+        FileOutputStream outStreamProvince = new FileOutputStream(provinceFileName);
+        wbProvince.write(outStreamProvince);
+        outStreamProvince.flush();
+        outStreamProvince.close();
+
+
+        try {
+            this.readExcel(fileName);
+            this.writeExcel(dirs);
+
+            //打包传送出来
+            FileUtilitys.fileToZip(dirs, dirs, nowTime);
+
+            return "redirect:/report/" + dirs + nowTime + ".zip";
+        } catch (Exception e) {
+            return "上传失败 " + fileName + " => " + e.getMessage();
+        }
+    }
+
+    @Override
     public String doExcel(MultipartFile file) throws UnsupportedEncodingException {
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String nowTime = format.format(new Date());
@@ -361,11 +451,11 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 stream.write(bytes);
                 stream.close();
                 this.readExcel(fileName);
+                System.out.println(excelData);
                 this.writeExcel(dirs);
 
                 //打包传送出来
                 FileUtilitys.fileToZip(dirs, dirs, nowTime);
-                System.out.println(dirs + datePath + ".zip");
                 return "redirect:/report/" + dirs + nowTime + ".zip";
             } catch (Exception e) {
                 return "上传失败 " + fileName + " => " + e.getMessage();

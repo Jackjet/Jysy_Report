@@ -4,17 +4,22 @@ import cn.coderss.jysy.service.FbhyService;
 import cn.coderss.jysy.utility.NettyTool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jdk.nashorn.internal.scripts.JD;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,6 +34,14 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/fbhy")
 public class FbhyController {
+    @Autowired
+    @Qualifier("primaryJdbcTemplate")
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    @Qualifier("secondaryJdbcTemplate")
+    private JdbcTemplate secondJdbcTemplate;
+
     @Autowired
     FbhyService fbhyService;
 
@@ -57,6 +70,29 @@ public class FbhyController {
             put("states", "1");
         }}).map(data -> new ResponseEntity<HashMap<String, String>>(data, HttpStatus.OK))
                 .orElseThrow(() -> new Exception("data error"));
+    }
+
+
+    @GetMapping(value = "/test2")
+    @ResponseBody
+    public Flux<HashMap<String,String>> getTest2(){
+        List<HashMap<String,String>> data = this.jdbcTemplate.query("select * from vmb_account where accountid=51630 limit 1;",(rs, num)->{
+            return new HashMap<String,String>(){{
+                put("fullname", rs.getString("fullname"));
+            }};
+        });
+        return Flux.fromIterable(data);
+    }
+
+    @GetMapping(value = "/test3")
+    @ResponseBody
+    public Flux<HashMap<String,String>> getTest3(){
+        List<HashMap<String,String>> data = this.secondJdbcTemplate.query("select * from vmb_account where accountid=51630 limit 1;",(rs, num)->{
+            return new HashMap<String,String>(){{
+                put("fullname", rs.getString("fullname"));
+            }};
+        });
+        return Flux.fromIterable(data);
     }
 
 

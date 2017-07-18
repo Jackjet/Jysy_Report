@@ -10,10 +10,17 @@ spring:
     template-loader-path: classpath:/templates/
     suffix: .ftl
   datasource:
-    url: jdbc:mysql://rm-bp1x467d7h08xi13do.mysql.rds.aliyuncs.com/vmobel
-    username: swread
-    password: Shenwei123
-    driver-class-name: com.mysql.jdbc.Driver
+    primary:
+      url: jdbc:mysql://rm-bp1x467d7h08xi13do.mysql.rds.aliyuncs.com/vmobel
+      username: swread
+      password: Shenwei123
+      driver-class-name: com.mysql.jdbc.Driver
+    secondary:
+      url: jdbc:mysql://192.168.1.12/vmobel
+      username: vmobel
+      password: a7NVZSdp
+      driver-class-name: com.mysql.jdbc.Driver
+    name: primary, secondary
   servlet:
     multipart:
       max-file-size: 50MB
