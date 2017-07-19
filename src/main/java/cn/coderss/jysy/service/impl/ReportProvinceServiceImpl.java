@@ -274,7 +274,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 //                        cityCellStyle.setFillPattern(XSSFCellStyle.THIN_FORWARD_DIAG);
 //                        cityCell.setCellStyle(cityCellStyle);
 
-                        cityCell.setCellValue("叠加合计");
+                        cityCell.setCellValue("合计");
                     }
                     else if(!model.getCity().equals("")){
                         XSSFCell cityCell = row.createCell(1);
@@ -297,7 +297,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                         XSSFCell countryCell = row.createCell(2);
 
 
-                        countryCell.setCellValue("叠加合计");
+                        countryCell.setCellValue("小计");
                     }else{
                         row.createCell(2).setCellValue(model.getContry().toString());
                     }
