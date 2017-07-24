@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class JysyController {
 
     @RequestMapping("/detail")
     public String detail(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("Y-MM-d");
+        String dateStr = dateFormat.format(new Date());
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
                 "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,concat(\"'\",TT.`name`) as `name`,TT.`fullname` as `fullname`,\n" +
                 "TT.`sex` as `sex`,concat(\"'\",TT.`birthday` )as `birthday`,concat(\"'\",TT.`mail`) as `mail`,\n" +
@@ -96,7 +100,7 @@ public class JysyController {
                 "            FROM `vmb_order` as `order`\n" +
                 "            WHERE `order`.`accountId`  = `account`.`accountId` \n" +
                 "            LIMIT 1\n" +
-                "        ) as `sign_ways`,`account`.`createtime`  as `createtime`,\n" +
+                "        ) as `sign_ways`,`entaccount`.`createtime`  as `createtime`,\n" +
                 "        (\n" +
                 "            SELECT CASE WHEN COUNT(*)>0\n" +
                 "            THEN \"已支付\"\n" +
@@ -104,14 +108,18 @@ public class JysyController {
                 "            END\n" +
                 "            FROM `vmb_order`  as `order`\n" +
                 "            WHERE `order`.`accountid`  = `account`.`accountId` \n" +
-                "            AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \"2017-06-25 02:59:59\"\n" +
+                "            AND `order`.`order_states` = 272\n" +
+                "            and  `order`.`pay_time` >= \"2017-06-25 00:00:00\"\n" +
+                "            AND `order`.`pay_time` <= \'"+dateStr+" 02:59:59\'\n" +
                 "            LIMIT 1\n" +
                 "        ) as `order_states`,\n" +
                 "        (\n" +
                 "            SELECT `pay_time`\n" +
                 "            FROM `vmb_order`  as `order`\n" +
                 "            WHERE `order`.`accountid`  = `account`.`accountId` \n" +
-                "            AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \"2017-06-25 02:59:59\"\n" +
+                "            AND `order`.`order_states` = 272 \n" +
+                "            and  `order`.`pay_time` >= \"2017-06-25 00:00:00\"\n" +
+                "            AND `order`.`pay_time` <= \'"+dateStr+" 02:59:59\'\n" +
                 "            LIMIT 1\n" +
                 "        ) as `pay_time`,\n" +
                 "        (\n" +
@@ -120,7 +128,7 @@ public class JysyController {
                 "            INNER JOIN `vmb_learningactivity`  as `lear`\n" +
                 "            on `lear`.`learningActivityId`  = `study`.`learningactivityid` \n" +
                 "            WHERE  `lear`.`actType` =200\n" +
-                "            AND `study`.starttime <= \"2017-06-25 02:59:59\"\n" +
+                "            AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
                 "            AND `study`.`accountid`  = `account`.`accountId` \n" +
                 "            limit 1\n" +
                 "        ) as `cer_states`,\n" +
@@ -130,7 +138,7 @@ public class JysyController {
                 "            INNER JOIN `vmb_learningactivity`  as `lear`\n" +
                 "            on `lear`.`learningActivityId`  = `study`.`learningactivityid` \n" +
                 "            WHERE  `lear`.`actType` =200\n" +
-                "            AND `study`.starttime <= \"2017-06-25 02:59:59\"\n" +
+                "            AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
                 "            AND `study`.`accountid`  = `account`.`accountId` \n" +
                 "        ) as `cer_time`,\n" +
                 "        (\n" +
@@ -140,7 +148,7 @@ public class JysyController {
                 "            on `lear`.`learningActivityId`  = `study`.`learningactivityid` \n" +
                 "            WHERE  `lear`.`actType` =200\n" +
                 "            AND `study`.`accountid`  = `account`.`accountId` \n" +
-                "            AND `study`.starttime <= \"2017-06-25 02:59:59\"\n" +
+                "            AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
                 "            ORDER BY `study`.`starttime` \n" +
                 "            limit 1\n" +
                 "        ) as `cer_code`,\n" +
@@ -152,7 +160,7 @@ public class JysyController {
                 "            INNER JOIN `vmb_learningactivity` as `lear` on `lear`.`learningActivityId`  = `study`.`learningactivityid`  AND `study`.`collegeid` =94\n" +
                 "            INNER JOIN `tempdata`.`jysy_learning_account` as `jysy` on `jysy`.`accountid`  = `study`.`accountid`  AND `jysy`.`learningactivityid`  = `study`.`learningactivityid` \n" +
                 "            INNER JOIN `vmb_account` as `maccount` on `maccount`.`accountId`  = `study`.`accountid`\n" +
-                "            WHERE `study`.sucessfuled=1 AND `study`.valid = 1 AND `study`.starttime <= \"2017-06-25 02:59:59\"\n" +
+                "            WHERE `study`.sucessfuled=1 AND `study`.valid = 1 AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
                 "            GROUP BY `study`.`accountid`,`study`.`learningactivityid`) as `P`\n" +
                 "        WHERE  `P`.accountid = `account`.`accountid`\n" +
                 "        GROUP BY `P`.`accountid`\n" +
@@ -169,7 +177,10 @@ public class JysyController {
                 "    on `colorg`.`orgId`  = `member`.`ordId` \n" +
                 "    INNER JOIN `vmb_org`  as `org`\n" +
                 "    on `org`.`orgId`  =`member`.`ordId` \n" +
+                "    INNER JOIN `vmb_enterpriseaccount` as `entaccount` \n" +
+                "    on `entaccount`.`accountid` = `account`.`accountid`\n" +
                 "    WHERE `colorg`.`collegeId` =94\n" +
+                "    and `entaccount`.`enterpriseid`=11\n" +
                 "    AND `account`.`accountid` in (\n" +
                 "        SELECT DISTINCT(`account`.`accountId`)\n" +
                 "        FROM `vmb_collegeorg` as `colorg`\n" +
@@ -177,19 +188,23 @@ public class JysyController {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
                 "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
-                "        WHERE `entaccount`.`createtime`>= \"2016-08-18 00:00:00\"\n" +
-                "        AND `entaccount`.`createtime` <= \"2017-06-25 02:59:59\"\n" +
+                "        WHERE `entaccount`.`createtime`>= \"2017-06-25 00:00:00\"\n" +
+                "        AND `entaccount`.`createtime` <= \'"+dateStr+" 02:59:59\'\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
                 "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        AND `account`.`accountid` not in (\n" +
-                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 AND `order_states` =272 AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        union all\n" +
-                "        SELECT `accountId` \n" +
-                "        FROM `vmb_account` \n" +
-                "        WHERE `name` in (\"18689113133\",\"15063906058\",\"13790032828\",\"13955259897\",\"18949368111\")\n" +
+                "        select `accountid`\n" +
+                "        from `vmb_order`\n" +
+                "        where `pay_time` > \"2017-06-25 00:00:00\"\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "    )\n" +
+                "    and `entaccount`.`createtime` <= \'"+dateStr+" 02:59:59\'\n" +
                 "    GROUP BY `account`.`accountid`\n" +
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT\n" +
@@ -221,9 +236,6 @@ public class JysyController {
                 put("cer_code", rs.getString("cer_code"));
             }};
         });
-//        System.out.println(data);
-//        service.readOnlineExcel(data);
-//        System.out.println(ReportDetailServiceImpl.data);
         try {
             return service.readOnlineExcel(data);
         } catch (IOException e) {

@@ -25,9 +25,9 @@ spring:
     multipart:
       max-file-size: 50MB
   mvc:
-    static-path-pattern: /static/**
+    static-path-pattern: /static/**,/downloads/**
   resources:
-    static-locations: classpath:/static/
+    static-locations: classpath:/static/,/downloads/
 logging:
   file: ./springboot.log
   level:
