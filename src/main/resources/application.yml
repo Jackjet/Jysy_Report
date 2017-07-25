@@ -32,3 +32,13 @@ logging:
   file: ./springboot.log
   level:
     cn.coderss: INFO
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.coderss.jysy.domain
+mapper:
+  identity: MYSQL
+  mappers: cn.coderss.jysy.utility.MyMapper
+  not-empty: false
+logging:
+  level:
+    cn.coderss: TRACE
