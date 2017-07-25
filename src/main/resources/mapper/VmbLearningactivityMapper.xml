@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbLearningactivityMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbLearningactivity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="trainingSolutionId" jdbcType="INTEGER" property="trainingsolutionid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logouUrl" jdbcType="VARCHAR" property="logouurl" />
+    <result column="bannerUrl" jdbcType="VARCHAR" property="bannerurl" />
+    <result column="actType" jdbcType="INTEGER" property="acttype" />
+    <result column="previewVideoUrl" jdbcType="VARCHAR" property="previewvideourl" />
+    <result column="videoUrl" jdbcType="VARCHAR" property="videourl" />
+    <result column="wikiContent" jdbcType="VARCHAR" property="wikicontent" />
+    <result column="documentUrl" jdbcType="VARCHAR" property="documenturl" />
+    <result column="indexPage" jdbcType="VARCHAR" property="indexpage" />
+    <result column="zipfile" jdbcType="VARCHAR" property="zipfile" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="actSize" jdbcType="DECIMAL" property="actsize" />
+    <result column="trainingStartTime" jdbcType="TIMESTAMP" property="trainingstarttime" />
+    <result column="trainingEndTime" jdbcType="TIMESTAMP" property="trainingendtime" />
+    <result column="trainingAddress" jdbcType="VARCHAR" property="trainingaddress" />
+    <result column="canRegistration" jdbcType="BIT" property="canregistration" />
+    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="forward" jdbcType="INTEGER" property="forward" />
+    <result column="cycle" jdbcType="INTEGER" property="cycle" />
+    <result column="timetype" jdbcType="INTEGER" property="timetype" />
+    <result column="limitplay" jdbcType="INTEGER" property="limitplay" />
+    <result column="periods" jdbcType="REAL" property="periods" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbLearningactivity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="trainingSolutionId" jdbcType="INTEGER" property="trainingsolutionid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logouUrl" jdbcType="VARCHAR" property="logouurl" />
+    <result column="bannerUrl" jdbcType="VARCHAR" property="bannerurl" />
+    <result column="actType" jdbcType="INTEGER" property="acttype" />
+    <result column="previewVideoUrl" jdbcType="VARCHAR" property="previewvideourl" />
+    <result column="videoUrl" jdbcType="VARCHAR" property="videourl" />
+    <result column="wikiContent" jdbcType="VARCHAR" property="wikicontent" />
+    <result column="documentUrl" jdbcType="VARCHAR" property="documenturl" />
+    <result column="indexPage" jdbcType="VARCHAR" property="indexpage" />
+    <result column="zipfile" jdbcType="VARCHAR" property="zipfile" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="actSize" jdbcType="DECIMAL" property="actsize" />
+    <result column="trainingStartTime" jdbcType="TIMESTAMP" property="trainingstarttime" />
+    <result column="trainingEndTime" jdbcType="TIMESTAMP" property="trainingendtime" />
+    <result column="trainingAddress" jdbcType="VARCHAR" property="trainingaddress" />
+    <result column="canRegistration" jdbcType="BIT" property="canregistration" />
+    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="forward" jdbcType="INTEGER" property="forward" />
+    <result column="cycle" jdbcType="INTEGER" property="cycle" />
+    <result column="timetype" jdbcType="INTEGER" property="timetype" />
+    <result column="limitplay" jdbcType="INTEGER" property="limitplay" />
+    <result column="periods" jdbcType="REAL" property="periods" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbLearningactivity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="trainingSolutionId" jdbcType="INTEGER" property="trainingsolutionid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logouUrl" jdbcType="VARCHAR" property="logouurl" />
+    <result column="bannerUrl" jdbcType="VARCHAR" property="bannerurl" />
+    <result column="actType" jdbcType="INTEGER" property="acttype" />
+    <result column="previewVideoUrl" jdbcType="VARCHAR" property="previewvideourl" />
+    <result column="videoUrl" jdbcType="VARCHAR" property="videourl" />
+    <result column="wikiContent" jdbcType="VARCHAR" property="wikicontent" />
+    <result column="documentUrl" jdbcType="VARCHAR" property="documenturl" />
+    <result column="indexPage" jdbcType="VARCHAR" property="indexpage" />
+    <result column="zipfile" jdbcType="VARCHAR" property="zipfile" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="actSize" jdbcType="DECIMAL" property="actsize" />
+    <result column="trainingStartTime" jdbcType="TIMESTAMP" property="trainingstarttime" />
+    <result column="trainingEndTime" jdbcType="TIMESTAMP" property="trainingendtime" />
+    <result column="trainingAddress" jdbcType="VARCHAR" property="trainingaddress" />
+    <result column="canRegistration" jdbcType="BIT" property="canregistration" />
+    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="forward" jdbcType="INTEGER" property="forward" />
+    <result column="cycle" jdbcType="INTEGER" property="cycle" />
+    <result column="timetype" jdbcType="INTEGER" property="timetype" />
+    <result column="limitplay" jdbcType="INTEGER" property="limitplay" />
+    <result column="periods" jdbcType="REAL" property="periods" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+</mapper>

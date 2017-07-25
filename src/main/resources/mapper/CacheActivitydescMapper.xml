@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.CacheActivitydescMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.CacheActivitydesc">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="activitydescid" jdbcType="BIGINT" property="activitydescid" />
+    <result column="LearningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="acttype" jdbcType="INTEGER" property="acttype" />
+    <result column="commentcount" jdbcType="BIGINT" property="commentcount" />
+    <result column="favoritecount" jdbcType="BIGINT" property="favoritecount" />
+    <result column="footmarkcount" jdbcType="BIGINT" property="footmarkcount" />
+    <result column="threegradepercent" jdbcType="DECIMAL" property="threegradepercent" />
+    <result column="foregradepercent" jdbcType="DECIMAL" property="foregradepercent" />
+    <result column="fivegradepercent" jdbcType="DECIMAL" property="fivegradepercent" />
+    <result column="onegradepercent" jdbcType="DECIMAL" property="onegradepercent" />
+    <result column="twogradepercent" jdbcType="DECIMAL" property="twogradepercent" />
+    <result column="studiescount" jdbcType="INTEGER" property="studiescount" />
+    <result column="accountId" jdbcType="INTEGER" property="accountid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="cl_recommend" jdbcType="TINYINT" property="clRecommend" />
+    <result column="mem_recommend" jdbcType="INTEGER" property="memRecommend" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheActivitydesc">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="activitydescid" jdbcType="BIGINT" property="activitydescid" />
+    <result column="LearningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="acttype" jdbcType="INTEGER" property="acttype" />
+    <result column="commentcount" jdbcType="BIGINT" property="commentcount" />
+    <result column="favoritecount" jdbcType="BIGINT" property="favoritecount" />
+    <result column="footmarkcount" jdbcType="BIGINT" property="footmarkcount" />
+    <result column="threegradepercent" jdbcType="DECIMAL" property="threegradepercent" />
+    <result column="foregradepercent" jdbcType="DECIMAL" property="foregradepercent" />
+    <result column="fivegradepercent" jdbcType="DECIMAL" property="fivegradepercent" />
+    <result column="onegradepercent" jdbcType="DECIMAL" property="onegradepercent" />
+    <result column="twogradepercent" jdbcType="DECIMAL" property="twogradepercent" />
+    <result column="studiescount" jdbcType="INTEGER" property="studiescount" />
+    <result column="accountId" jdbcType="INTEGER" property="accountid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="cl_recommend" jdbcType="TINYINT" property="clRecommend" />
+    <result column="mem_recommend" jdbcType="INTEGER" property="memRecommend" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheActivitydesc">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="activitydescid" jdbcType="BIGINT" property="activitydescid" />
+    <result column="LearningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="acttype" jdbcType="INTEGER" property="acttype" />
+    <result column="commentcount" jdbcType="BIGINT" property="commentcount" />
+    <result column="favoritecount" jdbcType="BIGINT" property="favoritecount" />
+    <result column="footmarkcount" jdbcType="BIGINT" property="footmarkcount" />
+    <result column="threegradepercent" jdbcType="DECIMAL" property="threegradepercent" />
+    <result column="foregradepercent" jdbcType="DECIMAL" property="foregradepercent" />
+    <result column="fivegradepercent" jdbcType="DECIMAL" property="fivegradepercent" />
+    <result column="onegradepercent" jdbcType="DECIMAL" property="onegradepercent" />
+    <result column="twogradepercent" jdbcType="DECIMAL" property="twogradepercent" />
+    <result column="studiescount" jdbcType="INTEGER" property="studiescount" />
+    <result column="accountId" jdbcType="INTEGER" property="accountid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="cl_recommend" jdbcType="TINYINT" property="clRecommend" />
+    <result column="mem_recommend" jdbcType="INTEGER" property="memRecommend" />
+  </resultMap>
+</mapper>

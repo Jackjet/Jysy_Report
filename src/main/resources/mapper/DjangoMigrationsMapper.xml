@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.DjangoMigrationsMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.DjangoMigrations">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app" jdbcType="VARCHAR" property="app" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="applied" jdbcType="TIMESTAMP" property="applied" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.DjangoMigrations">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app" jdbcType="VARCHAR" property="app" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="applied" jdbcType="TIMESTAMP" property="applied" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.DjangoMigrations">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app" jdbcType="VARCHAR" property="app" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="applied" jdbcType="TIMESTAMP" property="applied" />
+  </resultMap>
+</mapper>

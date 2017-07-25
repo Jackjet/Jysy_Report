@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbActivitycatalogMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbActivitycatalog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="catalogId" jdbcType="INTEGER" property="catalogid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parentcatalogId" jdbcType="INTEGER" property="parentcatalogid" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="originalid" jdbcType="INTEGER" property="originalid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="acttype" jdbcType="INTEGER" property="acttype" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbActivitycatalog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="catalogId" jdbcType="INTEGER" property="catalogid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parentcatalogId" jdbcType="INTEGER" property="parentcatalogid" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="originalid" jdbcType="INTEGER" property="originalid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="acttype" jdbcType="INTEGER" property="acttype" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbActivitycatalog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="catalogId" jdbcType="INTEGER" property="catalogid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parentcatalogId" jdbcType="INTEGER" property="parentcatalogid" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="originalid" jdbcType="INTEGER" property="originalid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="acttype" jdbcType="INTEGER" property="acttype" />
+  </resultMap>
+</mapper>

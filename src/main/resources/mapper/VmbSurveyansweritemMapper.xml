@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbSurveyansweritemMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbSurveyansweritem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="surveyansweritemId" jdbcType="INTEGER" property="surveyansweritemid" />
+    <result column="answerId" jdbcType="INTEGER" property="answerid" />
+    <result column="itemId" jdbcType="INTEGER" property="itemid" />
+    <result column="accountsurveyId" jdbcType="INTEGER" property="accountsurveyid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbSurveyansweritem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="surveyansweritemId" jdbcType="INTEGER" property="surveyansweritemid" />
+    <result column="answerId" jdbcType="INTEGER" property="answerid" />
+    <result column="itemId" jdbcType="INTEGER" property="itemid" />
+    <result column="accountsurveyId" jdbcType="INTEGER" property="accountsurveyid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbSurveyansweritem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="surveyansweritemId" jdbcType="INTEGER" property="surveyansweritemid" />
+    <result column="answerId" jdbcType="INTEGER" property="answerid" />
+    <result column="itemId" jdbcType="INTEGER" property="itemid" />
+    <result column="accountsurveyId" jdbcType="INTEGER" property="accountsurveyid" />
+  </resultMap>
+</mapper>

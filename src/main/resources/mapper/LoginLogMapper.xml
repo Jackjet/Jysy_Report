@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.LoginLogMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.LoginLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="successfull" jdbcType="INTEGER" property="successfull" />
+    <result column="resaon" jdbcType="VARCHAR" property="resaon" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="request_appid" jdbcType="VARCHAR" property="requestAppid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="terminal" jdbcType="VARCHAR" property="terminal" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.LoginLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="successfull" jdbcType="INTEGER" property="successfull" />
+    <result column="resaon" jdbcType="VARCHAR" property="resaon" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="request_appid" jdbcType="VARCHAR" property="requestAppid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="terminal" jdbcType="VARCHAR" property="terminal" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.LoginLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="successfull" jdbcType="INTEGER" property="successfull" />
+    <result column="resaon" jdbcType="VARCHAR" property="resaon" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="request_appid" jdbcType="VARCHAR" property="requestAppid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="terminal" jdbcType="VARCHAR" property="terminal" />
+  </resultMap>
+</mapper>

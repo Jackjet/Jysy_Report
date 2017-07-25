@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbPaperquestionMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbPaperquestion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="paperQuestionId" jdbcType="INTEGER" property="paperquestionid" />
+    <result column="paperId" jdbcType="INTEGER" property="paperid" />
+    <result column="questionId" jdbcType="INTEGER" property="questionid" />
+    <result column="weights" jdbcType="REAL" property="weights" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbPaperquestion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="paperQuestionId" jdbcType="INTEGER" property="paperquestionid" />
+    <result column="paperId" jdbcType="INTEGER" property="paperid" />
+    <result column="questionId" jdbcType="INTEGER" property="questionid" />
+    <result column="weights" jdbcType="REAL" property="weights" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbPaperquestion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="paperQuestionId" jdbcType="INTEGER" property="paperquestionid" />
+    <result column="paperId" jdbcType="INTEGER" property="paperid" />
+    <result column="questionId" jdbcType="INTEGER" property="questionid" />
+    <result column="weights" jdbcType="REAL" property="weights" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+  </resultMap>
+</mapper>

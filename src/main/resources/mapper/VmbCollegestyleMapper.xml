@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbCollegestyleMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbCollegestyle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeStyleId" jdbcType="INTEGER" property="collegestyleid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbCollegestyle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeStyleId" jdbcType="INTEGER" property="collegestyleid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbCollegestyle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeStyleId" jdbcType="INTEGER" property="collegestyleid" />
+  </resultMap>
+</mapper>

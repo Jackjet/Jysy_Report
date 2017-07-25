@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbVotesolutionMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbVotesolution">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="votesolutionid" jdbcType="INTEGER" property="votesolutionid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="ismustclick" jdbcType="INTEGER" property="ismustclick" />
+    <result column="ismultipleclicks" jdbcType="INTEGER" property="ismultipleclicks" />
+    <result column="isdeffclicks" jdbcType="INTEGER" property="isdeffclicks" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbVotesolution">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="votesolutionid" jdbcType="INTEGER" property="votesolutionid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="ismustclick" jdbcType="INTEGER" property="ismustclick" />
+    <result column="ismultipleclicks" jdbcType="INTEGER" property="ismultipleclicks" />
+    <result column="isdeffclicks" jdbcType="INTEGER" property="isdeffclicks" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbVotesolution">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="votesolutionid" jdbcType="INTEGER" property="votesolutionid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="ismustclick" jdbcType="INTEGER" property="ismustclick" />
+    <result column="ismultipleclicks" jdbcType="INTEGER" property="ismultipleclicks" />
+    <result column="isdeffclicks" jdbcType="INTEGER" property="isdeffclicks" />
+  </resultMap>
+</mapper>

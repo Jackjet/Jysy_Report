@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbTransactionlogMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbTransactionlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="logtype" jdbcType="INTEGER" property="logtype" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="logtime" jdbcType="TIMESTAMP" property="logtime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbTransactionlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="logtype" jdbcType="INTEGER" property="logtype" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="logtime" jdbcType="TIMESTAMP" property="logtime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbTransactionlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="logtype" jdbcType="INTEGER" property="logtype" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="logtime" jdbcType="TIMESTAMP" property="logtime" />
+  </resultMap>
+</mapper>

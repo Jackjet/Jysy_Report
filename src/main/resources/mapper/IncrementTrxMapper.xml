@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.IncrementTrxMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.IncrementTrx">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="jobid" jdbcType="CHAR" property="jobid" />
+    <id column="database" jdbcType="CHAR" property="database" />
+    <id column="table" jdbcType="CHAR" property="table" />
+    <id column="partition" jdbcType="INTEGER" property="partition" />
+    <result column="checkpoint" jdbcType="VARCHAR" property="checkpoint" />
+    <result column="timestamp" jdbcType="BIGINT" property="timestamp" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.IncrementTrx">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="jobid" jdbcType="CHAR" property="jobid" />
+    <id column="database" jdbcType="CHAR" property="database" />
+    <id column="table" jdbcType="CHAR" property="table" />
+    <id column="partition" jdbcType="INTEGER" property="partition" />
+    <result column="checkpoint" jdbcType="VARCHAR" property="checkpoint" />
+    <result column="timestamp" jdbcType="BIGINT" property="timestamp" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.IncrementTrx">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="jobid" jdbcType="CHAR" property="jobid" />
+    <id column="database" jdbcType="CHAR" property="database" />
+    <id column="table" jdbcType="CHAR" property="table" />
+    <id column="partition" jdbcType="INTEGER" property="partition" />
+    <result column="checkpoint" jdbcType="VARCHAR" property="checkpoint" />
+    <result column="timestamp" jdbcType="BIGINT" property="timestamp" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.WechatAccessTokenMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.WechatAccessToken">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="access_tokenid" jdbcType="INTEGER" property="accessTokenid" />
+    <result column="wechat_appid" jdbcType="VARCHAR" property="wechatAppid" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="expires_in" jdbcType="INTEGER" property="expiresIn" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.WechatAccessToken">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="access_tokenid" jdbcType="INTEGER" property="accessTokenid" />
+    <result column="wechat_appid" jdbcType="VARCHAR" property="wechatAppid" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="expires_in" jdbcType="INTEGER" property="expiresIn" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.WechatAccessToken">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="access_tokenid" jdbcType="INTEGER" property="accessTokenid" />
+    <result column="wechat_appid" jdbcType="VARCHAR" property="wechatAppid" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="expires_in" jdbcType="INTEGER" property="expiresIn" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+  </resultMap>
+</mapper>

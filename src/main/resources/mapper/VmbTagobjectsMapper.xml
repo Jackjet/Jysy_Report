@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbTagobjectsMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbTagobjects">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="tagobjectsId" jdbcType="INTEGER" property="tagobjectsid" />
+    <result column="objectId" jdbcType="INTEGER" property="objectid" />
+    <result column="tagId" jdbcType="INTEGER" property="tagid" />
+    <result column="objecttablename" jdbcType="VARCHAR" property="objecttablename" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbTagobjects">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="tagobjectsId" jdbcType="INTEGER" property="tagobjectsid" />
+    <result column="objectId" jdbcType="INTEGER" property="objectid" />
+    <result column="tagId" jdbcType="INTEGER" property="tagid" />
+    <result column="objecttablename" jdbcType="VARCHAR" property="objecttablename" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbTagobjects">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="tagobjectsId" jdbcType="INTEGER" property="tagobjectsid" />
+    <result column="objectId" jdbcType="INTEGER" property="objectid" />
+    <result column="tagId" jdbcType="INTEGER" property="tagid" />
+    <result column="objecttablename" jdbcType="VARCHAR" property="objecttablename" />
+  </resultMap>
+</mapper>

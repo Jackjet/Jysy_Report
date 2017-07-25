@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbQuestionMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbQuestion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="questionId" jdbcType="INTEGER" property="questionid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="quetype" jdbcType="INTEGER" property="quetype" />
+    <result column="catalog" jdbcType="INTEGER" property="catalog" />
+    <result column="multi" jdbcType="BIT" property="multi" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbQuestion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="questionId" jdbcType="INTEGER" property="questionid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="quetype" jdbcType="INTEGER" property="quetype" />
+    <result column="catalog" jdbcType="INTEGER" property="catalog" />
+    <result column="multi" jdbcType="BIT" property="multi" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbQuestion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="questionId" jdbcType="INTEGER" property="questionid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="quetype" jdbcType="INTEGER" property="quetype" />
+    <result column="catalog" jdbcType="INTEGER" property="catalog" />
+    <result column="multi" jdbcType="BIT" property="multi" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+</mapper>

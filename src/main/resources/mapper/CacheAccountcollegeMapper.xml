@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.CacheAccountcollegeMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.CacheAccountcollege">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="memberid" jdbcType="INTEGER" property="memberid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="orgid" jdbcType="INTEGER" property="orgid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheAccountcollege">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="memberid" jdbcType="INTEGER" property="memberid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="orgid" jdbcType="INTEGER" property="orgid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheAccountcollege">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="memberid" jdbcType="INTEGER" property="memberid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="orgid" jdbcType="INTEGER" property="orgid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+  </resultMap>
+</mapper>

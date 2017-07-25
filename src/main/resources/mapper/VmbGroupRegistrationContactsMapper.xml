@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbGroupRegistrationContactsMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbGroupRegistrationContacts">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="contactid" jdbcType="INTEGER" property="contactid" />
+    <result column="orgname" jdbcType="VARCHAR" property="orgname" />
+    <result column="contactname" jdbcType="VARCHAR" property="contactname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="provinceid" jdbcType="INTEGER" property="provinceid" />
+    <result column="excel_url" jdbcType="VARCHAR" property="excelUrl" />
+    <result column="batch_number" jdbcType="VARCHAR" property="batchNumber" />
+    <result column="excel_result_url" jdbcType="VARCHAR" property="excelResultUrl" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="committime" jdbcType="TIMESTAMP" property="committime" />
+    <result column="complete" jdbcType="INTEGER" property="complete" />
+    <result column="create_result" jdbcType="VARCHAR" property="createResult" />
+    <result column="create_result_url" jdbcType="VARCHAR" property="createResultUrl" />
+    <result column="cityid" jdbcType="INTEGER" property="cityid" />
+    <result column="countyid" jdbcType="INTEGER" property="countyid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbGroupRegistrationContacts">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="contactid" jdbcType="INTEGER" property="contactid" />
+    <result column="orgname" jdbcType="VARCHAR" property="orgname" />
+    <result column="contactname" jdbcType="VARCHAR" property="contactname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="provinceid" jdbcType="INTEGER" property="provinceid" />
+    <result column="excel_url" jdbcType="VARCHAR" property="excelUrl" />
+    <result column="batch_number" jdbcType="VARCHAR" property="batchNumber" />
+    <result column="excel_result_url" jdbcType="VARCHAR" property="excelResultUrl" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="committime" jdbcType="TIMESTAMP" property="committime" />
+    <result column="complete" jdbcType="INTEGER" property="complete" />
+    <result column="create_result" jdbcType="VARCHAR" property="createResult" />
+    <result column="create_result_url" jdbcType="VARCHAR" property="createResultUrl" />
+    <result column="cityid" jdbcType="INTEGER" property="cityid" />
+    <result column="countyid" jdbcType="INTEGER" property="countyid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbGroupRegistrationContacts">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="contactid" jdbcType="INTEGER" property="contactid" />
+    <result column="orgname" jdbcType="VARCHAR" property="orgname" />
+    <result column="contactname" jdbcType="VARCHAR" property="contactname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="provinceid" jdbcType="INTEGER" property="provinceid" />
+    <result column="excel_url" jdbcType="VARCHAR" property="excelUrl" />
+    <result column="batch_number" jdbcType="VARCHAR" property="batchNumber" />
+    <result column="excel_result_url" jdbcType="VARCHAR" property="excelResultUrl" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="committime" jdbcType="TIMESTAMP" property="committime" />
+    <result column="complete" jdbcType="INTEGER" property="complete" />
+    <result column="create_result" jdbcType="VARCHAR" property="createResult" />
+    <result column="create_result_url" jdbcType="VARCHAR" property="createResultUrl" />
+    <result column="cityid" jdbcType="INTEGER" property="cityid" />
+    <result column="countyid" jdbcType="INTEGER" property="countyid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+</mapper>

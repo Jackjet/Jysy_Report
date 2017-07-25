@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.LoginConfigMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.LoginConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <id column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="verify_code" jdbcType="INTEGER" property="verifyCode" />
+    <result column="remember_day" jdbcType="INTEGER" property="rememberDay" />
+    <result column="forget_pwd_config" jdbcType="INTEGER" property="forgetPwdConfig" />
+    <result column="audit" jdbcType="INTEGER" property="audit" />
+    <result column="change_pwd_config" jdbcType="INTEGER" property="changePwdConfig" />
+    <result column="change_pwd_every_day" jdbcType="INTEGER" property="changePwdEveryDay" />
+    <result column="change_pwd_to_do_time" jdbcType="TIMESTAMP" property="changePwdToDoTime" />
+    <result column="change_pwd_rate" jdbcType="INTEGER" property="changePwdRate" />
+    <result column="login_test_count" jdbcType="INTEGER" property="loginTestCount" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.LoginConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <id column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="verify_code" jdbcType="INTEGER" property="verifyCode" />
+    <result column="remember_day" jdbcType="INTEGER" property="rememberDay" />
+    <result column="forget_pwd_config" jdbcType="INTEGER" property="forgetPwdConfig" />
+    <result column="audit" jdbcType="INTEGER" property="audit" />
+    <result column="change_pwd_config" jdbcType="INTEGER" property="changePwdConfig" />
+    <result column="change_pwd_every_day" jdbcType="INTEGER" property="changePwdEveryDay" />
+    <result column="change_pwd_to_do_time" jdbcType="TIMESTAMP" property="changePwdToDoTime" />
+    <result column="change_pwd_rate" jdbcType="INTEGER" property="changePwdRate" />
+    <result column="login_test_count" jdbcType="INTEGER" property="loginTestCount" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.LoginConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <id column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="verify_code" jdbcType="INTEGER" property="verifyCode" />
+    <result column="remember_day" jdbcType="INTEGER" property="rememberDay" />
+    <result column="forget_pwd_config" jdbcType="INTEGER" property="forgetPwdConfig" />
+    <result column="audit" jdbcType="INTEGER" property="audit" />
+    <result column="change_pwd_config" jdbcType="INTEGER" property="changePwdConfig" />
+    <result column="change_pwd_every_day" jdbcType="INTEGER" property="changePwdEveryDay" />
+    <result column="change_pwd_to_do_time" jdbcType="TIMESTAMP" property="changePwdToDoTime" />
+    <result column="change_pwd_rate" jdbcType="INTEGER" property="changePwdRate" />
+    <result column="login_test_count" jdbcType="INTEGER" property="loginTestCount" />
+  </resultMap>
+</mapper>

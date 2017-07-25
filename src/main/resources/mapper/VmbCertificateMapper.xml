@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbCertificateMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbCertificate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="templateurl" jdbcType="VARCHAR" property="templateurl" />
+    <result column="issuer" jdbcType="CHAR" property="issuer" />
+    <result column="scoresourceid" jdbcType="INTEGER" property="scoresourceid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbCertificate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="templateurl" jdbcType="VARCHAR" property="templateurl" />
+    <result column="issuer" jdbcType="CHAR" property="issuer" />
+    <result column="scoresourceid" jdbcType="INTEGER" property="scoresourceid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbCertificate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="templateurl" jdbcType="VARCHAR" property="templateurl" />
+    <result column="issuer" jdbcType="CHAR" property="issuer" />
+    <result column="scoresourceid" jdbcType="INTEGER" property="scoresourceid" />
+  </resultMap>
+</mapper>

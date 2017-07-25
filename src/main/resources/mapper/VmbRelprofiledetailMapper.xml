@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbRelprofiledetailMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbRelprofiledetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="relprofiledetailid" jdbcType="INTEGER" property="relprofiledetailid" />
+    <result column="reltype" jdbcType="INTEGER" property="reltype" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="position" jdbcType="INTEGER" property="position" />
+    <result column="profiledetailid" jdbcType="INTEGER" property="profiledetailid" />
+    <result column="relobjectid" jdbcType="INTEGER" property="relobjectid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbRelprofiledetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="relprofiledetailid" jdbcType="INTEGER" property="relprofiledetailid" />
+    <result column="reltype" jdbcType="INTEGER" property="reltype" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="position" jdbcType="INTEGER" property="position" />
+    <result column="profiledetailid" jdbcType="INTEGER" property="profiledetailid" />
+    <result column="relobjectid" jdbcType="INTEGER" property="relobjectid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbRelprofiledetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="relprofiledetailid" jdbcType="INTEGER" property="relprofiledetailid" />
+    <result column="reltype" jdbcType="INTEGER" property="reltype" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="position" jdbcType="INTEGER" property="position" />
+    <result column="profiledetailid" jdbcType="INTEGER" property="profiledetailid" />
+    <result column="relobjectid" jdbcType="INTEGER" property="relobjectid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+  </resultMap>
+</mapper>

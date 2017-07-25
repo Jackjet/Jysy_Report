@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbDistribactivityMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbDistribactivity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribActivityId" jdbcType="INTEGER" property="distribactivityid" />
+    <result column="solutionId" jdbcType="INTEGER" property="solutionid" />
+    <result column="learningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="orgdistribId" jdbcType="INTEGER" property="orgdistribid" />
+    <result column="ownerId" jdbcType="INTEGER" property="ownerid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="activitycollegeid" jdbcType="INTEGER" property="activitycollegeid" />
+    <result column="activityenterpriseid" jdbcType="INTEGER" property="activityenterpriseid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbDistribactivity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribActivityId" jdbcType="INTEGER" property="distribactivityid" />
+    <result column="solutionId" jdbcType="INTEGER" property="solutionid" />
+    <result column="learningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="orgdistribId" jdbcType="INTEGER" property="orgdistribid" />
+    <result column="ownerId" jdbcType="INTEGER" property="ownerid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="activitycollegeid" jdbcType="INTEGER" property="activitycollegeid" />
+    <result column="activityenterpriseid" jdbcType="INTEGER" property="activityenterpriseid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbDistribactivity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribActivityId" jdbcType="INTEGER" property="distribactivityid" />
+    <result column="solutionId" jdbcType="INTEGER" property="solutionid" />
+    <result column="learningActivityId" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="orgdistribId" jdbcType="INTEGER" property="orgdistribid" />
+    <result column="ownerId" jdbcType="INTEGER" property="ownerid" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="activitycollegeid" jdbcType="INTEGER" property="activitycollegeid" />
+    <result column="activityenterpriseid" jdbcType="INTEGER" property="activityenterpriseid" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbVoteresultMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbVoteresult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="voteresultid" jdbcType="INTEGER" property="voteresultid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="voteitemid" jdbcType="INTEGER" property="voteitemid" />
+    <result column="votetime" jdbcType="TIMESTAMP" property="votetime" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="votesolutionid" jdbcType="INTEGER" property="votesolutionid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbVoteresult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="voteresultid" jdbcType="INTEGER" property="voteresultid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="voteitemid" jdbcType="INTEGER" property="voteitemid" />
+    <result column="votetime" jdbcType="TIMESTAMP" property="votetime" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="votesolutionid" jdbcType="INTEGER" property="votesolutionid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbVoteresult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="voteresultid" jdbcType="INTEGER" property="voteresultid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="voteitemid" jdbcType="INTEGER" property="voteitemid" />
+    <result column="votetime" jdbcType="TIMESTAMP" property="votetime" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="votesolutionid" jdbcType="INTEGER" property="votesolutionid" />
+    <result column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.ReplayLiveMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.ReplayLive">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="replayid" jdbcType="INTEGER" property="replayid" />
+    <result column="vid" jdbcType="VARCHAR" property="vid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="scheduleid" jdbcType="INTEGER" property="scheduleid" />
+    <result column="live_roomid" jdbcType="INTEGER" property="liveRoomid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.ReplayLive">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="replayid" jdbcType="INTEGER" property="replayid" />
+    <result column="vid" jdbcType="VARCHAR" property="vid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="scheduleid" jdbcType="INTEGER" property="scheduleid" />
+    <result column="live_roomid" jdbcType="INTEGER" property="liveRoomid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.ReplayLive">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="replayid" jdbcType="INTEGER" property="replayid" />
+    <result column="vid" jdbcType="VARCHAR" property="vid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="scheduleid" jdbcType="INTEGER" property="scheduleid" />
+    <result column="live_roomid" jdbcType="INTEGER" property="liveRoomid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+  </resultMap>
+</mapper>

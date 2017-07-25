@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.SfTokenLogMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.SfTokenLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="token_log_id" jdbcType="INTEGER" property="tokenLogId" />
+    <result column="error_code" jdbcType="VARCHAR" property="errorCode" />
+    <result column="error_msg" jdbcType="VARCHAR" property="errorMsg" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="token_id" jdbcType="INTEGER" property="tokenId" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="gets" jdbcType="VARCHAR" property="gets" />
+    <result column="posts" jdbcType="VARCHAR" property="posts" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.SfTokenLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="token_log_id" jdbcType="INTEGER" property="tokenLogId" />
+    <result column="error_code" jdbcType="VARCHAR" property="errorCode" />
+    <result column="error_msg" jdbcType="VARCHAR" property="errorMsg" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="token_id" jdbcType="INTEGER" property="tokenId" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="gets" jdbcType="VARCHAR" property="gets" />
+    <result column="posts" jdbcType="VARCHAR" property="posts" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.SfTokenLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="token_log_id" jdbcType="INTEGER" property="tokenLogId" />
+    <result column="error_code" jdbcType="VARCHAR" property="errorCode" />
+    <result column="error_msg" jdbcType="VARCHAR" property="errorMsg" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="token_id" jdbcType="INTEGER" property="tokenId" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="gets" jdbcType="VARCHAR" property="gets" />
+    <result column="posts" jdbcType="VARCHAR" property="posts" />
+  </resultMap>
+</mapper>

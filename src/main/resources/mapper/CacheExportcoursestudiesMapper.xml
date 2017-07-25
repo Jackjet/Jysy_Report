@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.CacheExportcoursestudiesMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.CacheExportcoursestudies">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="public" jdbcType="VARCHAR" property="public" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+    <result column="studycount" jdbcType="INTEGER" property="studycount" />
+    <result column="distribcount" jdbcType="INTEGER" property="distribcount" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheExportcoursestudies">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="public" jdbcType="VARCHAR" property="public" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+    <result column="studycount" jdbcType="INTEGER" property="studycount" />
+    <result column="distribcount" jdbcType="INTEGER" property="distribcount" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheExportcoursestudies">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="public" jdbcType="VARCHAR" property="public" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+    <result column="studycount" jdbcType="INTEGER" property="studycount" />
+    <result column="distribcount" jdbcType="INTEGER" property="distribcount" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+  </resultMap>
+</mapper>

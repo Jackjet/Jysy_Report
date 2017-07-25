@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbExamconfigMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbExamconfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="configid" jdbcType="INTEGER" property="configid" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="sectionid" jdbcType="INTEGER" property="sectionid" />
+    <result column="paperid" jdbcType="INTEGER" property="paperid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="createaccountid" jdbcType="INTEGER" property="createaccountid" />
+    <result column="examtime" jdbcType="INTEGER" property="examtime" />
+    <result column="passscore" jdbcType="INTEGER" property="passscore" />
+    <result column="totalscore" jdbcType="INTEGER" property="totalscore" />
+    <result column="retry_exam" jdbcType="INTEGER" property="retryExam" />
+    <result column="repeatcount" jdbcType="INTEGER" property="repeatcount" />
+    <result column="after_show_answer" jdbcType="INTEGER" property="afterShowAnswer" />
+    <result column="show_answer" jdbcType="INTEGER" property="showAnswer" />
+    <result column="exam_time" jdbcType="INTEGER" property="examTime" />
+    <result column="show_explain" jdbcType="INTEGER" property="showExplain" />
+    <result column="after_show_explain" jdbcType="INTEGER" property="afterShowExplain" />
+    <result column="view_result" jdbcType="INTEGER" property="viewResult" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbExamconfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="configid" jdbcType="INTEGER" property="configid" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="sectionid" jdbcType="INTEGER" property="sectionid" />
+    <result column="paperid" jdbcType="INTEGER" property="paperid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="createaccountid" jdbcType="INTEGER" property="createaccountid" />
+    <result column="examtime" jdbcType="INTEGER" property="examtime" />
+    <result column="passscore" jdbcType="INTEGER" property="passscore" />
+    <result column="totalscore" jdbcType="INTEGER" property="totalscore" />
+    <result column="retry_exam" jdbcType="INTEGER" property="retryExam" />
+    <result column="repeatcount" jdbcType="INTEGER" property="repeatcount" />
+    <result column="after_show_answer" jdbcType="INTEGER" property="afterShowAnswer" />
+    <result column="show_answer" jdbcType="INTEGER" property="showAnswer" />
+    <result column="exam_time" jdbcType="INTEGER" property="examTime" />
+    <result column="show_explain" jdbcType="INTEGER" property="showExplain" />
+    <result column="after_show_explain" jdbcType="INTEGER" property="afterShowExplain" />
+    <result column="view_result" jdbcType="INTEGER" property="viewResult" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbExamconfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="configid" jdbcType="INTEGER" property="configid" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="sectionid" jdbcType="INTEGER" property="sectionid" />
+    <result column="paperid" jdbcType="INTEGER" property="paperid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="createaccountid" jdbcType="INTEGER" property="createaccountid" />
+    <result column="examtime" jdbcType="INTEGER" property="examtime" />
+    <result column="passscore" jdbcType="INTEGER" property="passscore" />
+    <result column="totalscore" jdbcType="INTEGER" property="totalscore" />
+    <result column="retry_exam" jdbcType="INTEGER" property="retryExam" />
+    <result column="repeatcount" jdbcType="INTEGER" property="repeatcount" />
+    <result column="after_show_answer" jdbcType="INTEGER" property="afterShowAnswer" />
+    <result column="show_answer" jdbcType="INTEGER" property="showAnswer" />
+    <result column="exam_time" jdbcType="INTEGER" property="examTime" />
+    <result column="show_explain" jdbcType="INTEGER" property="showExplain" />
+    <result column="after_show_explain" jdbcType="INTEGER" property="afterShowExplain" />
+    <result column="view_result" jdbcType="INTEGER" property="viewResult" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbDistribmemberMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbDistribmember">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribMemberId" jdbcType="INTEGER" property="distribmemberid" />
+    <result column="solutionId" jdbcType="INTEGER" property="solutionid" />
+    <result column="memberId" jdbcType="INTEGER" property="memberid" />
+    <result column="accountId" jdbcType="INTEGER" property="accountid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbDistribmember">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribMemberId" jdbcType="INTEGER" property="distribmemberid" />
+    <result column="solutionId" jdbcType="INTEGER" property="solutionid" />
+    <result column="memberId" jdbcType="INTEGER" property="memberid" />
+    <result column="accountId" jdbcType="INTEGER" property="accountid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbDistribmember">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribMemberId" jdbcType="INTEGER" property="distribmemberid" />
+    <result column="solutionId" jdbcType="INTEGER" property="solutionid" />
+    <result column="memberId" jdbcType="INTEGER" property="memberid" />
+    <result column="accountId" jdbcType="INTEGER" property="accountid" />
+  </resultMap>
+</mapper>

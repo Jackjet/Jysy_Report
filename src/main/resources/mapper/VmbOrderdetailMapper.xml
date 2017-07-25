@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbOrderdetailMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbOrderdetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="detailid" jdbcType="INTEGER" property="detailid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbOrderdetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="detailid" jdbcType="INTEGER" property="detailid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbOrderdetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="detailid" jdbcType="INTEGER" property="detailid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+</mapper>

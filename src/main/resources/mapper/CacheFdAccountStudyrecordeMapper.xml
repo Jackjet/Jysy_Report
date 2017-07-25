@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.CacheFdAccountStudyrecordeMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.CacheFdAccountStudyrecorde">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="unit_type1" jdbcType="VARCHAR" property="unitType1" />
+    <result column="unit_type2" jdbcType="VARCHAR" property="unitType2" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="register_ways" jdbcType="VARCHAR" property="registerWays" />
+    <result column="regist_time" jdbcType="VARCHAR" property="registTime" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_ways" jdbcType="VARCHAR" property="payWays" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="fapiao" jdbcType="VARCHAR" property="fapiao" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="ok" jdbcType="VARCHAR" property="ok" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheFdAccountStudyrecorde">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="unit_type1" jdbcType="VARCHAR" property="unitType1" />
+    <result column="unit_type2" jdbcType="VARCHAR" property="unitType2" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="register_ways" jdbcType="VARCHAR" property="registerWays" />
+    <result column="regist_time" jdbcType="VARCHAR" property="registTime" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_ways" jdbcType="VARCHAR" property="payWays" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="fapiao" jdbcType="VARCHAR" property="fapiao" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="ok" jdbcType="VARCHAR" property="ok" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheFdAccountStudyrecorde">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="unit_type1" jdbcType="VARCHAR" property="unitType1" />
+    <result column="unit_type2" jdbcType="VARCHAR" property="unitType2" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="register_ways" jdbcType="VARCHAR" property="registerWays" />
+    <result column="regist_time" jdbcType="VARCHAR" property="registTime" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_ways" jdbcType="VARCHAR" property="payWays" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="fapiao" jdbcType="VARCHAR" property="fapiao" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="ok" jdbcType="VARCHAR" property="ok" />
+  </resultMap>
+</mapper>

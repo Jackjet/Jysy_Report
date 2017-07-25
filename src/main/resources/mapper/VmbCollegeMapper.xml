@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbCollegeMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbCollege">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="styleId" jdbcType="INTEGER" property="styleid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="bannerurl" jdbcType="VARCHAR" property="bannerurl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="ispublic" jdbcType="INTEGER" property="ispublic" />
+    <result column="admincount" jdbcType="INTEGER" property="admincount" />
+    <result column="required_login" jdbcType="INTEGER" property="requiredLogin" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="default_orgid" jdbcType="INTEGER" property="defaultOrgid" />
+    <result column="beian" jdbcType="VARCHAR" property="beian" />
+    <result column="originalid" jdbcType="INTEGER" property="originalid" />
+    <result column="banner_color" jdbcType="VARCHAR" property="bannerColor" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbCollege">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="styleId" jdbcType="INTEGER" property="styleid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="bannerurl" jdbcType="VARCHAR" property="bannerurl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="ispublic" jdbcType="INTEGER" property="ispublic" />
+    <result column="admincount" jdbcType="INTEGER" property="admincount" />
+    <result column="required_login" jdbcType="INTEGER" property="requiredLogin" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="default_orgid" jdbcType="INTEGER" property="defaultOrgid" />
+    <result column="beian" jdbcType="VARCHAR" property="beian" />
+    <result column="originalid" jdbcType="INTEGER" property="originalid" />
+    <result column="banner_color" jdbcType="VARCHAR" property="bannerColor" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbCollege">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="collegeId" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseId" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="styleId" jdbcType="INTEGER" property="styleid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="bannerurl" jdbcType="VARCHAR" property="bannerurl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="ispublic" jdbcType="INTEGER" property="ispublic" />
+    <result column="admincount" jdbcType="INTEGER" property="admincount" />
+    <result column="required_login" jdbcType="INTEGER" property="requiredLogin" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="default_orgid" jdbcType="INTEGER" property="defaultOrgid" />
+    <result column="beian" jdbcType="VARCHAR" property="beian" />
+    <result column="originalid" jdbcType="INTEGER" property="originalid" />
+    <result column="banner_color" jdbcType="VARCHAR" property="bannerColor" />
+  </resultMap>
+</mapper>

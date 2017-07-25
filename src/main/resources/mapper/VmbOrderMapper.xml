@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbOrderMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="order_states" jdbcType="INTEGER" property="orderStates" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="ending" jdbcType="VARCHAR" property="ending" />
+    <result column="flow_number" jdbcType="VARCHAR" property="flowNumber" />
+    <result column="pay_ways" jdbcType="INTEGER" property="payWays" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="operation_mode" jdbcType="VARCHAR" property="operationMode" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="order_states" jdbcType="INTEGER" property="orderStates" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="ending" jdbcType="VARCHAR" property="ending" />
+    <result column="flow_number" jdbcType="VARCHAR" property="flowNumber" />
+    <result column="pay_ways" jdbcType="INTEGER" property="payWays" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="operation_mode" jdbcType="VARCHAR" property="operationMode" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="order_states" jdbcType="INTEGER" property="orderStates" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="ending" jdbcType="VARCHAR" property="ending" />
+    <result column="flow_number" jdbcType="VARCHAR" property="flowNumber" />
+    <result column="pay_ways" jdbcType="INTEGER" property="payWays" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="operation_mode" jdbcType="VARCHAR" property="operationMode" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbApproveMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbApprove">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="checkid" jdbcType="INTEGER" property="checkid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="destaccountid" jdbcType="INTEGER" property="destaccountid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbApprove">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="checkid" jdbcType="INTEGER" property="checkid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="destaccountid" jdbcType="INTEGER" property="destaccountid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbApprove">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="checkid" jdbcType="INTEGER" property="checkid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="destaccountid" jdbcType="INTEGER" property="destaccountid" />
+  </resultMap>
+</mapper>

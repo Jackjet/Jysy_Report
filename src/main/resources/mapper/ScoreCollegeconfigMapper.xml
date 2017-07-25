@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.ScoreCollegeconfigMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.ScoreCollegeconfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="configid" jdbcType="INTEGER" property="configid" />
+    <result column="course" jdbcType="INTEGER" property="course" />
+    <result column="exam" jdbcType="INTEGER" property="exam" />
+    <result column="info" jdbcType="INTEGER" property="info" />
+    <result column="post" jdbcType="INTEGER" property="post" />
+    <result column="reply" jdbcType="INTEGER" property="reply" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="activityid" jdbcType="INTEGER" property="activityid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.ScoreCollegeconfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="configid" jdbcType="INTEGER" property="configid" />
+    <result column="course" jdbcType="INTEGER" property="course" />
+    <result column="exam" jdbcType="INTEGER" property="exam" />
+    <result column="info" jdbcType="INTEGER" property="info" />
+    <result column="post" jdbcType="INTEGER" property="post" />
+    <result column="reply" jdbcType="INTEGER" property="reply" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="activityid" jdbcType="INTEGER" property="activityid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.ScoreCollegeconfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="configid" jdbcType="INTEGER" property="configid" />
+    <result column="course" jdbcType="INTEGER" property="course" />
+    <result column="exam" jdbcType="INTEGER" property="exam" />
+    <result column="info" jdbcType="INTEGER" property="info" />
+    <result column="post" jdbcType="INTEGER" property="post" />
+    <result column="reply" jdbcType="INTEGER" property="reply" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="activityid" jdbcType="INTEGER" property="activityid" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.WechatConfigMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.WechatConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="svc_appid" jdbcType="VARCHAR" property="svcAppid" />
+    <result column="svc_appsecret" jdbcType="VARCHAR" property="svcAppsecret" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.WechatConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="svc_appid" jdbcType="VARCHAR" property="svcAppid" />
+    <result column="svc_appsecret" jdbcType="VARCHAR" property="svcAppsecret" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.WechatConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="svc_appid" jdbcType="VARCHAR" property="svcAppid" />
+    <result column="svc_appsecret" jdbcType="VARCHAR" property="svcAppsecret" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+</mapper>

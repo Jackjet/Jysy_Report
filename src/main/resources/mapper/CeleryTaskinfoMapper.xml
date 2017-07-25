@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.CeleryTaskinfoMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.CeleryTaskinfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="taskid" jdbcType="INTEGER" property="taskid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="result_file" jdbcType="VARCHAR" property="resultFile" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="import_file" jdbcType="VARCHAR" property="importFile" />
+    <result column="result_states" jdbcType="INTEGER" property="resultStates" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="import_description" jdbcType="LONGVARCHAR" property="importDescription" />
+    <result column="import_params" jdbcType="LONGVARCHAR" property="importParams" />
+    <result column="result_description" jdbcType="LONGVARCHAR" property="resultDescription" />
+    <result column="result_error_stack" jdbcType="LONGVARCHAR" property="resultErrorStack" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CeleryTaskinfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="taskid" jdbcType="INTEGER" property="taskid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="result_file" jdbcType="VARCHAR" property="resultFile" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="import_file" jdbcType="VARCHAR" property="importFile" />
+    <result column="result_states" jdbcType="INTEGER" property="resultStates" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="import_description" jdbcType="LONGVARCHAR" property="importDescription" />
+    <result column="import_params" jdbcType="LONGVARCHAR" property="importParams" />
+    <result column="result_description" jdbcType="LONGVARCHAR" property="resultDescription" />
+    <result column="result_error_stack" jdbcType="LONGVARCHAR" property="resultErrorStack" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CeleryTaskinfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="taskid" jdbcType="INTEGER" property="taskid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="states" jdbcType="INTEGER" property="states" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="result_file" jdbcType="VARCHAR" property="resultFile" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="import_file" jdbcType="VARCHAR" property="importFile" />
+    <result column="result_states" jdbcType="INTEGER" property="resultStates" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="import_description" jdbcType="LONGVARCHAR" property="importDescription" />
+    <result column="import_params" jdbcType="LONGVARCHAR" property="importParams" />
+    <result column="result_description" jdbcType="LONGVARCHAR" property="resultDescription" />
+    <result column="result_error_stack" jdbcType="LONGVARCHAR" property="resultErrorStack" />
+  </resultMap>
+</mapper>

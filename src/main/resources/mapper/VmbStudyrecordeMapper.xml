@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbStudyrecordeMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbStudyrecorde">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="recordeId" jdbcType="BIGINT" property="recordeid" />
+    <result column="studyId" jdbcType="INTEGER" property="studyid" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="chapterid" jdbcType="INTEGER" property="chapterid" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="exitstates" jdbcType="INTEGER" property="exitstates" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="overed" jdbcType="INTEGER" property="overed" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="progress" jdbcType="INTEGER" property="progress" />
+    <result column="startduration" jdbcType="INTEGER" property="startduration" />
+    <result column="physicendtime" jdbcType="TIMESTAMP" property="physicendtime" />
+    <result column="terminal" jdbcType="VARCHAR" property="terminal" />
+    <result column="ending" jdbcType="VARCHAR" property="ending" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="sucessfuled" jdbcType="INTEGER" property="sucessfuled" />
+    <result column="sectionsid" jdbcType="INTEGER" property="sectionsid" />
+    <result column="recordingmode" jdbcType="INTEGER" property="recordingmode" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="originalrecordeid" jdbcType="INTEGER" property="originalrecordeid" />
+    <result column="lastupdatetime" jdbcType="TIMESTAMP" property="lastupdatetime" />
+    <result column="createaccountid" jdbcType="INTEGER" property="createaccountid" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="lastupdateaccountid" jdbcType="INTEGER" property="lastupdateaccountid" />
+    <result column="recordetype" jdbcType="INTEGER" property="recordetype" />
+    <result column="certificate_code" jdbcType="VARCHAR" property="certificateCode" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbStudyrecorde">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="recordeId" jdbcType="BIGINT" property="recordeid" />
+    <result column="studyId" jdbcType="INTEGER" property="studyid" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="chapterid" jdbcType="INTEGER" property="chapterid" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="exitstates" jdbcType="INTEGER" property="exitstates" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="overed" jdbcType="INTEGER" property="overed" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="progress" jdbcType="INTEGER" property="progress" />
+    <result column="startduration" jdbcType="INTEGER" property="startduration" />
+    <result column="physicendtime" jdbcType="TIMESTAMP" property="physicendtime" />
+    <result column="terminal" jdbcType="VARCHAR" property="terminal" />
+    <result column="ending" jdbcType="VARCHAR" property="ending" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="sucessfuled" jdbcType="INTEGER" property="sucessfuled" />
+    <result column="sectionsid" jdbcType="INTEGER" property="sectionsid" />
+    <result column="recordingmode" jdbcType="INTEGER" property="recordingmode" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="originalrecordeid" jdbcType="INTEGER" property="originalrecordeid" />
+    <result column="lastupdatetime" jdbcType="TIMESTAMP" property="lastupdatetime" />
+    <result column="createaccountid" jdbcType="INTEGER" property="createaccountid" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="lastupdateaccountid" jdbcType="INTEGER" property="lastupdateaccountid" />
+    <result column="recordetype" jdbcType="INTEGER" property="recordetype" />
+    <result column="certificate_code" jdbcType="VARCHAR" property="certificateCode" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbStudyrecorde">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="recordeId" jdbcType="BIGINT" property="recordeid" />
+    <result column="studyId" jdbcType="INTEGER" property="studyid" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="chapterid" jdbcType="INTEGER" property="chapterid" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="exitstates" jdbcType="INTEGER" property="exitstates" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="overed" jdbcType="INTEGER" property="overed" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="accountid" jdbcType="INTEGER" property="accountid" />
+    <result column="progress" jdbcType="INTEGER" property="progress" />
+    <result column="startduration" jdbcType="INTEGER" property="startduration" />
+    <result column="physicendtime" jdbcType="TIMESTAMP" property="physicendtime" />
+    <result column="terminal" jdbcType="VARCHAR" property="terminal" />
+    <result column="ending" jdbcType="VARCHAR" property="ending" />
+    <result column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="sucessfuled" jdbcType="INTEGER" property="sucessfuled" />
+    <result column="sectionsid" jdbcType="INTEGER" property="sectionsid" />
+    <result column="recordingmode" jdbcType="INTEGER" property="recordingmode" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="originalrecordeid" jdbcType="INTEGER" property="originalrecordeid" />
+    <result column="lastupdatetime" jdbcType="TIMESTAMP" property="lastupdatetime" />
+    <result column="createaccountid" jdbcType="INTEGER" property="createaccountid" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="lastupdateaccountid" jdbcType="INTEGER" property="lastupdateaccountid" />
+    <result column="recordetype" jdbcType="INTEGER" property="recordetype" />
+    <result column="certificate_code" jdbcType="VARCHAR" property="certificateCode" />
+  </resultMap>
+</mapper>

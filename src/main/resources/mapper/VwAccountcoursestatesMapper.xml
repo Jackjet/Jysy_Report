@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VwAccountcoursestatesMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VwAccountcoursestates">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="learningactivityid" jdbcType="TINYINT" property="learningactivityid" />
+    <result column="accountid" jdbcType="TINYINT" property="accountid" />
+    <result column="overed" jdbcType="TINYINT" property="overed" />
+    <result column="licount" jdbcType="TINYINT" property="licount" />
+    <result column="chaptercount" jdbcType="TINYINT" property="chaptercount" />
+    <result column="sucessfuled" jdbcType="TINYINT" property="sucessfuled" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VwAccountcoursestates">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="learningactivityid" jdbcType="TINYINT" property="learningactivityid" />
+    <result column="accountid" jdbcType="TINYINT" property="accountid" />
+    <result column="overed" jdbcType="TINYINT" property="overed" />
+    <result column="licount" jdbcType="TINYINT" property="licount" />
+    <result column="chaptercount" jdbcType="TINYINT" property="chaptercount" />
+    <result column="sucessfuled" jdbcType="TINYINT" property="sucessfuled" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VwAccountcoursestates">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="learningactivityid" jdbcType="TINYINT" property="learningactivityid" />
+    <result column="accountid" jdbcType="TINYINT" property="accountid" />
+    <result column="overed" jdbcType="TINYINT" property="overed" />
+    <result column="licount" jdbcType="TINYINT" property="licount" />
+    <result column="chaptercount" jdbcType="TINYINT" property="chaptercount" />
+    <result column="sucessfuled" jdbcType="TINYINT" property="sucessfuled" />
+  </resultMap>
+</mapper>

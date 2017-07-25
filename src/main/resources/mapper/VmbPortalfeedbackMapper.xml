@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbPortalfeedbackMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbPortalfeedback">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="portalfeedbackId" jdbcType="INTEGER" property="portalfeedbackid" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="entname" jdbcType="VARCHAR" property="entname" />
+    <result column="entsite" jdbcType="VARCHAR" property="entsite" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="ipaddress" jdbcType="VARCHAR" property="ipaddress" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbPortalfeedback">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="portalfeedbackId" jdbcType="INTEGER" property="portalfeedbackid" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="entname" jdbcType="VARCHAR" property="entname" />
+    <result column="entsite" jdbcType="VARCHAR" property="entsite" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="ipaddress" jdbcType="VARCHAR" property="ipaddress" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbPortalfeedback">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="portalfeedbackId" jdbcType="INTEGER" property="portalfeedbackid" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="entname" jdbcType="VARCHAR" property="entname" />
+    <result column="entsite" jdbcType="VARCHAR" property="entsite" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="ipaddress" jdbcType="VARCHAR" property="ipaddress" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+</mapper>

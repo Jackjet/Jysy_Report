@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbStyleMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbStyle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="styleId" jdbcType="INTEGER" property="styleid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbStyle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="styleId" jdbcType="INTEGER" property="styleid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbStyle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="styleId" jdbcType="INTEGER" property="styleid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+</mapper>

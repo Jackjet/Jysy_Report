@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbLearninginformationMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbLearninginformation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningInformationId" jdbcType="INTEGER" property="learninginformationid" />
+    <result column="learningScheduleId" jdbcType="INTEGER" property="learningscheduleid" />
+    <result column="learningInfoPackId" jdbcType="INTEGER" property="learninginfopackid" />
+    <result column="informationId" jdbcType="INTEGER" property="informationid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="infotype" jdbcType="INTEGER" property="infotype" />
+    <result column="videourl" jdbcType="VARCHAR" property="videourl" />
+    <result column="recordId" jdbcType="INTEGER" property="recordid" />
+    <result column="fileurl" jdbcType="VARCHAR" property="fileurl" />
+    <result column="redirecturl" jdbcType="VARCHAR" property="redirecturl" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="orginalid" jdbcType="INTEGER" property="orginalid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="free" jdbcType="BIT" property="free" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="autoplay" jdbcType="INTEGER" property="autoplay" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbLearninginformation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningInformationId" jdbcType="INTEGER" property="learninginformationid" />
+    <result column="learningScheduleId" jdbcType="INTEGER" property="learningscheduleid" />
+    <result column="learningInfoPackId" jdbcType="INTEGER" property="learninginfopackid" />
+    <result column="informationId" jdbcType="INTEGER" property="informationid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="infotype" jdbcType="INTEGER" property="infotype" />
+    <result column="videourl" jdbcType="VARCHAR" property="videourl" />
+    <result column="recordId" jdbcType="INTEGER" property="recordid" />
+    <result column="fileurl" jdbcType="VARCHAR" property="fileurl" />
+    <result column="redirecturl" jdbcType="VARCHAR" property="redirecturl" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="orginalid" jdbcType="INTEGER" property="orginalid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="free" jdbcType="BIT" property="free" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="autoplay" jdbcType="INTEGER" property="autoplay" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbLearninginformation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningInformationId" jdbcType="INTEGER" property="learninginformationid" />
+    <result column="learningScheduleId" jdbcType="INTEGER" property="learningscheduleid" />
+    <result column="learningInfoPackId" jdbcType="INTEGER" property="learninginfopackid" />
+    <result column="informationId" jdbcType="INTEGER" property="informationid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="infotype" jdbcType="INTEGER" property="infotype" />
+    <result column="videourl" jdbcType="VARCHAR" property="videourl" />
+    <result column="recordId" jdbcType="INTEGER" property="recordid" />
+    <result column="fileurl" jdbcType="VARCHAR" property="fileurl" />
+    <result column="redirecturl" jdbcType="VARCHAR" property="redirecturl" />
+    <result column="orderindex" jdbcType="INTEGER" property="orderindex" />
+    <result column="logourl" jdbcType="VARCHAR" property="logourl" />
+    <result column="orginalid" jdbcType="INTEGER" property="orginalid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="free" jdbcType="BIT" property="free" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="autoplay" jdbcType="INTEGER" property="autoplay" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+</mapper>

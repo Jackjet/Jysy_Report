@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.RptEnterprisestudyMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.RptEnterprisestudy">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="rptid" jdbcType="INTEGER" property="rptid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="entname" jdbcType="VARCHAR" property="entname" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="coursename" jdbcType="VARCHAR" property="coursename" />
+    <result column="acttype" jdbcType="VARCHAR" property="acttype" />
+    <result column="chaptercount" jdbcType="INTEGER" property="chaptercount" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.RptEnterprisestudy">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="rptid" jdbcType="INTEGER" property="rptid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="entname" jdbcType="VARCHAR" property="entname" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="coursename" jdbcType="VARCHAR" property="coursename" />
+    <result column="acttype" jdbcType="VARCHAR" property="acttype" />
+    <result column="chaptercount" jdbcType="INTEGER" property="chaptercount" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.RptEnterprisestudy">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="rptid" jdbcType="INTEGER" property="rptid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="entname" jdbcType="VARCHAR" property="entname" />
+    <result column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <result column="coursename" jdbcType="VARCHAR" property="coursename" />
+    <result column="acttype" jdbcType="VARCHAR" property="acttype" />
+    <result column="chaptercount" jdbcType="INTEGER" property="chaptercount" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.CacheCollegeactivitystaticsTmpMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.CacheCollegeactivitystaticsTmp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <id column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+    <result column="studycount" jdbcType="INTEGER" property="studycount" />
+    <result column="studysecond" jdbcType="INTEGER" property="studysecond" />
+    <result column="averagesecond" jdbcType="INTEGER" property="averagesecond" />
+    <result column="favoritecount" jdbcType="INTEGER" property="favoritecount" />
+    <result column="grade" jdbcType="DECIMAL" property="grade" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheCollegeactivitystaticsTmp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <id column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+    <result column="studycount" jdbcType="INTEGER" property="studycount" />
+    <result column="studysecond" jdbcType="INTEGER" property="studysecond" />
+    <result column="averagesecond" jdbcType="INTEGER" property="averagesecond" />
+    <result column="favoritecount" jdbcType="INTEGER" property="favoritecount" />
+    <result column="grade" jdbcType="DECIMAL" property="grade" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.CacheCollegeactivitystaticsTmp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="learningactivityid" jdbcType="INTEGER" property="learningactivityid" />
+    <id column="collegeid" jdbcType="INTEGER" property="collegeid" />
+    <result column="enterpriseid" jdbcType="INTEGER" property="enterpriseid" />
+    <result column="accountcount" jdbcType="INTEGER" property="accountcount" />
+    <result column="studycount" jdbcType="INTEGER" property="studycount" />
+    <result column="studysecond" jdbcType="INTEGER" property="studysecond" />
+    <result column="averagesecond" jdbcType="INTEGER" property="averagesecond" />
+    <result column="favoritecount" jdbcType="INTEGER" property="favoritecount" />
+    <result column="grade" jdbcType="DECIMAL" property="grade" />
+  </resultMap>
+</mapper>

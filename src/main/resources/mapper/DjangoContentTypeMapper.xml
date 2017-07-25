@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.DjangoContentTypeMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.DjangoContentType">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="app_label" jdbcType="VARCHAR" property="appLabel" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.DjangoContentType">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="app_label" jdbcType="VARCHAR" property="appLabel" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.DjangoContentType">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="app_label" jdbcType="VARCHAR" property="appLabel" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+  </resultMap>
+</mapper>

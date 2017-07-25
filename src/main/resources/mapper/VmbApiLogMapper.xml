@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coderss.jysy.mapper.VmbApiLogMapper">
+  <resultMap id="BaseResultMap" type="cn.coderss.jysy.domain.VmbApiLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="funccode" jdbcType="VARCHAR" property="funccode" />
+    <result column="funcname" jdbcType="VARCHAR" property="funcname" />
+    <result column="funcurl" jdbcType="VARCHAR" property="funcurl" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="request" jdbcType="LONGVARCHAR" property="request" />
+    <result column="result" jdbcType="LONGVARCHAR" property="result" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbApiLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="funccode" jdbcType="VARCHAR" property="funccode" />
+    <result column="funcname" jdbcType="VARCHAR" property="funcname" />
+    <result column="funcurl" jdbcType="VARCHAR" property="funcurl" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="request" jdbcType="LONGVARCHAR" property="request" />
+    <result column="result" jdbcType="LONGVARCHAR" property="result" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="cn.coderss.shop.domain.VmbApiLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="funccode" jdbcType="VARCHAR" property="funccode" />
+    <result column="funcname" jdbcType="VARCHAR" property="funcname" />
+    <result column="funcurl" jdbcType="VARCHAR" property="funcurl" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="request" jdbcType="LONGVARCHAR" property="request" />
+    <result column="result" jdbcType="LONGVARCHAR" property="result" />
+  </resultMap>
+</mapper>
