@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -109,7 +110,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     }
 
     @Override
-    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData) throws IOException {
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData,String region,String statistics,
+                                  String sign_ways,String pay_ways,String startDate,String endDate) throws IOException {
         head_title.add("省");
         head_title.add("市");
         head_title.add("县");
@@ -134,6 +136,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         head_title.add("证书获得时间");
         head_title.add("证书编码");
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("tmp");
         XSSFRow headRow = sheet.createRow(0);
@@ -141,8 +145,41 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             headRow.createCell(j).setCellValue(head_title.get(j));
         }
         for (int i=0; i<onlineData.size(); i++){
-            XSSFRow row = sheet.createRow(i+1);
             LinkedHashMap<String,String> map = onlineData.get(i);
+            XSSFRow row = null;
+            //省份统计限制
+            if(!map.get("province").equals(region) && !region.equals("全国")){
+                continue;
+            }
+            //注册方式限制
+            if(!map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
+                continue;
+            }
+            //支付方式限制
+            if(!map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
+                continue;
+            }
+            //如果是统计方式为注册用户或者支付用户
+            Date pay_time = new Date(map.get("pay_time"));
+            Date createtime = new Date(map.get("createtime"));
+            try {
+                if(statistics.equals("支付用户") && (
+                        !(pay_time.getTime() < dateFormat.parse(endDate).getTime())
+                        || !(pay_time.getTime() > dateFormat.parse(startDate).getTime())
+                )
+                        ){
+                    continue;
+                }
+                else if(statistics.equals("注册用户") && (
+                        !(createtime.getTime() < dateFormat.parse(endDate).getTime())
+                        || !(createtime.getTime() > dateFormat.parse(startDate).getTime())
+                        )){
+                    continue;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            row = sheet.createRow(i+1);
             int index = 0;
             for (Map.Entry<String,String> m : map.entrySet()){
                 row.createCell(index++).setCellValue(m.getValue());
@@ -242,7 +279,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                     }
                 }
                 try {
-                    logger.info("文件地址:"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
+                    logger.info("文件地址:"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx -- "+provinceName);
                 } catch (PinyinException e) {
                     e.printStackTrace();
                 }

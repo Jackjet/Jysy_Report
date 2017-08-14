@@ -18,7 +18,8 @@ import java.util.List;
  */
 public interface ReportDetailService {
     public void readExcel(String filename) throws IOException;
-    public String readOnlineExcel(List<LinkedHashMap<String, String>> data) throws IOException;
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> data,String region,String statistics,
+                                  String sign_ways,String pay_ways, String startDate,String endDate) throws IOException;
     public void writeExcel(String filepath) throws IOException;
     public String doExcel(MultipartFile file) throws UnsupportedEncodingException;
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,10 +36,10 @@ public class JysyController {
     JdbcTemplate jdbcTemplate;
 
     @RequestMapping("/detail")
-    public String detail(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("Y-MM-d");
-        String endDateStr = dateFormat.format(new Date());
-        String startDateStr = "2017-06-25";
+    public String detail(String start_date,String end_date, String region, String statistics,
+                         String sign_ways, String pay_ways, String startDate,String endDate){
+        String endDateStr = end_date;
+        String startDateStr = start_date;
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
                 "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,concat(\"'\",TT.`name`) as `name`,TT.`fullname` as `fullname`,\n" +
                 "TT.`sex` as `sex`,concat(\"'\",TT.`birthday` )as `birthday`,concat(\"'\",TT.`mail`) as `mail`,\n" +
@@ -242,7 +243,8 @@ public class JysyController {
             }};
         });
         try {
-            return service.readOnlineExcel(data);
+            return service.readOnlineExcel(data, region, statistics,
+                    sign_ways, pay_ways, startDate, endDate);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -251,7 +253,7 @@ public class JysyController {
 
 
     @RequestMapping("/province")
-    public String province(){
+    public String province(String start_date,String end_date, String region, String people, String sign_ways, String pay_ways){
         String endDateStr = "2017-08-07";
         String startDateStr = "2017-06-25";
         String execSql = "INSERT INTO `tempdata`.`tmp_jysy_all`(`province_name`,\n" +
@@ -1053,5 +1055,13 @@ public class JysyController {
             e.printStackTrace();
         }
         return "ok";
+    }
+
+
+
+    @RequestMapping("/exec")
+    @ResponseBody
+    public String exec(String start_date,String end_date, String region, String statistics, String people, String sign_ways, String pay_ways){
+        return start_date + end_date + region + people + sign_ways + pay_ways;
     }
 }
