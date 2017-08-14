@@ -1026,7 +1026,7 @@ public class JysyController {
                 "        )\n" +
                 "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\'"+endDateStr+" 02:59:59\'\n" +
                 "FROM (\n" +
-                regionSql
+                regionSql+
                 ")T\n" +
                 "ORDER BY T.`province_id` ,T.`city_id`,T.`county_id`;";
 
