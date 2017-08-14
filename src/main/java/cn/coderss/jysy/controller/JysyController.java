@@ -36,8 +36,10 @@ public class JysyController {
     JdbcTemplate jdbcTemplate;
 
     @RequestMapping("/detail")
-    public String detail(String start_date,String end_date, String region, String statistics,
-                         String sign_ways, String pay_ways, String startDate,String endDate){
+    public String detail(String start_date,String end_date,
+                         String region, String regionId,
+                         String statistics, String sign_ways,
+                         String pay_ways, String startDate,String endDate){
         String endDateStr = end_date;
         String startDateStr = start_date;
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
@@ -253,7 +255,54 @@ public class JysyController {
 
 
     @RequestMapping("/province")
-    public String province(String start_date,String end_date, String region, String people, String sign_ways, String pay_ways){
+    public String province(String start_date,String end_date,
+                           String region, String regionId,
+                           String people, String sign_ways, String pay_ways){
+        String regionSql = "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
+                "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
+                "    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n" +
+                "    FROM `vmb_region`  as `province`\n" +
+                "    INNER JOIN `vmb_region`  as `city`\n" +
+                "    on `city`.`parent_id`  = `province`.`regionid` \n" +
+                "    INNER JOIN `vmb_region`  as `county`\n" +
+                "    on `county`.`parent_id`  = `city`.`regionid` \n" +
+                "UNION ALL \n" +
+                "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
+                "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
+                "    FROM `vmb_region`  as `province`\n" +
+                "    INNER JOIN `vmb_region`  as `city`\n" +
+                "    on `province`.`regionid`  = `city`.`parent_id`\n" +
+                "    WHERE `province`.`parent_id` =0\n" +
+                "UNION ALL \n" +
+                "    SELECT `province`.`region_name`  as `province_name`,\n" +
+                "    `province`.`regionid`  as `province_id` ,\n" +
+                "    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
+                "    FROM `vmb_region`  as `province`\n" +
+                "    WHERE `parent_id` =0\n" ;
+        if(region.equals("全国")){
+            regionSql = "SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`," +
+                    "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
+                    "    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n" +
+                    "    FROM `vmb_region`  as `province`\n" +
+                    "    INNER JOIN `vmb_region`  as `city`\n" +
+                    "    on `city`.`parent_id`  = `province`.`regionid` \n" +
+                    "    INNER JOIN `vmb_region`  as `county`\n" +
+                    "    on `county`.`parent_id`  = `city`.`regionid` \n" +
+                    "    WHERE `province`.`regionid` ="+regionId+
+                    "UNION ALL \n" +
+                    "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
+                    "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
+                    "    FROM `vmb_region`  as `province`\n" +
+                    "    INNER JOIN `vmb_region`  as `city`\n" +
+                    "    on `province`.`regionid`  = `city`.`parent_id`\n" +
+                    "    WHERE `province`.`regionid`  ="+regionId+"\n" +
+                    "UNION ALL \n" +
+                    "    SELECT `province`.`region_name`  as `province_name`,\n" +
+                    "    `province`.`regionid`  as `province_id` ,\n" +
+                    "    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
+                    "    FROM `vmb_region`  as `province`\n" +
+                    "    WHERE `province`.`regionid` ="+regionId+"\n" ;
+        }
         String endDateStr = "2017-08-07";
         String startDateStr = "2017-06-25";
         String execSql = "INSERT INTO `tempdata`.`tmp_jysy_all`(`province_name`,\n" +
@@ -977,27 +1026,7 @@ public class JysyController {
                 "        )\n" +
                 "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\'"+endDateStr+" 02:59:59\'\n" +
                 "FROM (\n" +
-                "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
-                "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
-                "    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n" +
-                "    FROM `vmb_region`  as `province`\n" +
-                "    INNER JOIN `vmb_region`  as `city`\n" +
-                "    on `city`.`parent_id`  = `province`.`regionid` \n" +
-                "    INNER JOIN `vmb_region`  as `county`\n" +
-                "    on `county`.`parent_id`  = `city`.`regionid` \n" +
-                "UNION ALL \n" +
-                "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
-                "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
-                "    FROM `vmb_region`  as `province`\n" +
-                "    INNER JOIN `vmb_region`  as `city`\n" +
-                "    on `province`.`regionid`  = `city`.`parent_id`\n" +
-                "    WHERE `province`.`parent_id` =0\n" +
-                "UNION ALL \n" +
-                "    SELECT `province`.`region_name`  as `province_name`,\n" +
-                "    `province`.`regionid`  as `province_id` ,\n" +
-                "    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
-                "    FROM `vmb_region`  as `province`\n" +
-                "    WHERE `parent_id` =0\n" +
+                regionSql
                 ")T\n" +
                 "ORDER BY T.`province_id` ,T.`city_id`,T.`county_id`;";
 
