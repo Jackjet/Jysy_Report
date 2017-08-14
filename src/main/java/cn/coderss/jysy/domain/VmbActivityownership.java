@@ -18,7 +18,7 @@ public class VmbActivityownership {
     @Column(name = "collegeId")
     private Integer collegeid;
 
-    private Boolean public;
+    private Boolean publicc;
 
     private Boolean recommend;
 
@@ -86,14 +86,14 @@ public class VmbActivityownership {
      * @return public
      */
     public Boolean getPublic() {
-        return public;
+        return publicc;
     }
 
     /**
-     * @param public
+     * @param publicc
      */
-    public void setPublic(Boolean public) {
-        this.public = public;
+    public void setPublic(Boolean publicc) {
+        this.publicc = publicc;
     }
 
     /**

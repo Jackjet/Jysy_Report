@@ -37,7 +37,8 @@ public class JysyController {
     @RequestMapping("/detail")
     public String detail(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("Y-MM-d");
-        String dateStr = dateFormat.format(new Date());
+        String endDateStr = dateFormat.format(new Date());
+        String startDateStr = "2017-06-25";
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
                 "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,concat(\"'\",TT.`name`) as `name`,TT.`fullname` as `fullname`,\n" +
                 "TT.`sex` as `sex`,concat(\"'\",TT.`birthday` )as `birthday`,concat(\"'\",TT.`mail`) as `mail`,\n" +
@@ -109,8 +110,8 @@ public class JysyController {
                 "            FROM `vmb_order`  as `order`\n" +
                 "            WHERE `order`.`accountid`  = `account`.`accountId` \n" +
                 "            AND `order`.`order_states` = 272\n" +
-                "            and  `order`.`pay_time` >= \"2017-06-25 00:00:00\"\n" +
-                "            AND `order`.`pay_time` <= \'"+dateStr+" 02:59:59\'\n" +
+                "            and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "            AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
                 "            LIMIT 1\n" +
                 "        ) as `order_states`,\n" +
                 "        (\n" +
@@ -118,8 +119,8 @@ public class JysyController {
                 "            FROM `vmb_order`  as `order`\n" +
                 "            WHERE `order`.`accountid`  = `account`.`accountId` \n" +
                 "            AND `order`.`order_states` = 272 \n" +
-                "            and  `order`.`pay_time` >= \"2017-06-25 00:00:00\"\n" +
-                "            AND `order`.`pay_time` <= \'"+dateStr+" 02:59:59\'\n" +
+                "            and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "            AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
                 "            LIMIT 1\n" +
                 "        ) as `pay_time`,\n" +
                 "        (\n" +
@@ -128,7 +129,7 @@ public class JysyController {
                 "            INNER JOIN `vmb_learningactivity`  as `lear`\n" +
                 "            on `lear`.`learningActivityId`  = `study`.`learningactivityid` \n" +
                 "            WHERE  `lear`.`actType` =200\n" +
-                "            AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
+                "            AND `study`.starttime <= \'"+endDateStr+" 02:59:59\'\n" +
                 "            AND `study`.`accountid`  = `account`.`accountId` \n" +
                 "            limit 1\n" +
                 "        ) as `cer_states`,\n" +
@@ -138,7 +139,7 @@ public class JysyController {
                 "            INNER JOIN `vmb_learningactivity`  as `lear`\n" +
                 "            on `lear`.`learningActivityId`  = `study`.`learningactivityid` \n" +
                 "            WHERE  `lear`.`actType` =200\n" +
-                "            AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
+                "            AND `study`.starttime <= \'"+endDateStr+" 02:59:59\'\n" +
                 "            AND `study`.`accountid`  = `account`.`accountId` \n" +
                 "        ) as `cer_time`,\n" +
                 "        (\n" +
@@ -148,7 +149,7 @@ public class JysyController {
                 "            on `lear`.`learningActivityId`  = `study`.`learningactivityid` \n" +
                 "            WHERE  `lear`.`actType` =200\n" +
                 "            AND `study`.`accountid`  = `account`.`accountId` \n" +
-                "            AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
+                "            AND `study`.starttime <= \'"+endDateStr+" 02:59:59\'\n" +
                 "            ORDER BY `study`.`starttime` \n" +
                 "            limit 1\n" +
                 "        ) as `cer_code`,\n" +
@@ -160,7 +161,7 @@ public class JysyController {
                 "            INNER JOIN `vmb_learningactivity` as `lear` on `lear`.`learningActivityId`  = `study`.`learningactivityid`  AND `study`.`collegeid` =94\n" +
                 "            INNER JOIN `tempdata`.`jysy_learning_account` as `jysy` on `jysy`.`accountid`  = `study`.`accountid`  AND `jysy`.`learningactivityid`  = `study`.`learningactivityid` \n" +
                 "            INNER JOIN `vmb_account` as `maccount` on `maccount`.`accountId`  = `study`.`accountid`\n" +
-                "            WHERE `study`.sucessfuled=1 AND `study`.valid = 1 AND `study`.starttime <= \'"+dateStr+" 02:59:59\'\n" +
+                "            WHERE `study`.sucessfuled=1 AND `study`.valid = 1 AND `study`.starttime <= \'"+endDateStr+" 02:59:59\'\n" +
                 "            GROUP BY `study`.`accountid`,`study`.`learningactivityid`) as `P`\n" +
                 "        WHERE  `P`.accountid = `account`.`accountid`\n" +
                 "        GROUP BY `P`.`accountid`\n" +
@@ -188,8 +189,8 @@ public class JysyController {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
                 "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
-                "        WHERE `entaccount`.`createtime`>= \"2017-06-25 00:00:00\"\n" +
-                "        AND `entaccount`.`createtime` <= \'"+dateStr+" 02:59:59\'\n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
                 "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
@@ -199,12 +200,16 @@ public class JysyController {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        union all\n" +
-                "        select `accountid`\n" +
-                "        from `vmb_order`\n" +
-                "        where `pay_time` > \"2017-06-25 00:00:00\"\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`"+
                 "    )\n" +
-                "    and `entaccount`.`createtime` <= \'"+dateStr+" 02:59:59\'\n" +
+                "    and `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
                 "    GROUP BY `account`.`accountid`\n" +
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT\n" +
@@ -247,6 +252,755 @@ public class JysyController {
 
     @RequestMapping("/province")
     public String province(){
+        String endDateStr = "2017-08-07";
+        String startDateStr = "2017-06-25";
+        String execSql = "INSERT INTO `tempdata`.`tmp_jysy_all`(`province_name`,\n" +
+                "    `city_name`,\n" +
+                "    `county_name`,\n" +
+                "    `hight_edu`,\n" +
+                "    `sec_edu`,\n" +
+                "    `base_edu`,\n" +
+                "    `sci_edu`,\n" +
+                "    `manager`,\n" +
+                "    `province_id`,\n" +
+                "    `city_id`,\n" +
+                "    `county_id`,\n" +
+                "    `manager_province`,\n" +
+                "    `manager_city`,\n" +
+                "    `createtime`)\n" +
+                "SELECT \n" +
+                "    CASE WHEN T.`city_id` = \"\"\n" +
+                "    THEN T.`province_name` \n" +
+                "    else \"\" end as `province_name`,\n" +
+                "    CASE WHEN T.`county_id` = \"\"\n" +
+                "    THEN T.`city_name` \n" +
+                "    ELSE \"\" end as `city_name`,\n" +
+                "    CASE WHEN T.`county_id` != \"\"\n" +
+                "    THEN T.`county_name`\n" +
+                "    ELSE \"\" end as `county_name`,\n" +
+                "    \n" +
+                "CASE WHEN T.`county_id` = \"\" and T.`city_id` = \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R200005\"\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    AND `org`.`provinceid`  = T.`province_id`\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "    )\n" +
+                ")\n" +
+                "ELSE 0  END as `hight_edu`,\n" +
+                "CASE WHEN T.`county_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`))  as `sec_edu`\n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R200006\"\n" +
+                "    AND `org`.`countyid`  = T.`county_id`\n" +
+                "    AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "WHEN T.`county_id` = \"\" and T.`city_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`))  as `sec_edu`\n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R200006\"\n" +
+                "    AND `org`.`cityid`  = T.`city_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "WHEN T.`county_id` = \"\" and T.`city_id` = \"\" and T.`province_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`))  as `sec_edu`\n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R200006\"\n" +
+                "    AND `org`.`provinceid`  = T.`province_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "ELSE \"\" END as `sec_edu` ,\n" +
+                "CASE WHEN T.`county_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`))  \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` in (\"R200001\",\"R200002\",\"R200003\",\"R200004\")\n" +
+                "    and `org`.`countyid`  = T.`county_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "WHEN T.`county_id` = \"\" and T.`city_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`))  \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` in (\"R200001\",\"R200002\",\"R200003\",\"R200004\")\n" +
+                "    AND `org`.`cityid`  = T.`city_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "WHEN T.`county_id` = \"\" and T.`city_id` = \"\" and T.`province_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`))  \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` in (\"R200001\",\"R200002\",\"R200003\",\"R200004\")\n" +
+                "    AND `org`.`provinceid`  = T.`province_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "ELSE \"\" END as `base_edu`,\n" +
+                "CASE WHEN T.`county_id` = \"\" and T.`city_id` = \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `member`.`ordId`  = `org`.`orgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R300000\"\n" +
+                "    AND `org`.`provinceid`  = T.`province_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "ELSE 0  END AS `sci_edu`,\n" +
+                "CASE WHEN T.`county_id` != \"\"\n" +
+                "THEN (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "    on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R100000\" \n" +
+                "    AND `sun_org`.`countyid`  = T.`county_id`\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and  `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                ")\n" +
+                "WHEN T.`city_id` != \"\"\n" +
+                "THEN (\n" +
+                "    concat((\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "    on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R100000\"\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\' \n" +
+                "    and `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                "    AND `sun_org`.`cityid`  = T.`city_id`),'(',(\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "    on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R100000\" \n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                "    AND `sun_org`.`countyid`  = 0 AND `sun_org`.`cityid`  = T.`city_id`),')')\n" +
+                ")\n" +
+                "WHEN T.`province_id` != \"\"\n" +
+                "THEN (\n" +
+                "    CONCAT((\n" +
+                "        SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "        FROM `vmb_member` as `member`\n" +
+                "        INNER JOIN `vmb_account` as `account`\n" +
+                "        on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "        on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "        INNER JOIN `vmb_org`  as `org`\n" +
+                "        on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "        INNER JOIN `vmb_org` as `parent_org`\n" +
+                "        on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "        INNER JOIN `vmb_order` as `order`\n" +
+                "        on `order`.`accountid` = `member`.`accountid`\n" +
+                "        WHERE `parent_org`.`orgcode` =\"R100000\" \n" +
+                "        AND `sun_org`.`provinceid`  = T.`province_id`        \n" +
+                "        AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                "        AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        and `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    ),'(',(SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "    on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R100000\" \n" +
+                "    AND `sun_org`.`provinceid`  = T.`province_id`\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                "    AND `order`.`order_states` = 272 \n" +
+                "    AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "    and `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `sun_org`.`countyid`  = 0 and `sun_org`.`cityid`  = 0),')')\n" +
+                ")\n" +
+                "END as `manager`,T.`province_id` ,T.`city_id`,T.`county_id`,(\n" +
+                "        SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "        FROM `vmb_member` as `member`\n" +
+                "        INNER JOIN `vmb_account` as `account`\n" +
+                "        on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "        on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "        INNER JOIN `vmb_org`  as `org`\n" +
+                "        on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "        INNER JOIN `vmb_org` as `parent_org`\n" +
+                "        on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "        INNER JOIN `vmb_order` as `order`\n" +
+                "        on `order`.`accountid` = `member`.`accountid`\n" +
+                "        WHERE `parent_org`.`orgcode` =\"R100000\" \n" +
+                "        AND `sun_org`.`provinceid`  = T.`province_id`        \n" +
+                "        AND `member`.`accountid` in (\n" +
+                "            SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                "        AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        and `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    ) as `manager_province`,\n" +
+                "    (\n" +
+                "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
+                "    FROM `vmb_member` as `member`\n" +
+                "    INNER JOIN `vmb_account` as `account`\n" +
+                "    on `account`.`accountId`  = `member`.`accountId` \n" +
+                "    INNER JOIN `vmb_org`  as `sun_org`\n" +
+                "    on `member`.`ordid`  = `sun_org`.`orgId`\n" +
+                "    INNER JOIN `vmb_org`  as `org`\n" +
+                "    on `org`.`orgid` =`sun_org`.`parentorgId` \n" +
+                "    INNER JOIN `vmb_org` as `parent_org`\n" +
+                "    on `parent_org`.`orgId`  = `org`.`parentorgId`\n" +
+                "    INNER JOIN `vmb_order` as `order`\n" +
+                "    on `order`.`accountid` = `member`.`accountid`\n" +
+                "    WHERE `parent_org`.`orgcode` =\"R100000\"\n" +
+                "    AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \'"+endDateStr+" 02:59:59\' \n" +
+                "    and `order`.`pay_time` >= \'"+startDateStr+" 00:00:00\'\n" +
+                "    AND `member`.`accountid` in (\n" +
+                "        SELECT DISTINCT(`account`.`accountId`)\n" +
+                "        FROM `vmb_collegeorg` as `colorg`\n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `colorg`.`orgId` \n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
+                "        WHERE `entaccount`.`createtime`>= \'"+startDateStr+" 00:00:00\'\n" +
+                "        AND `entaccount`.`createtime` <= \'"+endDateStr+" 02:59:59\'\n" +
+                "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        AND `account`.`accountid` not in (\n" +
+                "            SELECT `accountid` FROM `vmb_order` WHERE `pay_ways`  =275 \n" +
+                "            AND `order_states` =272 \n" +
+                "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
+                "        )\n" +
+                "        \n" +
+                "        union all\n" +
+                "        select `order`.`accountid`\n" +
+                "        from `vmb_order` as `order`\n" +
+                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                "        where `pay_time` > \'"+startDateStr+" 00:00:00\'\n" +
+                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                "        GROUP BY `order`.`accountid`\n" +
+                "        )\n" +
+                "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\'"+endDateStr+" 02:59:59\'\n" +
+                "FROM (\n" +
+                "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
+                "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
+                "    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n" +
+                "    FROM `vmb_region`  as `province`\n" +
+                "    INNER JOIN `vmb_region`  as `city`\n" +
+                "    on `city`.`parent_id`  = `province`.`regionid` \n" +
+                "    INNER JOIN `vmb_region`  as `county`\n" +
+                "    on `county`.`parent_id`  = `city`.`regionid` \n" +
+                "UNION ALL \n" +
+                "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
+                "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
+                "    FROM `vmb_region`  as `province`\n" +
+                "    INNER JOIN `vmb_region`  as `city`\n" +
+                "    on `province`.`regionid`  = `city`.`parent_id`\n" +
+                "    WHERE `province`.`parent_id` =0\n" +
+                "UNION ALL \n" +
+                "    SELECT `province`.`region_name`  as `province_name`,\n" +
+                "    `province`.`regionid`  as `province_id` ,\n" +
+                "    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
+                "    FROM `vmb_region`  as `province`\n" +
+                "    WHERE `parent_id` =0\n" +
+                ")T\n" +
+                "ORDER BY T.`province_id` ,T.`city_id`,T.`county_id`;";
+
+        this.jdbcTemplate.execute(execSql);
+
         String getAllSql = "SELECT `province_name` as `province_name`,`city_name` as `city_name`,`county_name` as `county_name`,\n" +
                 "CASE WHEN `city_id` = 0 AND `county_id` = 0\n" +
                 "THEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
