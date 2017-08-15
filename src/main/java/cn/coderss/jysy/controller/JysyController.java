@@ -39,7 +39,7 @@ public class JysyController {
     public String detail(String start_date,String end_date,
                          String region, String regionId,
                          String statistics, String sign_ways,
-                         String pay_ways, String startDate,String endDate){
+                         String pay_ways){
         String endDateStr = end_date;
         String startDateStr = start_date;
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
@@ -245,8 +245,12 @@ public class JysyController {
             }};
         });
         try {
-            return service.readOnlineExcel(data, region, statistics,
-                    sign_ways, pay_ways, startDate, endDate);
+            String result =  service.readOnlineExcel(data, region, statistics,
+                    sign_ways, pay_ways, start_date, end_date);
+            //清理资源
+            data = null;
+            Runtime.getRuntime().gc();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -258,7 +262,9 @@ public class JysyController {
     public String province(String start_date,String end_date,
                            String region, String regionId,
                            String people, String sign_ways, String pay_ways){
-        String regionSql = "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
+        String delSql = " DELETE FROM tempdata.tmp_jysy_all;";
+        this.jdbcTemplate.execute(delSql);
+        String regionSql ="SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
                 "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
                 "    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n" +
                 "    FROM `vmb_region`  as `province`\n" +
@@ -279,8 +285,8 @@ public class JysyController {
                 "    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
                 "    FROM `vmb_region`  as `province`\n" +
                 "    WHERE `parent_id` =0\n" ;
-        if(region.equals("全国")){
-            regionSql = "SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`," +
+        if(!region.equals("全国")){
+            regionSql ="SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`," +
                     "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
                     "    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n" +
                     "    FROM `vmb_region`  as `province`\n" +
@@ -288,23 +294,23 @@ public class JysyController {
                     "    on `city`.`parent_id`  = `province`.`regionid` \n" +
                     "    INNER JOIN `vmb_region`  as `county`\n" +
                     "    on `county`.`parent_id`  = `city`.`regionid` \n" +
-                    "    WHERE `province`.`regionid` ="+regionId+
-                    "UNION ALL \n" +
+                    "    WHERE `province`.`regionid` ="+regionId+" \n" +
+                    " UNION ALL \n" +
                     "    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
                     "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
                     "    FROM `vmb_region`  as `province`\n" +
                     "    INNER JOIN `vmb_region`  as `city`\n" +
                     "    on `province`.`regionid`  = `city`.`parent_id`\n" +
                     "    WHERE `province`.`regionid`  ="+regionId+"\n" +
-                    "UNION ALL \n" +
+                    " UNION ALL \n" +
                     "    SELECT `province`.`region_name`  as `province_name`,\n" +
                     "    `province`.`regionid`  as `province_id` ,\n" +
                     "    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n" +
                     "    FROM `vmb_region`  as `province`\n" +
                     "    WHERE `province`.`regionid` ="+regionId+"\n" ;
         }
-        String endDateStr = "2017-08-07";
-        String startDateStr = "2017-06-25";
+        String endDateStr = end_date;
+        String startDateStr = start_date;
         String execSql = "INSERT INTO `tempdata`.`tmp_jysy_all`(`province_name`,\n" +
                 "    `city_name`,\n" +
                 "    `county_name`,\n" +
@@ -1027,15 +1033,15 @@ public class JysyController {
                 "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\'"+endDateStr+" 02:59:59\'\n" +
                 "FROM (\n" +
                 regionSql+
-                ")T\n" +
+                "\n)T\n" +
                 "ORDER BY T.`province_id` ,T.`city_id`,T.`county_id`;";
 
-        this.jdbcTemplate.execute(execSql);
+        this.jdbcTemplate.update(execSql);
 
         String getAllSql = "SELECT `province_name` as `province_name`,`city_name` as `city_name`,`county_name` as `county_name`,\n" +
-                "CASE WHEN `city_id` = 0 AND `county_id` = 0\n" +
+                "CASE WHEN `city_id` = '0' AND `county_id` = '0'\n" +
                 "THEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
-                "WHEN `county_id` = 0\n" +
+                "WHEN `county_id` = '0'\n" +
                 "THEN `manager_city`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
                 "ELSE `manager`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
                 "END  as `sum`,\n" +
@@ -1057,15 +1063,15 @@ public class JysyController {
         });
 
         String getProvinceSql = "SELECT `province_name` as `province_name`,`city_name` as `市`,`county_name` as `county_name`,\n" +
-                "CASE WHEN `city_id` = 0 AND `county_id` = 0\n" +
+                "CASE WHEN `city_id` = '0' AND `county_id` = '0'\n" +
                 "THEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
-                "WHEN `county_id` = 0\n" +
+                "WHEN `county_id` = '0'\n" +
                 "THEN `manager_city`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
                 "ELSE `manager`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
                 "END  as `sum`,\n" +
                 "`hight_edu` as `hight_edu`,`sec_edu` as `sec_edu`,`base_edu` as `base_edu`,`sci_edu` as `sci_edu`,`manager` as `manager`\n" +
                 "FROM `tempdata`.`tmp_jysy_all`\n" +
-                "where `city_id`=0;";
+                "where `city_id`='0';";
         List<LinkedHashMap<String,String>> province = this.jdbcTemplate.query(getProvinceSql,(rs, num)->{
             return new LinkedHashMap<String,String>(){{
                 put("province_name", rs.getString("province_name"));
@@ -1079,7 +1085,11 @@ public class JysyController {
         });
 
         try {
-            return provinceService.readOnlineExcel(all, province);
+            String result = provinceService.readOnlineExcel(all, province);
+            all = null;
+            province = null;
+            Runtime.getRuntime().gc();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }

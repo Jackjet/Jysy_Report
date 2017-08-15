@@ -314,6 +314,9 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                 //打包传送出来
                 FileUtilitys.fileToZip(dirs, dirs, nowTime);
 
+                //清理数据
+                clearData();
+
                 return "redirect:/report/" + dirs + nowTime + ".zip";
             } catch (Exception e) {
                 return "上传失败 " + fileName + " => " + e.getMessage();
@@ -321,5 +324,12 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         } else {
             return "上传失败 " + fileName + " 因为文件为空";
         }
+    }
+
+
+    public void clearData(){
+        ReportDetailServiceImpl.array_province = null;
+        ReportDetailServiceImpl.data = null;
+        ReportDetailServiceImpl.head_title = null;
     }
 }

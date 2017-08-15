@@ -341,7 +341,9 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 sheet.addMergedRegion(new CellRangeAddress(2, 2, 4,6));
 
 
-                stream = new FileOutputStream(new File(filepath+ PinyinHelper.convertToPinyinString("省份统计 - "+provinceStr, "", PinyinFormat.WITHOUT_TONE)+".xlsx"));
+                String fileName = filepath+ PinyinHelper.convertToPinyinString("省份统计 - "+provinceStr, "", PinyinFormat.WITHOUT_TONE)+".xlsx";
+                stream = new FileOutputStream(new File(fileName));
+                System.out.println(fileName);
                 wb.write(stream);
             }
         }
@@ -428,6 +430,9 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
             //打包传送出来
             FileUtilitys.fileToZip(dirs, dirs, nowTime);
 
+            //清空数据
+            clearData();
+
             return "redirect:/report/" + dirs + nowTime + ".zip";
         } catch (Exception e) {
             return "上传失败 " + fileName + " => " + e.getMessage();
@@ -456,6 +461,10 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
                 //打包传送出来
                 FileUtilitys.fileToZip(dirs, dirs, nowTime);
+
+                //清理
+                clearData();
+
                 return "redirect:/report/" + dirs + nowTime + ".zip";
             } catch (Exception e) {
                 return "上传失败 " + fileName + " => " + e.getMessage();
@@ -463,5 +472,11 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         } else {
             return "上传失败 " + fileName + " 因为文件为空";
         }
+    }
+
+
+    public void clearData(){
+        ReportProvinceServiceImpl.excelData = null;
+        ReportProvinceServiceImpl.provinceList.clear();
     }
 }
