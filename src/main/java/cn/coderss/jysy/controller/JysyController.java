@@ -262,7 +262,7 @@ public class JysyController {
     public String province(String start_date,String end_date,
                            String region, String regionId,
                            String people, String sign_ways, String pay_ways){
-        String delSql = " DELETE FROM tempdata.tmp_jysy_all;";
+        String delSql = " truncate table tempdata.tmp_jysy_all;";
         this.jdbcTemplate.execute(delSql);
         String regionSql ="SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
                 "    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n" +
