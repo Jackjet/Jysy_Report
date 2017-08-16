@@ -2,7 +2,6 @@ package cn.coderss.jysy.service.impl;
 
 import cn.coderss.jysy.domain.JysyProvinceModel;
 import cn.coderss.jysy.service.ReportProvinceService;
-import cn.coderss.jysy.utility.Character2PinyinUtil;
 import cn.coderss.jysy.utility.FileUtilitys;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
@@ -36,6 +35,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     //当前的位置
     public static String nowStart;
     public static String nowEnd;
+    Integer surplus = 0;
 
     public void readExcel(String inputFile) {
         InputStream inputStream = null;
@@ -408,14 +408,29 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         headRowProvince.createCell(5).setCellValue("科研机构人数");
         headRowProvince.createCell(6).setCellValue("管理人数");
 
+        LinkedHashMap<String, Integer> sumMap = new LinkedHashMap<String, Integer>(){{
+            put("sum", 0);
+            put("hight_edu", 0);
+            put("sec_edu", 0);
+            put("base_edu", 0);
+            put("sci_edu", 0);
+            put("surplus", 0);
+        }};
+
         for (int i=0; i<province.size(); i++){
-            XSSFRow rowProvince = sheetProvince.createRow(i+1);
+            XSSFRow rowProvince = sheetProvince.createRow(i+2);
             LinkedHashMap<String,String> map = province.get(i);
             int index = 0;
             for (Map.Entry<String,String> m : map.entrySet()){
                 rowProvince.createCell(index++).setCellValue(m.getValue());
+                sumData(sumMap, m);
             }
         }
+        sumMap.put("surplus", sumMap.get("sum")- surplus);
+        //做全国的分析
+        createCountryRow(sheetProvince, sumMap);
+
+
         String provinceFileName = datePath +"/"+uuid+"/"+ "province.xlsx";
         FileOutputStream outStreamProvince = new FileOutputStream(provinceFileName);
         wbProvince.write(outStreamProvince);
@@ -474,9 +489,36 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         }
     }
 
+    public void sumData(LinkedHashMap<String, Integer> sumMap, Map.Entry<String, String> m){
+        for (Map.Entry<String, Integer> sumMapEntry: sumMap.entrySet()){
+            if(sumMapEntry.getKey().equals(m.getKey())){
+                Integer data = m.getValue().equals("")? 0: Integer.valueOf(m.getValue());
+                data += sumMapEntry.getValue();
+                sumMap.put(sumMapEntry.getKey(), data);
+            }
+            else{
+                //surplus
+                sumMap.entrySet().stream().forEach(item->{
+                    if(!item.getKey().equals("sum"))
+                        surplus += item.getValue();
+                });
+            }
+        }
+    }
+
 
     public void clearData(){
         ReportProvinceServiceImpl.excelData = null;
         ReportProvinceServiceImpl.provinceList.clear();
+    }
+
+
+    public void createCountryRow(XSSFSheet sheetProvince,LinkedHashMap<String,Integer> sumMap){
+        XSSFRow rowProvince = sheetProvince.createRow(1);
+        int index = 0;
+        rowProvince.createCell(index++).setCellValue("全国");
+        for (Map.Entry<String, Integer> entry: sumMap.entrySet()){
+            rowProvince.createCell(index++).setCellValue(entry.getValue());
+        }
     }
 }

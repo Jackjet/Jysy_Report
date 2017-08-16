@@ -35,6 +35,10 @@ public class JysyController {
     @Qualifier("primaryJdbcTemplate")
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    @Qualifier("secondaryJdbcTemplate")
+    JdbcTemplate secondJdbcTemplate;
+
     @RequestMapping("/detail")
     public String detail(String start_date,String end_date,
                          String region, String regionId,
@@ -217,7 +221,7 @@ public class JysyController {
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT\n" +
                 "\n";
-        List<LinkedHashMap<String,String>> data = this.jdbcTemplate.query(sql ,(rs, num)->{
+        List<LinkedHashMap<String,String>> data = this.secondJdbcTemplate.query(sql ,(rs, num)->{
             return new LinkedHashMap<String,String>(){{
                 put("province", rs.getString("province"));
                 put("city", rs.getString("city"));
@@ -1048,7 +1052,7 @@ public class JysyController {
                 "`hight_edu` as `hight_edu`,`sec_edu` as `sec_edu`,`base_edu` as `base_edu`,`sci_edu` as `sci_edu`,`manager` as `manager`\n" +
                 "FROM `tempdata`.`tmp_jysy_all`;";
 
-        List<LinkedHashMap<String,String>> all = this.jdbcTemplate.query(getAllSql, (rs, num)->{
+        List<LinkedHashMap<String,String>> all = this.secondJdbcTemplate.query(getAllSql, (rs, num)->{
             return new LinkedHashMap<String,String>(){{
                 put("province_name",rs.getString("province_name"));
                 put("city_name",rs.getString("city_name"));
@@ -1063,16 +1067,16 @@ public class JysyController {
         });
 
         String getProvinceSql = "SELECT `province_name` as `province_name`,`city_name` as `市`,`county_name` as `county_name`,\n" +
-                "CASE WHEN `city_id` = '0' AND `county_id` = '0'\n" +
+                "CASE WHEN `city_id` = '' AND `county_id` = ''\n" +
                 "THEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
-                "WHEN `county_id` = '0'\n" +
+                "WHEN `county_id` = ''\n" +
                 "THEN `manager_city`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
                 "ELSE `manager`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\n" +
                 "END  as `sum`,\n" +
                 "`hight_edu` as `hight_edu`,`sec_edu` as `sec_edu`,`base_edu` as `base_edu`,`sci_edu` as `sci_edu`,`manager` as `manager`\n" +
                 "FROM `tempdata`.`tmp_jysy_all`\n" +
-                "where `city_id`='0';";
-        List<LinkedHashMap<String,String>> province = this.jdbcTemplate.query(getProvinceSql,(rs, num)->{
+                "where `city_id`='';";
+        List<LinkedHashMap<String,String>> province = this.secondJdbcTemplate.query(getProvinceSql,(rs, num)->{
             return new LinkedHashMap<String,String>(){{
                 put("province_name", rs.getString("province_name"));
                 put("sum", rs.getString("sum"));
