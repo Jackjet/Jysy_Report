@@ -1,35 +1,36 @@
-package cn.coderss.jysy.controller;
+package cn.coderss.jysy.service.impl;
 
 import cn.coderss.jysy.service.ReportDetailService;
 import cn.coderss.jysy.service.ReportProvinceService;
+import cn.coderss.jysy.service.ReportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * Created with report.
  * User: shenwei
- * Date: 17/7/17
- * Time: 上午10:29
+ * Date: 2017/8/16
+ * Time: 下午1:24
  * Blog: http://www.coderss.cn
  */
-@Controller
-@RequestMapping("/jysy")
-public class JysyController {
+@Service
+public class ReportServiceImpl implements ReportService {
+
     @Autowired
     ReportDetailService service;
 
     @Autowired
     ReportProvinceService provinceService;
+
+    private Logger logger = LoggerFactory.getLogger(ReportProvinceServiceImpl.class);
 
     @Autowired
     @Qualifier("primaryJdbcTemplate")
@@ -39,21 +40,22 @@ public class JysyController {
     @Qualifier("secondaryJdbcTemplate")
     JdbcTemplate secondJdbcTemplate;
 
-    @RequestMapping("/detail")
+    @Override
     public String detail(String start_date,String end_date,
                          String region, String regionId,
                          String statistics, String sign_ways,
-                         String pay_ways){
+                         String pay_ways, String myFilePath,
+                         String nowTime){
         String endDateStr = end_date;
         String startDateStr = start_date;
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
                 "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,concat(\"'\",TT.`name`) as `name`,TT.`fullname` as `fullname`,\n" +
                 "TT.`sex` as `sex`,concat(\"'\",TT.`birthday` )as `birthday`,concat(\"'\",TT.`mail`) as `mail`,\n" +
-                "TT.`position` as `position`,TT.`sign_ways` as `sign_ways`,concat(\"'\",TT.`createtime`) as `createtime`,TT.`order_states` as `order_states`,\n" +
-                "TT.`pay_ways` as `pay_ways`,concat(\"'\",TT.`pay_time`) as `pay_time`,\n" +
+                "TT.`position` as `position`,TT.`sign_ways` as `sign_ways`,TT.`createtime` as `createtime`,TT.`order_states` as `order_states`,\n" +
+                "TT.`pay_ways` as `pay_ways`,TT.`pay_time` as `pay_time`,\n" +
                 "TT.`org_custom_name` as `org_custom_name`,TT.`address` as `address`,\n" +
                 "CASE WHEN TT.`periods` is null THEN 0 ELSE TT.`periods` END  as `periods`,\n" +
-                "TT.`cer_states` as `cer_states`,concat(\"'\",TT.`cer_time`) as `cer_time`,\n" +
+                "TT.`cer_states` as `cer_states`,TT.`cer_time` as `cer_time`,\n" +
                 "concat(\"'\",TT.`cer_code`) as `cer_code`,\n" +
                 "concat(\"'\",TT.`mobile`) as `mobile`,\n" +
                 "concat(\"'\",TT.`createuser`) as `createuser`\n" +
@@ -221,6 +223,34 @@ public class JysyController {
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT\n" +
                 "\n";
+        logger.info(sql);
+        sql = "SELECT `tmp_jysy_stu`.`province`,\n" +
+                "    `tmp_jysy_stu`.`city`,\n" +
+                "    `tmp_jysy_stu`.`county` as `country`,\n" +
+                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
+                "    `tmp_jysy_stu`.`org_name_second`,\n" +
+                "    `tmp_jysy_stu`.`org_name`,\n" +
+                "    `tmp_jysy_stu`.`name`,\n" +
+                "    `tmp_jysy_stu`.`fullname`,\n" +
+                "    `tmp_jysy_stu`.`sex`,\n" +
+                "    `tmp_jysy_stu`.`birthday`,\n" +
+                "    `tmp_jysy_stu`.`mail`,\n" +
+                "    `tmp_jysy_stu`.`position`,\n" +
+                "    `tmp_jysy_stu`.`sign_ways`,\n" +
+                "    `tmp_jysy_stu`.`createtime`,\n" +
+                "    `tmp_jysy_stu`.`order_states`,\n" +
+                "    `tmp_jysy_stu`.`pay_ways`,\n" +
+                "    `tmp_jysy_stu`.`pay_time`,\n" +
+                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
+                "    `tmp_jysy_stu`.`address`,\n" +
+                "    `tmp_jysy_stu`.`periods`,\n" +
+                "    `tmp_jysy_stu`.`cer_states`,\n" +
+                "    `tmp_jysy_stu`.`cer_time`,\n" +
+                "    `tmp_jysy_stu`.`cer_code`,\n" +
+                "    `tmp_jysy_stu`.`mobile`,\n" +
+                "    `tmp_jysy_stu`.`createuser`\n" +
+                "FROM `tempdata`.`tmp_jysy_stu`;";
+        logger.info(sql);
         List<LinkedHashMap<String,String>> data = this.secondJdbcTemplate.query(sql ,(rs, num)->{
             return new LinkedHashMap<String,String>(){{
                 put("province", rs.getString("province"));
@@ -250,7 +280,7 @@ public class JysyController {
         });
         try {
             String result =  service.readOnlineExcel(data, region, statistics,
-                    sign_ways, pay_ways, start_date, end_date, "", "");
+                    sign_ways, pay_ways, start_date, end_date, myFilePath, nowTime);
             //清理资源
             data = null;
             Runtime.getRuntime().gc();
@@ -261,11 +291,12 @@ public class JysyController {
         return "ok";
     }
 
-
-    @RequestMapping("/province")
+    @Override
     public String province(String start_date,String end_date,
                            String region, String regionId,
-                           String people, String sign_ways, String pay_ways){
+                           String people, String sign_ways,
+                           String pay_ways, String myFilePath,
+                           String nowTime){
         String delSql = " truncate table tempdata.tmp_jysy_all;";
         this.jdbcTemplate.execute(delSql);
         String regionSql ="SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
@@ -1089,7 +1120,7 @@ public class JysyController {
         });
 
         try {
-            String result = provinceService.readOnlineExcel(all, province, "", "");
+            String result = provinceService.readOnlineExcel(all, province, myFilePath, nowTime);
             all = null;
             province = null;
             Runtime.getRuntime().gc();
@@ -1100,11 +1131,4 @@ public class JysyController {
         return "ok";
     }
 
-
-
-    @RequestMapping("/exec")
-    @ResponseBody
-    public String exec(String start_date,String end_date, String region, String statistics, String people, String sign_ways, String pay_ways){
-        return start_date + end_date + region + people + sign_ways + pay_ways;
-    }
 }

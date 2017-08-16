@@ -36,9 +36,6 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     public static ArrayList<String> head_title = new ArrayList<String>();
     Logger logger = LoggerFactory.getLogger(ReportDetailServiceImpl.class);
 
-
-
-
     @Override
     public void readExcel(String filename) throws IOException {
         InputStream inputStream = null;
@@ -111,7 +108,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
     @Override
     public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData,String region,String statistics,
-                                  String sign_ways,String pay_ways,String startDate,String endDate) throws IOException {
+                                  String sign_ways,String pay_ways,String startDate,String endDate,
+                                  String myFilePath, String nowTime) throws IOException {
         head_title.add("省");
         head_title.add("市");
         head_title.add("县");
@@ -144,68 +142,81 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         for (int j=0; j<head_title.size(); j++){
             headRow.createCell(j).setCellValue(head_title.get(j));
         }
+
         for (int i=0; i<onlineData.size(); i++){
             LinkedHashMap<String,String> map = onlineData.get(i);
-            XSSFRow row = null;
-            //省份统计限制
-            if(!map.get("province").equals(region) && !region.equals("全国")){
-                continue;
-            }
-            //注册方式限制
-            if(!map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
-                continue;
-            }
-            //支付方式限制
-            if(!map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
-                continue;
-            }
-            //如果是统计方式为注册用户或者支付用户
-            Date pay_time = new Date(map.get("pay_time"));
-            Date createtime = new Date(map.get("createtime"));
             try {
-                if(statistics.equals("支付用户") && (
-                        !(pay_time.getTime() < dateFormat.parse(endDate).getTime())
-                        || !(pay_time.getTime() > dateFormat.parse(startDate).getTime())
-                )
-                        ){
+                XSSFRow row = null;
+                //省份统计限制
+                if(map.get("province")!= null && !map.get("province").equals(region) && !region.equals("全国")){
+                    logger.info("省份过滤");
                     continue;
                 }
-                else if(statistics.equals("注册用户") && (
-                        !(createtime.getTime() < dateFormat.parse(endDate).getTime())
-                        || !(createtime.getTime() > dateFormat.parse(startDate).getTime())
-                        )){
+                //注册方式限制
+                if(map.get("sign_ways")!= null && !map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
+                    logger.info("注册方式限制过滤");
                     continue;
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
+                //支付方式限制
+                if(map.get("pay_ways")!= null && !map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
+                    logger.info("支付方式限制过滤");
+                    continue;
+                }
+                //如果是统计方式为注册用户或者支付用户
+                Date pay_time = null;
+                Date createtime = null;
+                if(map.get("pay_time") != null){
+                    pay_time = new Date(dateFormat.parse(map.get("pay_time").toString()).getTime());
+                }
+                if(map.get("createtime") != null){
+                    createtime = new Date(dateFormat.parse(map.get("createtime").toString()).getTime());
+                }
+                try {
+                    if(statistics.equals("支付用户") && (
+                            !(pay_time.getTime() < dateFormat.parse(endDate).getTime())
+                                    || !(pay_time.getTime() > dateFormat.parse(startDate).getTime())
+                    )
+                            ){
+                        continue;
+                    }
+                    else if(statistics.equals("注册用户") && (
+                            !(createtime.getTime() < dateFormat.parse(endDate).getTime())
+                                    || !(createtime.getTime() > dateFormat.parse(startDate).getTime())
+                    )){
+                        continue;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                row = sheet.createRow(i+1);
+                int index = 0;
+                for (Map.Entry<String,String> m : map.entrySet()){
+                    row.createCell(index++).setCellValue(m.getValue());
+                }
             }
-            row = sheet.createRow(i+1);
-            int index = 0;
-            for (Map.Entry<String,String> m : map.entrySet()){
-                row.createCell(index++).setCellValue(m.getValue());
+            catch (Exception ex){
+                System.out.println(map);
+                logger.info(ex.getMessage());
+
             }
         }
 
 
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        String nowTime = format.format(new Date());
-        String datePath = "downloads/"+nowTime;
-        String uuid = UUID.randomUUID().toString();
-        String dirs = datePath +"/"+uuid +"/";
-        FileUtilitys.makeDir(dirs);
-        String filepath = datePath +"/"+uuid+"/detail.xlsx";
+        logger.info("创建相关文件");
+        String filepath = myFilePath+"/detail.xlsx";
         FileOutputStream outStream = new FileOutputStream(filepath);
         wb.write(outStream);
         outStream.flush();
         outStream.close();
+        logger.info("创建相关文件完成");
         try {
             this.readExcel(filepath);
-            this.writeExcel(dirs);
+            this.writeExcel(myFilePath);
 
             //打包传送出来
-            FileUtilitys.fileToZip(dirs, dirs, nowTime);
+            FileUtilitys.fileToZip(myFilePath, myFilePath, nowTime);
 
-            return "redirect:/report/" + dirs + nowTime + ".zip";
+            return "redirect:/report/" + myFilePath + nowTime + ".zip";
         } catch (Exception e) {
             return "上传失败 " + filepath + " => " + e.getMessage();
         }
@@ -291,7 +302,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     }
 
     @Override
-    public String doExcel(MultipartFile file) throws UnsupportedEncodingException {
+    public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException {
         String fileEncode = System.getProperty("file.encoding");
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String nowTime = format.format(new Date());

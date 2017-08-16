@@ -63,13 +63,6 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                     excelData.put(nowProvinceStr, arrayModel);
                     provinceList.add(nowProvinceStr);
                 }
-                System.out.println("readXlsx:"+row.getCell(0).toString());
-                System.out.println("readXlsx:"+row.getCell(1).toString());
-                System.out.println("readXlsx:"+row.getCell(2).toString());
-                System.out.println("readXlsx:"+row.getCell(3).toString());
-                System.out.println("readXlsx:"+row.getCell(4).toString());
-                System.out.println("readXlsx:"+row.getCell(5).toString());
-                System.out.println("readXlsx:"+row.getCell(6).toString());
                 //新增model
                 try {
                     JysyProvinceModel model = new JysyProvinceModel(
@@ -101,7 +94,6 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     public void writeExcel(String filepath) {
         //当前日期
         String nowHour = new SimpleDateFormat("M月d日 H:mm:s").format(new Date());
-        System.out.println(nowHour);
         //表头高度
         int headHeight = 5;
 
@@ -343,7 +335,6 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
                 String fileName = filepath+ PinyinHelper.convertToPinyinString("省份统计 - "+provinceStr, "", PinyinFormat.WITHOUT_TONE)+".xlsx";
                 stream = new FileOutputStream(new File(fileName));
-                System.out.println(fileName);
                 wb.write(stream);
             }
         }
@@ -354,15 +345,11 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
     @Override
     public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData,
-                                  List<LinkedHashMap<String, String>> province) throws IOException {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        String nowTime = format.format(new Date());
-        String datePath = "downloads/"+nowTime;
-        String uuid = UUID.randomUUID().toString();
-        String fileName = datePath +"/"+uuid+"/"+ "all.xlsx";
-        String dirs = datePath +"/"+uuid +"/";
+                                  List<LinkedHashMap<String, String>> province,
+                                  String myFilePath, String nowTime) throws IOException {
+        String fileName = myFilePath+ "all.xlsx";
+        String dirs = myFilePath;
         FileUtilitys.makeDir(dirs);
-
 
         /**
          * all
@@ -431,7 +418,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         createCountryRow(sheetProvince, sumMap);
 
 
-        String provinceFileName = datePath +"/"+uuid+"/"+ "province.xlsx";
+        String provinceFileName = myFilePath+ "province.xlsx";
         FileOutputStream outStreamProvince = new FileOutputStream(provinceFileName);
         wbProvince.write(outStreamProvince);
         outStreamProvince.flush();
@@ -443,7 +430,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
             this.writeExcel(dirs);
 
             //打包传送出来
-            FileUtilitys.fileToZip(dirs, dirs, nowTime);
+            //FileUtilitys.fileToZip(dirs, dirs, nowTime);
 
             //清空数据
             clearData();
@@ -455,7 +442,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     }
 
     @Override
-    public String doExcel(MultipartFile file) throws UnsupportedEncodingException {
+    public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException {
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String nowTime = format.format(new Date());
         String datePath = "downloads/"+nowTime;
@@ -471,7 +458,6 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 stream.write(bytes);
                 stream.close();
                 this.readExcel(fileName);
-                System.out.println(excelData);
                 this.writeExcel(dirs);
 
                 //打包传送出来

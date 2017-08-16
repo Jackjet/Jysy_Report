@@ -44,13 +44,13 @@ public class IndexController {
     @ApiOperation("教育事业-详情xlsx切割")
     @PostMapping("/detail")
     public String detail(MultipartFile file) throws UnsupportedEncodingException {
-        return reportDetailService.doExcel(file);
+        return reportDetailService.doExcel(file, "");
     }
 
     @ApiOperation("教育事业-省份相关xlsxl切割")
     @PostMapping("/province")
     public String province(MultipartFile file) throws UnsupportedEncodingException {
-        return reportProvinceService.doExcel(file);
+        return reportProvinceService.doExcel(file, "");
     }
 
 

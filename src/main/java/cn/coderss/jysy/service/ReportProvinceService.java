@@ -18,6 +18,8 @@ public interface ReportProvinceService {
     public void readExcel(String inputFile);
     public void writeExcel(String outFile);
     public String readOnlineExcel(List<LinkedHashMap<String, String>> data,
-                                  List<LinkedHashMap<String, String>> province) throws IOException;
-    public String doExcel(MultipartFile file) throws UnsupportedEncodingException;
+                                  List<LinkedHashMap<String, String>> province,
+                                  String myFilePath,
+                                  String nowTime) throws IOException;
+    public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException;
 }
