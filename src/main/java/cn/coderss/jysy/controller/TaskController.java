@@ -3,9 +3,13 @@ package cn.coderss.jysy.controller;
 import cn.coderss.jysy.reqmodel.JysyReqModel;
 import cn.coderss.jysy.service.ReportService;
 import cn.coderss.jysy.utility.DateUtil;
+import cn.coderss.jysy.utility.UuidStr;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +35,10 @@ public class TaskController {
     ReportService reportService;
     Logger logger = LoggerFactory.getLogger(TaskController.class);
 
+    @Autowired
+    @Qualifier("primaryJdbcTemplate")
+    JdbcTemplate jdbcTemplate;
+
     ArrayBlockingQueue<JysyReqModel> queue = new ArrayBlockingQueue<JysyReqModel>(1);
     Runnable consumer = ()->{
         while (true){
@@ -44,6 +52,35 @@ public class TaskController {
                  */
                 SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
                 String nowTime = format.format(new Date());
+                String code = UuidStr.getUuidStr();
+
+                String insertCeleryTaskSql = "INSERT INTO `vmobel`.`celery_taskinfo`\n" +
+                        "(`code`,\n" +
+                        "`type`,\n" +
+                        "`states`,\n" +
+                        "`createtime`,\n" +
+                        "`starttime`,\n" +
+                        "`endtime`,\n" +
+                        "`import_description`,\n" +
+                        "`import_params`,\n" +
+                        "`result_description`,\n" +
+                        "`result_file`,\n" +
+                        "`collegeid`,\n" +
+                        "`enterpriseid`,\n" +
+                        "`accountid`,\n" +
+                        "`import_file`,\n" +
+                        "`result_error_stack`,\n" +
+                        "`result_states`,\n" +
+                        "`domain`)\n" +
+                        "VALUES\n" +
+                        "('"+code+"', '143', '121', \n" +
+                        "'"+nowTime+"', '"+nowTime+"', \n" +
+                        "'"+nowTime+"', '', \n" +
+                        "'', \n" +
+                        "'', '', '"+taskModel.getCollegeid()+"', '"+taskModel.getEnterpriseid()+"', '"+taskModel.getAccountid()+"', \n" +
+                        "'', '', '120', NULL);\n" +
+                        "\n";
+                jdbcTemplate.execute(insertCeleryTaskSql);
                 String datePath = "downloads/"+nowTime;
                 String uuid = UUID.randomUUID().toString();
                 String dirs = datePath +"/"+uuid +"/";
@@ -53,6 +90,11 @@ public class TaskController {
                 reportService.detail(taskModel.getStart_date(), taskModel.getEnd_date(),
                         taskModel.getRegion(), taskModel.getRegionId(), taskModel.getPeople(),
                         taskModel.getSign_ways(), taskModel.getPay_ways(), dirs, nowTime);
+
+                String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` SET `result_states`='119',`state`='119' " +
+                        "WHERE `code`='"+code+"';\n";
+                jdbcTemplate.execute(updateCeleryTaskSql);
+
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -15,6 +15,25 @@ public class JysyReqModel {
     public String people;
     public String sign_ways;
     public String pay_ways;
+    public String accountid;
+    public String collegeid;
+    public String enterpriseid;
+
+    @Override
+    public String toString() {
+        return "JysyReqModel{" +
+                "start_date='" + start_date + '\'' +
+                ", end_date='" + end_date + '\'' +
+                ", region='" + region + '\'' +
+                ", regionId='" + regionId + '\'' +
+                ", people='" + people + '\'' +
+                ", sign_ways='" + sign_ways + '\'' +
+                ", pay_ways='" + pay_ways + '\'' +
+                ", accountid='" + accountid + '\'' +
+                ", collegeid='" + collegeid + '\'' +
+                ", enterpriseid='" + enterpriseid + '\'' +
+                '}';
+    }
 
     public String getStart_date() {
         return start_date;
@@ -72,16 +91,27 @@ public class JysyReqModel {
         this.pay_ways = pay_ways;
     }
 
-    @Override
-    public String toString() {
-        return "JysyReqModel{" +
-                "start_date='" + start_date + '\'' +
-                ", end_date='" + end_date + '\'' +
-                ", region='" + region + '\'' +
-                ", regionId='" + regionId + '\'' +
-                ", people='" + people + '\'' +
-                ", sign_ways='" + sign_ways + '\'' +
-                ", pay_ways='" + pay_ways + '\'' +
-                '}';
+    public String getAccountid() {
+        return accountid;
+    }
+
+    public void setAccountid(String accountid) {
+        this.accountid = accountid;
+    }
+
+    public String getCollegeid() {
+        return collegeid;
+    }
+
+    public void setCollegeid(String collegeid) {
+        this.collegeid = collegeid;
+    }
+
+    public String getEnterpriseid() {
+        return enterpriseid;
+    }
+
+    public void setEnterpriseid(String enterpriseid) {
+        this.enterpriseid = enterpriseid;
     }
 }

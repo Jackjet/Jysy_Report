@@ -134,17 +134,14 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             XSSFRow row = null;
             //省份统计限制
             if(map.get("province")!= null && !map.get("province").equals(region) && !region.equals("全国")){
-                logger.info("省份过滤");
                 continue;
             }
             //注册方式限制
             if(map.get("sign_ways")!= null && !map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
-                logger.info("注册方式限制过滤");
                 continue;
             }
             //支付方式限制
             if(map.get("pay_ways")!= null && !map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
-                logger.info("支付方式限制过滤");
                 continue;
             }
             //如果是统计方式为注册用户或者支付用户
