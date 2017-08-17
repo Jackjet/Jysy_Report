@@ -17,10 +17,10 @@ import java.util.List;
  * Blog: http://www.coderss.cn
  */
 public interface ReportDetailService {
-    public void readExcel(String filename) throws IOException;
+    public void readExcel(String filename) throws Exception;
     public String readOnlineExcel(List<LinkedHashMap<String, String>> data,String region,String statistics,
                                   String sign_ways,String pay_ways, String startDate,String endDate,
-                                  String myFilePath, String nowTime) throws IOException;
-    public void writeExcel(String filepath) throws IOException;
+                                  String myFilePath, String nowTime) throws Exception;
+    public void writeExcel(String filepath) throws Exception;
     public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException;
 }

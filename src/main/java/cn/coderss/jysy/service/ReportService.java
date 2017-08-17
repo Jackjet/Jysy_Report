@@ -12,11 +12,11 @@ public interface ReportService {
                            String region, String regionId,
                            String people, String sign_ways,
                            String pay_ways, String myFilePath,
-                           String nowTime);
+                           String nowTime) throws Exception;
 
     public String detail(String start_date,String end_date,
                          String region, String regionId,
                          String statistics, String sign_ways,
                          String pay_ways, String myFilePath,
-                         String nowTime);
+                         String nowTime) throws Exception;
 }

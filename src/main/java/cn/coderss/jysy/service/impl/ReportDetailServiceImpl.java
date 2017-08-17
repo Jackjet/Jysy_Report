@@ -37,79 +37,65 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     Logger logger = LoggerFactory.getLogger(ReportDetailServiceImpl.class);
 
     @Override
-    public void readExcel(String filename) throws IOException {
+    public void readExcel(String filename) throws Exception {
         InputStream inputStream = null;
         Workbook wb = null;
-        try {
-            inputStream = new FileInputStream(filename);
-            wb = new XSSFWorkbook(inputStream);
-            Sheet sheet = wb.getSheetAt(0);
-            Iterator<Row> rows = sheet.rowIterator();
-            while (rows.hasNext()){
-                Row row = rows.next();
-                String province = row.getCell(0).toString();
-                if (!province.equals("省") && !array_province.contains(province)){
-                    array_province.add(province);
-                }
-                if (province.equals("省")){
-                    Iterator<Cell> cells = row.cellIterator();
-                    while (cells.hasNext()){
-                        head_title.add(cells.next().toString());
-                    }
+        inputStream = new FileInputStream(filename);
+        wb = new XSSFWorkbook(inputStream);
+        Sheet sheet = wb.getSheetAt(0);
+        Iterator<Row> rows = sheet.rowIterator();
+        while (rows.hasNext()){
+            Row row = rows.next();
+            String province = row.getCell(0).toString();
+            if (!province.equals("省") && !array_province.contains(province)){
+                array_province.add(province);
+            }
+        }
+
+        for (String province_str: array_province) {
+            Sheet sheet1 = wb.getSheetAt(0);
+            Iterator<Row> rows1 = sheet1.rowIterator();
+            ArrayList<JysyModel> da = new ArrayList<JysyModel>();
+            while (rows1.hasNext()){
+                Row row = rows1.next();
+                if(province_str.equals(row.getCell(0).toString())){
+                    JysyModel model = new JysyModel(row.getCell(0).toString(),
+                            row.getCell(1)==null ? "" : row.getCell(1).toString(),
+                            row.getCell(2)==null ? "" : row.getCell(2).toString(),
+                            row.getCell(3)==null ? "" : row.getCell(3).toString(),
+                            row.getCell(4)==null ? "" : row.getCell(4).toString(),
+                            row.getCell(5)==null ? "" : row.getCell(5).toString(),
+                            row.getCell(6)==null ? "" : row.getCell(6).toString(),
+                            row.getCell(7)==null ? "" : row.getCell(7).toString(),
+                            row.getCell(8)==null ? "" : row.getCell(8).toString(),
+                            row.getCell(9)==null ? "" : row.getCell(9).toString(),
+                            row.getCell(10)==null ? "" : row.getCell(10).toString(),
+                            row.getCell(11)==null ? "" : row.getCell(11).toString(),
+                            row.getCell(12)==null ? "" : row.getCell(12).toString(),
+                            row.getCell(13)==null ? "" : row.getCell(13).toString(),
+                            row.getCell(14)==null ? "" : row.getCell(14).toString(),
+                            row.getCell(15)==null ? "" : row.getCell(15).toString(),
+                            row.getCell(16)==null ? "" : row.getCell(16).toString(),
+                            row.getCell(17)==null ? "" : row.getCell(17).toString(),
+                            row.getCell(18)==null ? "" : row.getCell(18).toString(),
+                            row.getCell(19)==null ? "" : row.getCell(19).toString(),
+                            row.getCell(20)==null ? "" : row.getCell(20).toString(),
+                            row.getCell(21)==null ? "" : row.getCell(21).toString(),
+                            row.getCell(22)==null ? "" : row.getCell(22).toString()
+                    );
+                    da.add(model);
                 }
             }
-
-            for (String province_str: array_province) {
-                Sheet sheet1 = wb.getSheetAt(0);
-                Iterator<Row> rows1 = sheet1.rowIterator();
-                ArrayList<JysyModel> da = new ArrayList<JysyModel>();
-                while (rows1.hasNext()){
-                    Row row = rows1.next();
-                    if(province_str.equals(row.getCell(0).toString())){
-                        JysyModel model = new JysyModel(row.getCell(0).toString(),
-                                row.getCell(1)==null ? "" : row.getCell(1).toString(),
-                                row.getCell(2)==null ? "" : row.getCell(2).toString(),
-                                row.getCell(3)==null ? "" : row.getCell(3).toString(),
-                                row.getCell(4)==null ? "" : row.getCell(4).toString(),
-                                row.getCell(5)==null ? "" : row.getCell(5).toString(),
-                                row.getCell(6)==null ? "" : row.getCell(6).toString(),
-                                row.getCell(7)==null ? "" : row.getCell(7).toString(),
-                                row.getCell(8)==null ? "" : row.getCell(8).toString(),
-                                row.getCell(9)==null ? "" : row.getCell(9).toString(),
-                                row.getCell(10)==null ? "" : row.getCell(10).toString(),
-                                row.getCell(11)==null ? "" : row.getCell(11).toString(),
-                                row.getCell(12)==null ? "" : row.getCell(12).toString(),
-                                row.getCell(13)==null ? "" : row.getCell(13).toString(),
-                                row.getCell(14)==null ? "" : row.getCell(14).toString(),
-                                row.getCell(15)==null ? "" : row.getCell(15).toString(),
-                                row.getCell(16)==null ? "" : row.getCell(16).toString(),
-                                row.getCell(17)==null ? "" : row.getCell(17).toString(),
-                                row.getCell(18)==null ? "" : row.getCell(18).toString(),
-                                row.getCell(19)==null ? "" : row.getCell(19).toString(),
-                                row.getCell(20)==null ? "" : row.getCell(20).toString(),
-                                row.getCell(21)==null ? "" : row.getCell(21).toString(),
-                                row.getCell(22)==null ? "" : row.getCell(22).toString()
-                        );
-                        da.add(model);
-                    }
-                }
-                data.put(province_str,da);
-            }
-
-
+            data.put(province_str,da);
         }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
-        finally {
-            inputStream.close();
-        }
+        inputStream.close();
+
     }
 
     @Override
     public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData,String region,String statistics,
                                   String sign_ways,String pay_ways,String startDate,String endDate,
-                                  String myFilePath, String nowTime) throws IOException {
+                                  String myFilePath, String nowTime) throws Exception {
         head_title.add("省");
         head_title.add("市");
         head_title.add("县");
@@ -145,60 +131,52 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
         for (int i=0; i<onlineData.size(); i++){
             LinkedHashMap<String,String> map = onlineData.get(i);
-            try {
-                XSSFRow row = null;
-                //省份统计限制
-                if(map.get("province")!= null && !map.get("province").equals(region) && !region.equals("全国")){
-                    logger.info("省份过滤");
-                    continue;
-                }
-                //注册方式限制
-                if(map.get("sign_ways")!= null && !map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
-                    logger.info("注册方式限制过滤");
-                    continue;
-                }
-                //支付方式限制
-                if(map.get("pay_ways")!= null && !map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
-                    logger.info("支付方式限制过滤");
-                    continue;
-                }
-                //如果是统计方式为注册用户或者支付用户
-                Date pay_time = null;
-                Date createtime = null;
-                if(map.get("pay_time") != null){
-                    pay_time = new Date(dateFormat.parse(map.get("pay_time").toString()).getTime());
-                }
-                if(map.get("createtime") != null){
-                    createtime = new Date(dateFormat.parse(map.get("createtime").toString()).getTime());
-                }
-                try {
-                    if(statistics.equals("支付用户") && (
-                            !(pay_time.getTime() < dateFormat.parse(endDate).getTime())
-                                    || !(pay_time.getTime() > dateFormat.parse(startDate).getTime())
-                    )
-                            ){
-                        continue;
-                    }
-                    else if(statistics.equals("注册用户") && (
-                            !(createtime.getTime() < dateFormat.parse(endDate).getTime())
-                                    || !(createtime.getTime() > dateFormat.parse(startDate).getTime())
-                    )){
-                        continue;
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                row = sheet.createRow(i+1);
-                int index = 0;
-                for (Map.Entry<String,String> m : map.entrySet()){
-                    row.createCell(index++).setCellValue(m.getValue());
-                }
+            XSSFRow row = null;
+            //省份统计限制
+            if(map.get("province")!= null && !map.get("province").equals(region) && !region.equals("全国")){
+                logger.info("省份过滤");
+                continue;
             }
-            catch (Exception ex){
-                System.out.println(map);
-                logger.info(ex.getMessage());
+            //注册方式限制
+            if(map.get("sign_ways")!= null && !map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
+                logger.info("注册方式限制过滤");
+                continue;
+            }
+            //支付方式限制
+            if(map.get("pay_ways")!= null && !map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
+                logger.info("支付方式限制过滤");
+                continue;
+            }
+            //如果是统计方式为注册用户或者支付用户
+            Date pay_time = null;
+            Date createtime = null;
+            if(map.get("pay_time") != null){
+                pay_time = new Date(dateFormat.parse(map.get("pay_time").toString()).getTime());
+            }
+            if(map.get("createtime") != null){
+                createtime = new Date(dateFormat.parse(map.get("createtime").toString()).getTime());
+            }
 
+            if(statistics.equals("支付用户") && (
+                    !(pay_time.getTime() < dateFormat.parse(endDate).getTime())
+                            || !(pay_time.getTime() > dateFormat.parse(startDate).getTime())
+            )
+                    ){
+                continue;
             }
+            else if(statistics.equals("注册用户") && (
+                    !(createtime.getTime() < dateFormat.parse(endDate).getTime())
+                            || !(createtime.getTime() > dateFormat.parse(startDate).getTime())
+            )){
+                continue;
+            }
+
+            row = sheet.createRow(i+1);
+            int index = 0;
+            for (Map.Entry<String,String> m : map.entrySet()){
+                row.createCell(index++).setCellValue(m.getValue());
+            }
+
         }
 
 
@@ -216,6 +194,9 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             //打包传送出来
             FileUtilitys.fileToZip(myFilePath, myFilePath, nowTime);
 
+            //清空数据
+            clearData();
+
             return "redirect:/report/" + myFilePath + nowTime + ".zip";
         } catch (Exception e) {
             return "上传失败 " + filepath + " => " + e.getMessage();
@@ -224,7 +205,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     }
 
     @Override
-    public void writeExcel(String filepath) throws IOException {
+    public void writeExcel(String filepath) throws Exception {
         FileOutputStream outStream = null;
         for (String provinceName:array_province) {
             ArrayList<JysyModel> arr = data.get(provinceName);
@@ -276,24 +257,12 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             }
             if (provinceName != "省"){
                 if (filepath.charAt(filepath.length()-1) == '/'){
-                    try {
-                        outStream = new FileOutputStream(filepath+ PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
-                    } catch (PinyinException e) {
-                        e.printStackTrace();
-                    }
+                    outStream = new FileOutputStream(filepath+ PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
                 }
                 else{
-                    try {
-                        outStream = new FileOutputStream(filepath+"/"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
-                    } catch (PinyinException e) {
-                        e.printStackTrace();
-                    }
+                    outStream = new FileOutputStream(filepath+"/"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
                 }
-                try {
-                    logger.info("文件地址:"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx -- "+provinceName);
-                } catch (PinyinException e) {
-                    e.printStackTrace();
-                }
+                logger.info("文件地址:"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx -- "+provinceName);
                 wb.write(outStream);
                 outStream.flush();
                 outStream.close();
@@ -339,8 +308,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
 
     public void clearData(){
-        ReportDetailServiceImpl.array_province = null;
-        ReportDetailServiceImpl.data = null;
-        ReportDetailServiceImpl.head_title = null;
+        array_province.clear();
+        data.clear();
+        head_title.clear();
     }
 }

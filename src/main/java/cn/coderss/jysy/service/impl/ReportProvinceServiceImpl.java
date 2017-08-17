@@ -494,7 +494,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
 
     public void clearData(){
-        ReportProvinceServiceImpl.excelData = null;
+        ReportProvinceServiceImpl.excelData.clear();
         ReportProvinceServiceImpl.provinceList.clear();
     }
 

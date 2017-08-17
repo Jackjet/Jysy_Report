@@ -45,7 +45,7 @@ public class ReportServiceImpl implements ReportService {
                          String region, String regionId,
                          String statistics, String sign_ways,
                          String pay_ways, String myFilePath,
-                         String nowTime){
+                         String nowTime) throws Exception{
         String endDateStr = end_date;
         String startDateStr = start_date;
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
@@ -224,33 +224,33 @@ public class ReportServiceImpl implements ReportService {
                 ")TT\n" +
                 "\n";
         logger.info(sql);
-        sql = "SELECT `tmp_jysy_stu`.`province`,\n" +
-                "    `tmp_jysy_stu`.`city`,\n" +
-                "    `tmp_jysy_stu`.`county` as `country`,\n" +
-                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
-                "    `tmp_jysy_stu`.`org_name_second`,\n" +
-                "    `tmp_jysy_stu`.`org_name`,\n" +
-                "    `tmp_jysy_stu`.`name`,\n" +
-                "    `tmp_jysy_stu`.`fullname`,\n" +
-                "    `tmp_jysy_stu`.`sex`,\n" +
-                "    `tmp_jysy_stu`.`birthday`,\n" +
-                "    `tmp_jysy_stu`.`mail`,\n" +
-                "    `tmp_jysy_stu`.`position`,\n" +
-                "    `tmp_jysy_stu`.`sign_ways`,\n" +
-                "    `tmp_jysy_stu`.`createtime`,\n" +
-                "    `tmp_jysy_stu`.`order_states`,\n" +
-                "    `tmp_jysy_stu`.`pay_ways`,\n" +
-                "    `tmp_jysy_stu`.`pay_time`,\n" +
-                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
-                "    `tmp_jysy_stu`.`address`,\n" +
-                "    `tmp_jysy_stu`.`periods`,\n" +
-                "    `tmp_jysy_stu`.`cer_states`,\n" +
-                "    `tmp_jysy_stu`.`cer_time`,\n" +
-                "    `tmp_jysy_stu`.`cer_code`,\n" +
-                "    `tmp_jysy_stu`.`mobile`,\n" +
-                "    `tmp_jysy_stu`.`createuser`\n" +
-                "FROM `tempdata`.`tmp_jysy_stu`;";
-        logger.info(sql);
+//        sql = "SELECT `tmp_jysy_stu`.`province`,\n" +
+//                "    `tmp_jysy_stu`.`city`,\n" +
+//                "    `tmp_jysy_stu`.`county` as `country`,\n" +
+//                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
+//                "    `tmp_jysy_stu`.`org_name_second`,\n" +
+//                "    `tmp_jysy_stu`.`org_name`,\n" +
+//                "    `tmp_jysy_stu`.`name`,\n" +
+//                "    `tmp_jysy_stu`.`fullname`,\n" +
+//                "    `tmp_jysy_stu`.`sex`,\n" +
+//                "    `tmp_jysy_stu`.`birthday`,\n" +
+//                "    `tmp_jysy_stu`.`mail`,\n" +
+//                "    `tmp_jysy_stu`.`position`,\n" +
+//                "    `tmp_jysy_stu`.`sign_ways`,\n" +
+//                "    `tmp_jysy_stu`.`createtime`,\n" +
+//                "    `tmp_jysy_stu`.`order_states`,\n" +
+//                "    `tmp_jysy_stu`.`pay_ways`,\n" +
+//                "    `tmp_jysy_stu`.`pay_time`,\n" +
+//                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
+//                "    `tmp_jysy_stu`.`address`,\n" +
+//                "    `tmp_jysy_stu`.`periods`,\n" +
+//                "    `tmp_jysy_stu`.`cer_states`,\n" +
+//                "    `tmp_jysy_stu`.`cer_time`,\n" +
+//                "    `tmp_jysy_stu`.`cer_code`,\n" +
+//                "    `tmp_jysy_stu`.`mobile`,\n" +
+//                "    `tmp_jysy_stu`.`createuser`\n" +
+//                "FROM `tempdata`.`tmp_jysy_stu` where province='浙江省'; ";
+//        logger.info(sql);
         List<LinkedHashMap<String,String>> data = this.secondJdbcTemplate.query(sql ,(rs, num)->{
             return new LinkedHashMap<String,String>(){{
                 put("province", rs.getString("province"));
@@ -278,17 +278,13 @@ public class ReportServiceImpl implements ReportService {
                 put("cer_code", rs.getString("cer_code"));
             }};
         });
-        try {
-            String result =  service.readOnlineExcel(data, region, statistics,
-                    sign_ways, pay_ways, start_date, end_date, myFilePath, nowTime);
-            //清理资源
-            data = null;
-            Runtime.getRuntime().gc();
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "ok";
+        String result =  service.readOnlineExcel(data, region, statistics,
+                sign_ways, pay_ways, start_date, end_date, myFilePath, nowTime);
+        //清理资源
+        data = null;
+        Runtime.getRuntime().gc();
+        return result;
+
     }
 
     @Override
@@ -296,7 +292,7 @@ public class ReportServiceImpl implements ReportService {
                            String region, String regionId,
                            String people, String sign_ways,
                            String pay_ways, String myFilePath,
-                           String nowTime){
+                           String nowTime) throws Exception{
         String delSql = " truncate table tempdata.tmp_jysy_all;";
         this.jdbcTemplate.execute(delSql);
         String regionSql ="SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n" +
@@ -1119,16 +1115,11 @@ public class ReportServiceImpl implements ReportService {
             }};
         });
 
-        try {
-            String result = provinceService.readOnlineExcel(all, province, myFilePath, nowTime);
-            all = null;
-            province = null;
-            Runtime.getRuntime().gc();
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "ok";
+        String result = provinceService.readOnlineExcel(all, province, myFilePath, nowTime);
+        all.clear();
+        province.clear();
+        Runtime.getRuntime().gc();
+        return result;
     }
 
 }

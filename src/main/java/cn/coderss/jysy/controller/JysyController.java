@@ -257,6 +257,8 @@ public class JysyController {
             return result;
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "ok";
     }

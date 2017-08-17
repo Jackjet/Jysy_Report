@@ -56,6 +56,10 @@ public class TaskController {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                logger.info("consumer has exception InterruptedException");
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.info("consumer has exception Exception");
             }
         }
     };
