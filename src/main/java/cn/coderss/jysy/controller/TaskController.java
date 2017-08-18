@@ -10,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -113,12 +115,24 @@ public class TaskController {
     }
 
     @RequestMapping("/states")
-    public String states(){
-        return queue.size() > 0?"有任务":"无任务";
+    @CrossOrigin(origins = "*")
+    public HashMap<String,String> states(){
+        HashMap<String,String> result = new HashMap<>();
+        if(queue.size() > 0){
+            result.put("states","-1");
+            result.put("msg","有任务");
+        }
+        else {
+            result.put("states","1");
+            result.put("msg","无任务");
+        }
+        return result;
     }
 
     @RequestMapping("/create")
-    public String createTask(JysyReqModel model){
+    @CrossOrigin(origins = "*")
+    public HashMap<String,String> createTask(JysyReqModel model){
+        HashMap<String,String> resultMap = new HashMap<>();
         StringBuilder stringBuilder = new StringBuilder();
         try {
             Class modelClass = model.getClass();
@@ -140,13 +154,20 @@ public class TaskController {
             e.printStackTrace();
         }
         if(stringBuilder.length() > 0){
-            return stringBuilder.toString();
+            resultMap.put("msg", stringBuilder.toString());
+            resultMap.put("states", "-1");
         }
-        if(model.getEnd_date()==null){
-            return "end_date 不能为空";
-        }
+
         boolean result = queue.offer(model);
-        return result?"任务创建成功":"任务创建失败";
+        if(result){
+            resultMap.put("msg", "任务创建成功");
+            resultMap.put("states", "1");
+        }
+        else{
+            resultMap.put("msg", "任务创建失败");
+            resultMap.put("states", "-1");
+        }
+        return resultMap;
     }
 
 }
