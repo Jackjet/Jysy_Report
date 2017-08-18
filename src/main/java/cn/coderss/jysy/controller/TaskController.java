@@ -87,11 +87,12 @@ public class TaskController {
                 reportService.province(taskModel.getStart_date(), taskModel.getEnd_date(),
                         taskModel.getRegion(), taskModel.getRegionId(), taskModel.getPeople(),
                         taskModel.getSign_ways(), taskModel.getPay_ways(), dirs, nowTime);
-                reportService.detail(taskModel.getStart_date(), taskModel.getEnd_date(),
+                String zipFilePath = reportService.detail(taskModel.getStart_date(), taskModel.getEnd_date(),
                         taskModel.getRegion(), taskModel.getRegionId(), taskModel.getPeople(),
                         taskModel.getSign_ways(), taskModel.getPay_ways(), dirs, nowTime);
 
-                String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` SET `result_states`='119',`state`='119' " +
+                String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` " +
+                        "SET `result_states`='119',`states`='119',result_file='"+zipFilePath+"' " +
                         "WHERE `code`='"+code+"';\n";
                 jdbcTemplate.execute(updateCeleryTaskSql);
 

@@ -194,7 +194,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             //清空数据
             clearData();
 
-            return "redirect:/report/" + myFilePath + nowTime + ".zip";
+            return  myFilePath + nowTime + ".zip";
         } catch (Exception e) {
             return "上传失败 " + filepath + " => " + e.getMessage();
         }

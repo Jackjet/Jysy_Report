@@ -53,7 +53,6 @@ public class IndexController {
         return reportProvinceService.doExcel(file, "");
     }
 
-
     @GetMapping("/report_detail")
     public String reportDetail(){
         return "report_detail";
