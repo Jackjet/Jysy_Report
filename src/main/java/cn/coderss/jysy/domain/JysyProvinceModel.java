@@ -3,11 +3,12 @@ package cn.coderss.jysy.domain;
 /**
  * Created with report.
  * User: shenwei
- * Date: 17/6/30
- * Time: 下午2:57
+ * Date: 2017/8/24
+ * Time: 上午9:50
  * Blog: http://www.coderss.cn
  */
-public class JysyProvinceModel{
+
+public class JysyProvinceModel {
     public String province;
     public String city;
     public String contry;
@@ -30,23 +31,12 @@ public class JysyProvinceModel{
         this.manager = manager;
     }
 
-    @Override
     public String toString() {
-        return "JysyProvinceModel{" +
-                "province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", contry='" + contry + '\'' +
-                ", sum='" + sum + '\'' +
-                ", hight='" + hight + '\'' +
-                ", middle='" + middle + '\'' +
-                ", base='" + base + '\'' +
-                ", sen='" + sen + '\'' +
-                ", manager='" + manager + '\'' +
-                '}';
+        return "JysyProvinceModel{province='" + this.province + '\'' + ", city='" + this.city + '\'' + ", contry='" + this.contry + '\'' + ", sum='" + this.sum + '\'' + ", hight='" + this.hight + '\'' + ", middle='" + this.middle + '\'' + ", base='" + this.base + '\'' + ", sen='" + this.sen + '\'' + ", manager='" + this.manager + '\'' + '}';
     }
 
     public String getProvince() {
-        return province;
+        return this.province;
     }
 
     public void setProvince(String province) {
@@ -54,7 +44,7 @@ public class JysyProvinceModel{
     }
 
     public String getCity() {
-        return city;
+        return this.city;
     }
 
     public void setCity(String city) {
@@ -62,7 +52,7 @@ public class JysyProvinceModel{
     }
 
     public String getContry() {
-        return contry;
+        return this.contry;
     }
 
     public void setContry(String contry) {
@@ -70,7 +60,7 @@ public class JysyProvinceModel{
     }
 
     public String getSum() {
-        return sum;
+        return this.sum;
     }
 
     public void setSum(String sum) {
@@ -78,7 +68,7 @@ public class JysyProvinceModel{
     }
 
     public String getHight() {
-        return hight;
+        return this.hight;
     }
 
     public void setHight(String hight) {
@@ -86,7 +76,7 @@ public class JysyProvinceModel{
     }
 
     public String getMiddle() {
-        return middle;
+        return this.middle;
     }
 
     public void setMiddle(String middle) {
@@ -94,7 +84,7 @@ public class JysyProvinceModel{
     }
 
     public String getBase() {
-        return base;
+        return this.base;
     }
 
     public void setBase(String base) {
@@ -102,7 +92,7 @@ public class JysyProvinceModel{
     }
 
     public String getSen() {
-        return sen;
+        return this.sen;
     }
 
     public void setSen(String sen) {
@@ -110,10 +100,11 @@ public class JysyProvinceModel{
     }
 
     public String getManager() {
-        return manager;
+        return this.manager;
     }
 
     public void setManager(String manager) {
         this.manager = manager;
     }
 }
+

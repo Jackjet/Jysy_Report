@@ -3,115 +3,88 @@ package cn.coderss.jysy.service.impl;
 import cn.coderss.jysy.domain.JysyModel;
 import cn.coderss.jysy.service.ReportDetailService;
 import cn.coderss.jysy.utility.FileUtilitys;
-import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
-import org.apache.poi.ss.usermodel.Cell;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.UUID;
+import java.util.Map.Entry;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-/**
- * Created with report.
- * User: shenwei
- * Date: 17/6/30
- * Time: 下午3:03
- * Blog: http://www.coderss.cn
- */
 @Service
 public class ReportDetailServiceImpl implements ReportDetailService {
-    public static HashMap<String, ArrayList<JysyModel>> data = new HashMap<String, ArrayList<JysyModel>>();
-    public static ArrayList<String> array_province = new ArrayList<String>();
-    public static ArrayList<String> head_title = new ArrayList<String>();
+    public static HashMap<String, ArrayList<JysyModel>> data = new HashMap();
+    public static ArrayList<String> array_province = new ArrayList();
+    public static ArrayList<String> head_title = new ArrayList();
     Logger logger = LoggerFactory.getLogger(ReportDetailServiceImpl.class);
 
-
-
-
-    @Override
-    public void readExcel(String filename) throws IOException {
-        InputStream inputStream = null;
-        Workbook wb = null;
-        try {
-            inputStream = new FileInputStream(filename);
-            wb = new XSSFWorkbook(inputStream);
-            Sheet sheet = wb.getSheetAt(0);
-            Iterator<Row> rows = sheet.rowIterator();
-            while (rows.hasNext()){
-                Row row = rows.next();
-                String province = row.getCell(0).toString();
-                if (!province.equals("省") && !array_province.contains(province)){
-                    array_province.add(province);
-                }
-                if (province.equals("省")){
-                    Iterator<Cell> cells = row.cellIterator();
-                    while (cells.hasNext()){
-                        head_title.add(cells.next().toString());
-                    }
-                }
-            }
-
-            for (String province_str: array_province) {
-                Sheet sheet1 = wb.getSheetAt(0);
-                Iterator<Row> rows1 = sheet1.rowIterator();
-                ArrayList<JysyModel> da = new ArrayList<JysyModel>();
-                while (rows1.hasNext()){
-                    Row row = rows1.next();
-                    if(province_str.equals(row.getCell(0).toString())){
-                        JysyModel model = new JysyModel(row.getCell(0).toString(),
-                                row.getCell(1)==null ? "" : row.getCell(1).toString(),
-                                row.getCell(2)==null ? "" : row.getCell(2).toString(),
-                                row.getCell(3)==null ? "" : row.getCell(3).toString(),
-                                row.getCell(4)==null ? "" : row.getCell(4).toString(),
-                                row.getCell(5)==null ? "" : row.getCell(5).toString(),
-                                row.getCell(6)==null ? "" : row.getCell(6).toString(),
-                                row.getCell(7)==null ? "" : row.getCell(7).toString(),
-                                row.getCell(8)==null ? "" : row.getCell(8).toString(),
-                                row.getCell(9)==null ? "" : row.getCell(9).toString(),
-                                row.getCell(10)==null ? "" : row.getCell(10).toString(),
-                                row.getCell(11)==null ? "" : row.getCell(11).toString(),
-                                row.getCell(12)==null ? "" : row.getCell(12).toString(),
-                                row.getCell(13)==null ? "" : row.getCell(13).toString(),
-                                row.getCell(14)==null ? "" : row.getCell(14).toString(),
-                                row.getCell(15)==null ? "" : row.getCell(15).toString(),
-                                row.getCell(16)==null ? "" : row.getCell(16).toString(),
-                                row.getCell(17)==null ? "" : row.getCell(17).toString(),
-                                row.getCell(18)==null ? "" : row.getCell(18).toString(),
-                                row.getCell(19)==null ? "" : row.getCell(19).toString(),
-                                row.getCell(20)==null ? "" : row.getCell(20).toString(),
-                                row.getCell(21)==null ? "" : row.getCell(21).toString(),
-                                row.getCell(22)==null ? "" : row.getCell(22).toString()
-                        );
-                        da.add(model);
-                    }
-                }
-                data.put(province_str,da);
-            }
-
-
-        }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
-        finally {
-            inputStream.close();
-        }
+    public ReportDetailServiceImpl() {
     }
 
-    @Override
-    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData,String region,String statistics,
-                                  String sign_ways,String pay_ways,String startDate,String endDate) throws IOException {
+    public void readExcel(String filename) throws Exception {
+        this.logger.info("文件名:" + filename);
+        InputStream inputStream = null;
+        Workbook wb = null;
+        inputStream = new FileInputStream(filename);
+        wb = new XSSFWorkbook(inputStream);
+        Sheet sheet = wb.getSheetAt(0);
+        Iterator rows = sheet.rowIterator();
+
+        String province_str;
+        while(rows.hasNext()) {
+            Row row = (Row)rows.next();
+            province_str = row.getCell(0).toString();
+            if(!province_str.equals("省") && !array_province.contains(province_str)) {
+                array_province.add(province_str);
+            }
+        }
+
+        Iterator var13 = array_province.iterator();
+
+        while(var13.hasNext()) {
+            province_str = (String)var13.next();
+            Sheet sheet1 = wb.getSheetAt(0);
+            Iterator<Row> rows1 = sheet1.rowIterator();
+            ArrayList da = new ArrayList();
+
+            while(rows1.hasNext()) {
+                Row row = (Row)rows1.next();
+                if(province_str.equals(row.getCell(0).toString())) {
+                    JysyModel model = new JysyModel(row.getCell(0).toString(), row.getCell(1) == null?"":row.getCell(1).toString(), row.getCell(2) == null?"":row.getCell(2).toString(), row.getCell(3) == null?"":row.getCell(3).toString(), row.getCell(4) == null?"":row.getCell(4).toString(), row.getCell(5) == null?"":row.getCell(5).toString(), row.getCell(6) == null?"":row.getCell(6).toString(), row.getCell(7) == null?"":row.getCell(7).toString(), row.getCell(8) == null?"":row.getCell(8).toString(), row.getCell(9) == null?"":row.getCell(9).toString(), row.getCell(10) == null?"":row.getCell(10).toString(), row.getCell(11) == null?"":row.getCell(11).toString(), row.getCell(12) == null?"":row.getCell(12).toString(), row.getCell(13) == null?"":row.getCell(13).toString(), row.getCell(14) == null?"":row.getCell(14).toString(), row.getCell(15) == null?"":row.getCell(15).toString(), row.getCell(16) == null?"":row.getCell(16).toString(), row.getCell(17) == null?"":row.getCell(17).toString(), row.getCell(18) == null?"":row.getCell(18).toString(), row.getCell(19) == null?"":row.getCell(19).toString(), row.getCell(20) == null?"":row.getCell(20).toString(), row.getCell(21) == null?"":row.getCell(21).toString(), row.getCell(22) == null?"":row.getCell(22).toString());
+                    da.add(model);
+                }
+            }
+
+            data.put(province_str, da);
+        }
+
+        inputStream.close();
+    }
+
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData, String region, String statistics, String sign_ways, String pay_ways, String startDate, String endDate, String myFilePath, String nowTime) throws Exception {
         head_title.add("省");
         head_title.add("市");
         head_title.add("县");
@@ -135,191 +108,176 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         head_title.add("证书获得状态");
         head_title.add("证书获得时间");
         head_title.add("证书编码");
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("tmp");
         XSSFRow headRow = sheet.createRow(0);
-        for (int j=0; j<head_title.size(); j++){
-            headRow.createCell(j).setCellValue(head_title.get(j));
+
+        int row_index;
+        for(row_index = 0; row_index < head_title.size(); ++row_index) {
+            headRow.createCell(row_index).setCellValue((String)head_title.get(row_index));
         }
-        for (int i=0; i<onlineData.size(); i++){
-            LinkedHashMap<String,String> map = onlineData.get(i);
+
+        row_index = 0;
+
+        for(int i = 0; i < onlineData.size(); ++i) {
+            LinkedHashMap<String, String> map = (LinkedHashMap)onlineData.get(i);
             XSSFRow row = null;
-            //省份统计限制
-            if(!map.get("province").equals(region) && !region.equals("全国")){
-                continue;
-            }
-            //注册方式限制
-            if(!map.get("sign_ways").equals(sign_ways) && !sign_ways.equals("all")){
-                continue;
-            }
-            //支付方式限制
-            if(!map.get("pay_ways").equals(pay_ways) && !pay_ways.equals("all")){
-                continue;
-            }
-            //如果是统计方式为注册用户或者支付用户
-            Date pay_time = new Date(map.get("pay_time"));
-            Date createtime = new Date(map.get("createtime"));
-            try {
-                if(statistics.equals("支付用户") && (
-                        !(pay_time.getTime() < dateFormat.parse(endDate).getTime())
-                        || !(pay_time.getTime() > dateFormat.parse(startDate).getTime())
-                )
-                        ){
+            if((map.get("province") == null || ((String)map.get("province")).equals(region) || region.equals("全国")) && (map.get("sign_ways") == null || ((String)map.get("sign_ways")).equals(sign_ways) || sign_ways.equals("all")) && (map.get("order_states") == null || ((String)map.get("order_states")).equals(pay_ways) || pay_ways.equals("all"))) {
+                Date pay_time = null;
+                Date createtime = null;
+                if(map.get("pay_time") != null) {
+                    pay_time = new Date(dateFormat.parse(((String)map.get("pay_time")).toString()).getTime());
+                } else if(statistics.equals("支付用户") && pay_time == null) {
                     continue;
                 }
-                else if(statistics.equals("注册用户") && (
-                        !(createtime.getTime() < dateFormat.parse(endDate).getTime())
-                        || !(createtime.getTime() > dateFormat.parse(startDate).getTime())
-                        )){
+
+                if(map.get("createtime") != null) {
+                    createtime = new Date(dateFormat.parse(((String)map.get("createtime")).toString()).getTime());
+                } else if(createtime == null && statistics.equals("注册用户")) {
                     continue;
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            row = sheet.createRow(i+1);
-            int index = 0;
-            for (Map.Entry<String,String> m : map.entrySet()){
-                row.createCell(index++).setCellValue(m.getValue());
+
+                if((pay_time == null || !statistics.equals("支付用户") || pay_time.compareTo(dateFormat.parse(endDate)) < 0 && pay_time.compareTo(dateFormat.parse(startDate)) > 0) && (createtime == null || !statistics.equals("注册用户") || createtime.compareTo(dateFormat.parse(endDate)) < 0 && createtime.compareTo(dateFormat.parse(startDate)) > 0)) {
+                    row = sheet.createRow(row_index + 1);
+                    ++row_index;
+                    int index = 0;
+                    Iterator var21 = map.entrySet().iterator();
+
+                    while(var21.hasNext()) {
+                        Entry<String, String> m = (Entry)var21.next();
+                        row.createCell(index++).setCellValue((String)m.getValue());
+                    }
+                }
             }
         }
 
-
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        String nowTime = format.format(new Date());
-        String datePath = "downloads/"+nowTime;
-        String uuid = UUID.randomUUID().toString();
-        String dirs = datePath +"/"+uuid +"/";
-        FileUtilitys.makeDir(dirs);
-        String filepath = datePath +"/"+uuid+"/detail.xlsx";
+        this.logger.info("创建相关文件");
+        String filepath = "/var/www/" + myFilePath + "detail.xlsx";
         FileOutputStream outStream = new FileOutputStream(filepath);
         wb.write(outStream);
         outStream.flush();
         outStream.close();
+        this.logger.info("创建相关文件完成");
+        onlineData.clear();
+        Runtime.getRuntime().gc();
+        this.logger.info("清楚onlineData成功");
+
         try {
             this.readExcel(filepath);
-            this.writeExcel(dirs);
-
-            //打包传送出来
-            FileUtilitys.fileToZip(dirs, dirs, nowTime);
-
-            return "redirect:/report/" + dirs + nowTime + ".zip";
-        } catch (Exception e) {
-            return "上传失败 " + filepath + " => " + e.getMessage();
+            this.writeExcel(myFilePath);
+            FileUtilitys.fileToZip(myFilePath, myFilePath, nowTime);
+            this.clearData();
+            return myFilePath + nowTime + ".zip";
+        } catch (Exception var23) {
+            return "上传失败 " + filepath + " => " + var23.getMessage();
         }
-
     }
 
-    @Override
-    public void writeExcel(String filepath) throws IOException {
+    public void writeExcel(String filepath) throws Exception {
         FileOutputStream outStream = null;
-        for (String provinceName:array_province) {
-            ArrayList<JysyModel> arr = data.get(provinceName);
+        Iterator var3 = array_province.iterator();
+
+        while(var3.hasNext()) {
+            String provinceName = (String)var3.next();
+            this.logger.info("省份:" + provinceName);
+            ArrayList<JysyModel> arr = (ArrayList)data.get(provinceName);
             XSSFWorkbook wb = new XSSFWorkbook();
             XSSFSheet sheet = wb.createSheet("tmp");
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0,head_title.size()));//合并单元格
-
-
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, head_title.size()));
             XSSFCellStyle cellStyle = wb.createCellStyle();
-            cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 居中
-
+            cellStyle.setAlignment((short) 2);
             XSSFRow head_top = sheet.createRow(0);
             XSSFCell top_cell = head_top.createCell(0);
             top_cell.setCellValue(provinceName + "在线培训学员注册与学习情况统计表");
             top_cell.setCellStyle(cellStyle);
-
-
-
             XSSFRow head = sheet.createRow(1);
-            for (int i=0;i <head_title.size(); i++){
-                head.createCell(i).setCellValue(head_title.get(i));
+
+            int i;
+            for(i = 0; i < head_title.size(); ++i) {
+                head.createCell(i).setCellValue((String)head_title.get(i));
             }
 
-            for(int i=0; i<arr.size();i++){
-                XSSFRow row = sheet.createRow(i+2);
-                row.createCell(0).setCellValue(arr.get(i).getProvinceName());
-                row.createCell(1).setCellValue(arr.get(i).getCityName());
-                row.createCell(2).setCellValue(arr.get(i).getCountyName());
-                row.createCell(3).setCellValue(arr.get(i).getSchoolName());
-                row.createCell(4).setCellValue(arr.get(i).getDanwei_1());
-                row.createCell(5).setCellValue(arr.get(i).getDanwei_2());
-                row.createCell(6).setCellValue(arr.get(i).getUserName());
-                row.createCell(7).setCellValue(arr.get(i).getFullName());
-                row.createCell(8).setCellValue(arr.get(i).getSex());
-                row.createCell(9).setCellValue(arr.get(i).getBirthDay());
-                row.createCell(10).setCellValue(arr.get(i).getMail());
-                row.createCell(11).setCellValue(arr.get(i).getZhiWu());
-                row.createCell(12).setCellValue(arr.get(i).getSignWays());
-                row.createCell(13).setCellValue(arr.get(i).getCreatetime());
-                row.createCell(14).setCellValue(arr.get(i).getPaySatatus());
-                row.createCell(15).setCellValue(arr.get(i).getPayWays());
-                row.createCell(16).setCellValue(arr.get(i).getPayTimes());
-                row.createCell(17).setCellValue(arr.get(i).getFapiao());
-                row.createCell(18).setCellValue(arr.get(i).getDetailAddress());
-                row.createCell(19).setCellValue(arr.get(i).getFinishTime());
-                row.createCell(20).setCellValue(arr.get(i).getCerStatus());
-                row.createCell(21).setCellValue(arr.get(i).getCerTime());
-                row.createCell(22).setCellValue(arr.get(i).getCerCode());
+            for(i = 0; i < arr.size(); ++i) {
+                XSSFRow row = sheet.createRow(i + 2);
+                row.createCell(0).setCellValue(((JysyModel)arr.get(i)).getProvinceName());
+                row.createCell(1).setCellValue(((JysyModel)arr.get(i)).getCityName());
+                row.createCell(2).setCellValue(((JysyModel)arr.get(i)).getCountyName());
+                row.createCell(3).setCellValue(((JysyModel)arr.get(i)).getSchoolName());
+                row.createCell(4).setCellValue(((JysyModel)arr.get(i)).getDanwei_1());
+                row.createCell(5).setCellValue(((JysyModel)arr.get(i)).getDanwei_2());
+                row.createCell(6).setCellValue(((JysyModel)arr.get(i)).getUserName());
+                row.createCell(7).setCellValue(((JysyModel)arr.get(i)).getFullName());
+                row.createCell(8).setCellValue(((JysyModel)arr.get(i)).getSex());
+                row.createCell(9).setCellValue(((JysyModel)arr.get(i)).getBirthDay());
+                row.createCell(10).setCellValue(((JysyModel)arr.get(i)).getMail());
+                row.createCell(11).setCellValue(((JysyModel)arr.get(i)).getZhiWu());
+                row.createCell(12).setCellValue(((JysyModel)arr.get(i)).getSignWays());
+                row.createCell(13).setCellValue(((JysyModel)arr.get(i)).getCreatetime());
+                row.createCell(14).setCellValue(((JysyModel)arr.get(i)).getPaySatatus());
+                row.createCell(15).setCellValue(((JysyModel)arr.get(i)).getPayWays());
+                row.createCell(16).setCellValue(((JysyModel)arr.get(i)).getPayTimes());
+                row.createCell(17).setCellValue(((JysyModel)arr.get(i)).getFapiao());
+                row.createCell(18).setCellValue(((JysyModel)arr.get(i)).getDetailAddress());
+                row.createCell(19).setCellValue(((JysyModel)arr.get(i)).getFinishTime());
+                row.createCell(20).setCellValue(((JysyModel)arr.get(i)).getCerStatus());
+                row.createCell(21).setCellValue(((JysyModel)arr.get(i)).getCerTime());
+                row.createCell(22).setCellValue(((JysyModel)arr.get(i)).getCerCode());
             }
-            if (provinceName != "省"){
-                if (filepath.charAt(filepath.length()-1) == '/'){
-                    try {
-                        outStream = new FileOutputStream(filepath+ PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
-                    } catch (PinyinException e) {
-                        e.printStackTrace();
+
+            if(provinceName != "省") {
+                if(filepath.charAt(filepath.length() - 1) == 47) {
+                    if(provinceName.equals("陕西省")) {
+                        outStream = new FileOutputStream(filepath + "Shaanxi.xlsx");
+                    } else {
+                        outStream = new FileOutputStream(filepath + PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE) + ".xlsx");
                     }
+                } else if(provinceName.equals("陕西省")) {
+                    outStream = new FileOutputStream(filepath + "/" + "Shaanxi.xlsx");
+                } else {
+                    outStream = new FileOutputStream(filepath + "/" + PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE) + ".xlsx");
                 }
-                else{
-                    try {
-                        outStream = new FileOutputStream(filepath+"/"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx");
-                    } catch (PinyinException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    logger.info("文件地址:"+PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE)+".xlsx -- "+provinceName);
-                } catch (PinyinException e) {
-                    e.printStackTrace();
-                }
+
+                this.logger.info("文件地址:" + PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE) + ".xlsx -- " + provinceName);
                 wb.write(outStream);
                 outStream.flush();
                 outStream.close();
             }
         }
+
     }
 
-    @Override
-    public String doExcel(MultipartFile file) throws UnsupportedEncodingException {
+    public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException {
         String fileEncode = System.getProperty("file.encoding");
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String nowTime = format.format(new Date());
-        String datePath = "downloads/"+nowTime;
+        String datePath = "downloads/" + nowTime;
         String uuid = UUID.randomUUID().toString();
-        String fileName = datePath +"/"+uuid+"/"+ file.getOriginalFilename();
-        String dirs = datePath +"/"+uuid +"/";
+        String fileName = datePath + "/" + uuid + "/" + file.getOriginalFilename();
+        String dirs = datePath + "/" + uuid + "/";
         FileUtilitys.makeDir(dirs);
-        if (!file.isEmpty()) {
+        if(!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(fileName)));
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fileName)));
                 stream.write(bytes);
                 stream.close();
-
                 this.readExcel(fileName);
                 this.writeExcel(dirs);
-
-                //打包传送出来
                 FileUtilitys.fileToZip(dirs, dirs, nowTime);
-
+                this.clearData();
                 return "redirect:/report/" + dirs + nowTime + ".zip";
-            } catch (Exception e) {
-                return "上传失败 " + fileName + " => " + e.getMessage();
+            } catch (Exception var12) {
+                return "上传失败 " + fileName + " => " + var12.getMessage();
             }
         } else {
             return "上传失败 " + fileName + " 因为文件为空";
         }
+    }
+
+    public void clearData() {
+        array_province.clear();
+        data.clear();
+        head_title.clear();
     }
 }

@@ -15,9 +15,11 @@ import java.util.List;
  * Blog: http://www.coderss.cn
  */
 public interface ReportProvinceService {
-    public void readExcel(String inputFile);
-    public void writeExcel(String outFile);
-    public String readOnlineExcel(List<LinkedHashMap<String, String>> data,
-                                  List<LinkedHashMap<String, String>> province) throws IOException;
-    public String doExcel(MultipartFile file) throws UnsupportedEncodingException;
+    void readExcel(String var1);
+
+    void writeExcel(String var1, String var2, String var3);
+
+    String readOnlineExcel(List<LinkedHashMap<String, String>> var1, List<LinkedHashMap<String, String>> var2, String var3, String var4, String var5, String var6) throws IOException;
+
+    String doExcel(MultipartFile var1, String var2) throws UnsupportedEncodingException;
 }

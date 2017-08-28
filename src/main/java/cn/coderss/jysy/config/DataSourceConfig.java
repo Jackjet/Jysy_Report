@@ -32,9 +32,33 @@ public class DataSourceConfig {
         dataSource.setPassword(env.getProperty("spring.datasource.primary.password"));//密码
         dataSource.setDriverClassName(env.getProperty("spring.datasource.primary.driver-class-name"));
         dataSource.setInitialSize(2);
-        dataSource.setMaxActive(20);
-        dataSource.setMinIdle(10);
-        dataSource.setMaxWait(60000);
+        dataSource.setMaxActive(2);
+        dataSource.setMinIdle(1);
+        dataSource.setMaxWait(6000000);
+        dataSource.setMinEvictableIdleTimeMillis(320000);
+        dataSource.setMaxEvictableIdleTimeMillis(320000);
+        dataSource.setTimeBetweenEvictionRunsMillis(300000);
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setRemoveAbandoned(true);
+        dataSource.setRemoveAbandonedTimeout(300);
+        dataSource.setTestOnBorrow(true);
+        dataSource.setTestWhileIdle(true);
+        dataSource.setPoolPreparedStatements(false);
+        return dataSource;
+    }
+
+    @Bean(name = "thirdDataSource")
+    @Qualifier("thirdDataSource")
+    public DruidDataSource thridDataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(env.getProperty("spring.datasource.third.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.third.username"));//用户名
+        dataSource.setPassword(env.getProperty("spring.datasource.third.password"));//密码
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.third.driver-class-name"));
+        dataSource.setInitialSize(2);
+        dataSource.setMaxActive(2);
+        dataSource.setMinIdle(1);
+        dataSource.setMaxWait(6000000);
         dataSource.setMinEvictableIdleTimeMillis(320000);
         dataSource.setMaxEvictableIdleTimeMillis(320000);
         dataSource.setTimeBetweenEvictionRunsMillis(300000);
@@ -57,9 +81,9 @@ public class DataSourceConfig {
         dataSource.setPassword(env.getProperty("spring.datasource.secondary.password"));//密码
         dataSource.setDriverClassName(env.getProperty("spring.datasource.secondary.driver-class-name"));
         dataSource.setInitialSize(2);
-        dataSource.setMaxActive(20);
-        dataSource.setMinIdle(10);
-        dataSource.setMaxWait(60000);
+        dataSource.setMaxActive(2);
+        dataSource.setMinIdle(1);
+        dataSource.setMaxWait(6000000);
         dataSource.setMinEvictableIdleTimeMillis(320000);
         dataSource.setMaxEvictableIdleTimeMillis(320000);
         dataSource.setTimeBetweenEvictionRunsMillis(300000);
@@ -82,4 +106,8 @@ public class DataSourceConfig {
         return new JdbcTemplate(dataSource);
     }
 
+    @Bean(name = "thirdJdbcTemplate")
+    public JdbcTemplate thirdJdbcTemplate(@Qualifier("thirdDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 }

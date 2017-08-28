@@ -21,9 +21,9 @@ spring:
       password: 3JRL9jtR
       driver-class-name: com.mysql.jdbc.Driver
     third:
-      url: jdbc:mysql://vmobel003.mysql.rds.aliyuncs.com/vmobel
-      username: testdb
-      password: vmobel2015
+      url: jdbc:mysql://vmobel002.mysql.rds.aliyuncs.com/vmobel
+      username: vmobel
+      password: PXkDT6mB
       driver-class-name: com.mysql.jdbc.Driver
   servlet:
     multipart:
@@ -36,10 +36,3 @@ logging:
   file: ./report.log
   level:
     cn.coderss.jysy: INFO
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: cn.coderss.jysy.domain
-mapper:
-  identity: MYSQL
-  mappers: cn.coderss.jysy.utility.MyMapper
-  not-empty: false

@@ -17,9 +17,11 @@ import java.util.List;
  * Blog: http://www.coderss.cn
  */
 public interface ReportDetailService {
-    public void readExcel(String filename) throws IOException;
-    public String readOnlineExcel(List<LinkedHashMap<String, String>> data,String region,String statistics,
-                                  String sign_ways,String pay_ways, String startDate,String endDate) throws IOException;
-    public void writeExcel(String filepath) throws IOException;
-    public String doExcel(MultipartFile file) throws UnsupportedEncodingException;
+    void readExcel(String var1) throws Exception;
+
+    String readOnlineExcel(List<LinkedHashMap<String, String>> var1, String var2, String var3, String var4, String var5, String var6, String var7, String var8, String var9) throws Exception;
+
+    void writeExcel(String var1) throws Exception;
+
+    String doExcel(MultipartFile var1, String var2) throws UnsupportedEncodingException;
 }

@@ -1,13 +1,11 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package cn.coderss.jysy.domain;
 
-/**
- * Created with report.
- * User: shenwei
- * Date: 17/6/30
- * Time: 下午3:01
- * Blog: http://www.coderss.cn
- */
-public class JysyModel{
+public class JysyModel {
     public String provinceName;
     public String cityName;
     public String countyName;
@@ -33,7 +31,7 @@ public class JysyModel{
     public String cerCode;
 
     public String getProvinceName() {
-        return provinceName;
+        return this.provinceName;
     }
 
     public void setProvinceName(String provinceName) {
@@ -41,7 +39,7 @@ public class JysyModel{
     }
 
     public String getCityName() {
-        return cityName;
+        return this.cityName;
     }
 
     public void setCityName(String cityName) {
@@ -49,7 +47,7 @@ public class JysyModel{
     }
 
     public String getCountyName() {
-        return countyName;
+        return this.countyName;
     }
 
     public void setCountyName(String countyName) {
@@ -57,7 +55,7 @@ public class JysyModel{
     }
 
     public String getSchoolName() {
-        return schoolName;
+        return this.schoolName;
     }
 
     public void setSchoolName(String schoolName) {
@@ -65,7 +63,7 @@ public class JysyModel{
     }
 
     public String getDanwei_1() {
-        return danwei_1;
+        return this.danwei_1;
     }
 
     public void setDanwei_1(String danwei_1) {
@@ -73,7 +71,7 @@ public class JysyModel{
     }
 
     public String getDanwei_2() {
-        return danwei_2;
+        return this.danwei_2;
     }
 
     public void setDanwei_2(String danwei_2) {
@@ -81,7 +79,7 @@ public class JysyModel{
     }
 
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
 
     public void setUserName(String userName) {
@@ -89,7 +87,7 @@ public class JysyModel{
     }
 
     public String getFullName() {
-        return fullName;
+        return this.fullName;
     }
 
     public void setFullName(String fullName) {
@@ -97,7 +95,7 @@ public class JysyModel{
     }
 
     public String getSex() {
-        return sex;
+        return this.sex;
     }
 
     public void setSex(String sex) {
@@ -105,7 +103,7 @@ public class JysyModel{
     }
 
     public String getBirthDay() {
-        return birthDay;
+        return this.birthDay;
     }
 
     public void setBirthDay(String birthDay) {
@@ -113,7 +111,7 @@ public class JysyModel{
     }
 
     public String getZhiWu() {
-        return zhiWu;
+        return this.zhiWu;
     }
 
     public void setZhiWu(String zhiWu) {
@@ -121,7 +119,7 @@ public class JysyModel{
     }
 
     public String getSignWays() {
-        return signWays;
+        return this.signWays;
     }
 
     public void setSignWays(String signWays) {
@@ -129,7 +127,7 @@ public class JysyModel{
     }
 
     public String getMail() {
-        return mail;
+        return this.mail;
     }
 
     public void setMail(String mail) {
@@ -137,7 +135,7 @@ public class JysyModel{
     }
 
     public String getCreatetime() {
-        return createtime;
+        return this.createtime;
     }
 
     public void setCreatetime(String createtime) {
@@ -145,7 +143,7 @@ public class JysyModel{
     }
 
     public String getPaySatatus() {
-        return paySatatus;
+        return this.paySatatus;
     }
 
     public void setPaySatatus(String paySatatus) {
@@ -153,7 +151,7 @@ public class JysyModel{
     }
 
     public String getPayWays() {
-        return payWays;
+        return this.payWays;
     }
 
     public void setPayWays(String payWays) {
@@ -161,7 +159,7 @@ public class JysyModel{
     }
 
     public String getPayTimes() {
-        return payTimes;
+        return this.payTimes;
     }
 
     public void setPayTimes(String payTimes) {
@@ -169,7 +167,7 @@ public class JysyModel{
     }
 
     public String getFapiao() {
-        return fapiao;
+        return this.fapiao;
     }
 
     public void setFapiao(String fapiao) {
@@ -177,7 +175,7 @@ public class JysyModel{
     }
 
     public String getDetailAddress() {
-        return detailAddress;
+        return this.detailAddress;
     }
 
     public void setDetailAddress(String detailAddress) {
@@ -185,7 +183,7 @@ public class JysyModel{
     }
 
     public String getFinishTime() {
-        return finishTime;
+        return this.finishTime;
     }
 
     public void setFinishTime(String finishTime) {
@@ -193,7 +191,7 @@ public class JysyModel{
     }
 
     public String getCerStatus() {
-        return cerStatus;
+        return this.cerStatus;
     }
 
     public void setCerStatus(String cerStatus) {
@@ -201,7 +199,7 @@ public class JysyModel{
     }
 
     public String getCerTime() {
-        return cerTime;
+        return this.cerTime;
     }
 
     public void setCerTime(String cerTime) {
@@ -209,7 +207,7 @@ public class JysyModel{
     }
 
     public String getCerCode() {
-        return cerCode;
+        return this.cerCode;
     }
 
     public void setCerCode(String cerCode) {
@@ -242,32 +240,7 @@ public class JysyModel{
         this.cerCode = cerCode;
     }
 
-    @Override
     public String toString() {
-        return "JysyModel{" +
-                "provinceName='" + provinceName + '\'' +
-                ", cityName='" + cityName + '\'' +
-                ", countyName='" + countyName + '\'' +
-                ", schoolName='" + schoolName + '\'' +
-                ", danwei_1='" + danwei_1 + '\'' +
-                ", danwei_2='" + danwei_2 + '\'' +
-                ", userName='" + userName + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birthDay='" + birthDay + '\'' +
-                ", mail='" + mail + '\'' +
-                ", zhiWu='" + zhiWu + '\'' +
-                ", signWays='" + signWays + '\'' +
-                ", createtime='" + createtime + '\'' +
-                ", paySatatus='" + paySatatus + '\'' +
-                ", payWays='" + payWays + '\'' +
-                ", payTimes='" + payTimes + '\'' +
-                ", fapiao='" + fapiao + '\'' +
-                ", detailAddress='" + detailAddress + '\'' +
-                ", finishTime='" + finishTime + '\'' +
-                ", cerStatus='" + cerStatus + '\'' +
-                ", cerTime='" + cerTime + '\'' +
-                ", cerCode='" + cerCode + '\'' +
-                '}';
+        return "JysyModel{provinceName='" + this.provinceName + '\'' + ", cityName='" + this.cityName + '\'' + ", countyName='" + this.countyName + '\'' + ", schoolName='" + this.schoolName + '\'' + ", danwei_1='" + this.danwei_1 + '\'' + ", danwei_2='" + this.danwei_2 + '\'' + ", userName='" + this.userName + '\'' + ", fullName='" + this.fullName + '\'' + ", sex='" + this.sex + '\'' + ", birthDay='" + this.birthDay + '\'' + ", mail='" + this.mail + '\'' + ", zhiWu='" + this.zhiWu + '\'' + ", signWays='" + this.signWays + '\'' + ", createtime='" + this.createtime + '\'' + ", paySatatus='" + this.paySatatus + '\'' + ", payWays='" + this.payWays + '\'' + ", payTimes='" + this.payTimes + '\'' + ", fapiao='" + this.fapiao + '\'' + ", detailAddress='" + this.detailAddress + '\'' + ", finishTime='" + this.finishTime + '\'' + ", cerStatus='" + this.cerStatus + '\'' + ", cerTime='" + this.cerTime + '\'' + ", cerCode='" + this.cerCode + '\'' + '}';
     }
 }
