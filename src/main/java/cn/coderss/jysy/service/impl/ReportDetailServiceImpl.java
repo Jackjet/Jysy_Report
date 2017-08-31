@@ -206,4 +206,6 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         data.clear();
         head_title.clear();
     }
+
+
 }

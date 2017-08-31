@@ -3,6 +3,7 @@ package cn.coderss.jysy.service.impl;
 import cn.coderss.jysy.domain.JysyProvinceModel;
 import cn.coderss.jysy.service.ReportProvinceService;
 import cn.coderss.jysy.utility.FileUtilitys;
+import com.sun.corba.se.pept.transport.ReaderThread;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -110,7 +111,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                     headRow_1_cell.setCellStyle(cellStyle);
                     XSSFRow headRow_2 = sheet.createRow(1);
                     XSSFCell headRow_2_cell = headRow_2.createCell(0);
-                    headRow_2_cell.setCellValue(new XSSFRichTextString("统计时间为：" + startDate + " 00:00 - " + endDate + " 03:00"));
+                    headRow_2_cell.setCellValue(new XSSFRichTextString("统计时间为：" + startDate + " 00:00 - " + endDate + " 00:00"));
                     XSSFRow headRow_3 = sheet.createRow(2);
                     XSSFCell headRow_3_cell_1 = headRow_3.createCell(3);
                     headRow_3_cell_1.setCellValue(new XSSFRichTextString("合计"));
@@ -235,7 +236,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 sheet.addMergedRegion(new CellRangeAddress(2, 2, 4, 6));
                 model = null;
                 String fileName;
-                fileName = filepath + "省份统计 - " + provinceStr +startDate.replace("-","")+"_"+endDate.replace("-","")+ ".xlsx";
+                fileName = filepath + "省份统计-" + provinceStr +startDate.replace("-","")+"_"+endDate.replace("-","")+ ".xlsx";
 
                 System.out.println("province文件地址:" + fileName);
                 stream = new FileOutputStream(new File(fileName));
@@ -278,7 +279,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         outStream.flush();
         outStream.close();
         XSSFWorkbook wbProvince = new XSSFWorkbook();
-        XSSFSheet sheetProvince = wbProvince.createSheet("tmp");
+        XSSFSheet sheetProvince = wbProvince.createSheet(sheetStr.toString());
         XSSFRow headRowProvince = sheetProvince.createRow(0);
         List headRowProvinceList = Arrays.asList("省","总人数","高教人数","中职人数","基教人数","科研机构人数","管理人数");
         for (int j=0; j<headRowProvinceList.size(); j++){
@@ -316,11 +317,12 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         outStreamProvince.close();
         onlineData.clear();
         Runtime.getRuntime().gc();
-
+        dealHead(provinceFileName);
         try {
             this.readExcel(fileName);
             this.writeExcel(dirs, startDate, endDate);
             this.clearData();
+            dealHeadWithAll(fileName);
             return "redirect:/report/" + dirs + nowTime + ".zip";
         } catch (Exception var23) {
             return "上传失败 " + fileName + " => " + var23.getMessage();
@@ -365,4 +367,169 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         }
 
     }
+
+
+    public void dealHead(String fileName) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(fileName)));
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+
+        //完美移动最后空行到第一行
+        int emptyLine = 4;
+        for (int i=0; i<emptyLine;i++){
+            sheet.shiftRows(i, sheet.getLastRowNum(), 1,true,false);
+        }
+
+        //合并相关单元格
+        dealMerge(sheet,0,1,0,6);
+        dealMerge(sheet,2,2,0,6);
+        dealMerge(sheet, 3,4,0,0);
+        dealMerge(sheet, 3,4,1,1);
+        dealMerge(sheet,3,4,5,5);
+        dealMerge(sheet,3,4,6,6 );
+        dealMerge(sheet,3,3,2,4 );
+
+        /**
+         * 样式美化
+         */
+        XSSFCellStyle rowFirstStyle = workbook.createCellStyle();
+        rowFirstStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        rowFirstStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        rowFirstStyle.setWrapText(true);
+        Font font = workbook.createFont();
+        font.setFontHeightInPoints((short) 13);
+        rowFirstStyle.setFont(font);
+        dealCell(sheet, 0, 0, "2017年全国教育事业统计在线培训 \n 全国分省学员人数汇总表", rowFirstStyle);
+
+
+        StringBuilder time = new StringBuilder(sheet.getSheetName());
+        time.insert(time.indexOf("_"), " 00:00");
+        time.insert(time.length(), " 00:00 ");
+        dealCell(sheet, 2, 0 ,"统计时间为:"+time.toString().replace("_","-"), null);
+
+
+        XSSFCellStyle school = workbook.createCellStyle();
+        school.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        school.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        XSSFRow schoolRow = dealCell(sheet, 3 , 2, "学校情况", school);
+
+
+        XSSFCellStyle province = workbook.createCellStyle();
+        province.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        province.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 0, "省", province);
+
+        XSSFCellStyle sum = workbook.createCellStyle();
+        sum.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        sum.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 1, "合计", sum);
+
+
+        XSSFCellStyle scientific = workbook.createCellStyle();
+        scientific.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        scientific.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 5, "科研机构人数", scientific);
+
+        XSSFCellStyle admin = workbook.createCellStyle();
+        admin.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        admin.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 6, "教育行政管理人员", admin);
+
+
+
+        workbook.write(new FileOutputStream(new File(fileName)));
+    }
+
+
+    public  void dealHeadWithAll(String fileName) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(fileName)));
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        //完美移动最后空行到第一行
+        int emptyLine = 4;
+        for (int i=0; i<emptyLine;i++){
+            sheet.shiftRows(i, sheet.getLastRowNum(), 1,true,false);
+        }
+
+        //合并相关单元格
+        dealMerge(sheet,0,1,0,8);
+        dealMerge(sheet,2,2,0,8);
+        dealMerge(sheet, 3,4,3,3);
+        dealMerge(sheet,3,4,7,7);
+        dealMerge(sheet,3,4,8,8 );
+        dealMerge(sheet,3,3,4,6 );
+
+        /**
+         * 样式美化
+         */
+        XSSFCellStyle rowFirstStyle = workbook.createCellStyle();
+        rowFirstStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        rowFirstStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        rowFirstStyle.setWrapText(true);
+        Font font = workbook.createFont();
+        font.setFontHeightInPoints((short) 13);
+        rowFirstStyle.setFont(font);
+        dealCell(sheet, 0, 0, "2017年全国教育事业统计在线培训 \n 各省学员报名情况统计汇总表", rowFirstStyle);
+
+
+        StringBuilder time = new StringBuilder(sheet.getSheetName());
+        time.insert(time.indexOf("_"), " 00:00");
+        time.insert(time.length(), " 00:00 ");
+        dealCell(sheet, 2, 0 ,"统计时间为:"+time.toString().replace("_","-"), null);
+
+
+        XSSFCellStyle school = workbook.createCellStyle();
+        school.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        school.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        XSSFRow schoolRow = dealCell(sheet, 3 , 4, "学校情况", school);
+
+
+        XSSFCellStyle sum = workbook.createCellStyle();
+        sum.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        sum.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 3, "合计", sum);
+
+
+        XSSFCellStyle scientific = workbook.createCellStyle();
+        scientific.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        scientific.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 7, "科研机构人数", scientific);
+
+        XSSFCellStyle admin = workbook.createCellStyle();
+        admin.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        admin.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        dealCellWithRow(schoolRow, 3, 8, "教育行政管理人员", admin);
+
+//        XSSFRow row = dealCell(sheet, 5, 0,"统计项", null);
+//        dealCellWithRow(row, 5,1,"地市名称",null);
+//        dealCellWithRow(row, 5,2,"县名称",null);
+
+
+        workbook.write(new FileOutputStream(new File(fileName)));
+    }
+
+
+    XSSFRow dealCell(XSSFSheet sheet, int rownum, int cellnum, String content, XSSFCellStyle style){
+        XSSFRow row = sheet.createRow(rownum);
+        XSSFCell cell = row.createCell(cellnum);
+        cell.setCellValue(new XSSFRichTextString(content));
+        if(style!= null){
+            cell.setCellStyle(style);
+        }
+        return row;
+    }
+
+    XSSFCell dealCellWithRow(XSSFRow row, int rownum, int cellnum, String content, XSSFCellStyle style){
+        XSSFCell cell = row.createCell(cellnum);
+        cell.setCellValue(new XSSFRichTextString(content));
+        if(style!= null){
+            cell.setCellStyle(style);
+        }
+        return cell;
+    }
+
+    void dealMerge(Sheet sheet, int firstRow, int lastRow, int firstCol, int lastCol){
+        sheet.addMergedRegion(new CellRangeAddress(firstRow,lastRow,firstCol,lastCol));
+    }
+
 }
