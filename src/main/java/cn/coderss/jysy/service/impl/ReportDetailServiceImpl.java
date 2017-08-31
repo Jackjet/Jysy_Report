@@ -69,14 +69,16 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         inputStream.close();
     }
 
-    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData, String region, String statistics, String sign_ways, String pay_ways, String startDate, String endDate, String myFilePath, String nowTime) throws Exception {
+    public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData, String region, String statistics, String sign_ways,
+                                  String pay_ways, String startDate, String endDate, String myFilePath, String nowTime) throws Exception {
         head_title.addAll(Arrays.asList("省", "市","县","单位","单位类型_1","单位类型_2",
                 "用户名","姓名","性别","出生年月","邮箱","职务","报名方式","注册时间",
                 "支付状态","支付方式","支付时间","发票信息","详细地址","已完成课时","证书获得状态","证书获得时间","证书编码"));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet("tmp");
+        StringBuilder sheetStr = new StringBuilder();
+        XSSFSheet sheet = wb.createSheet(sheetStr.append(startDate).append("_").append(endDate).toString());
         XSSFRow headRow = sheet.createRow(0);
 
         int row_index;
@@ -120,7 +122,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
         this.logger.info("创建相关文件");
         //todo 这里要增加一个/var/www
-        String filepath = myFilePath + "detail.xlsx";
+        String filepath = myFilePath + "分省学员情况统计表.xlsx";
         FileOutputStream outStream = new FileOutputStream(filepath);
         wb.write(outStream);
         outStream.flush();
@@ -149,7 +151,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             String provinceName = (String)var3.next();
             ArrayList<JysyModel> arr = (ArrayList)data.get(provinceName);
             XSSFWorkbook wb = new XSSFWorkbook();
-            XSSFSheet sheet = wb.createSheet("tmp");
+            StringBuilder sheetStr = new StringBuilder();
+            XSSFSheet sheet = wb.createSheet(sheetStr.append(startDate).append("_").append(endDate).toString());
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, head_title.size()));
             XSSFCellStyle cellStyle = wb.createCellStyle();
             cellStyle.setAlignment((short) 2);
@@ -182,11 +185,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                 if(filepath.charAt(filepath.length() - 1) != 47) {
                     fileStringBuilder.append("/");
                 }
-                fileStringBuilder.append(provinceName);
-                fileStringBuilder.append(startDate.replace("-",""));
-                fileStringBuilder.append("_");
-                fileStringBuilder.append(endDate.replace("-",""));
-                fileStringBuilder.append(".xlsx");
+                fileStringBuilder.append(provinceName).append(startDate.replace("-","")).append("_").append(endDate.replace("-","")).append(".xlsx");
                 outStream = new FileOutputStream(fileStringBuilder.toString());
                 this.logger.info("文件地址:" + provinceName + ".xlsx -- " + provinceName);
                 wb.write(outStream);

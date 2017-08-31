@@ -3,8 +3,6 @@ package cn.coderss.jysy.service.impl;
 import cn.coderss.jysy.domain.JysyProvinceModel;
 import cn.coderss.jysy.service.ReportProvinceService;
 import cn.coderss.jysy.utility.FileUtilitys;
-import com.github.stuxuhai.jpinyin.PinyinFormat;
-import com.github.stuxuhai.jpinyin.PinyinHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -90,7 +87,8 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 ArrayList<JysyProvinceModel> arrayModel = (ArrayList)excelData.get(provinceStr);
                 Iterator<JysyProvinceModel> models = arrayModel.iterator();
                 XSSFWorkbook wb = new XSSFWorkbook();
-                XSSFSheet sheet = wb.createSheet();
+                StringBuilder sheetStr = new StringBuilder();
+                XSSFSheet sheet = wb.createSheet(sheetStr.append(startDate).append("_").append(endDate).toString());
                 sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
                 sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 9));
                 sheet.addMergedRegion(new CellRangeAddress(headHeight, arrayModel.size() + 4, 0, 0));
@@ -106,7 +104,9 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                     model = (JysyProvinceModel)models.next();
                     XSSFRow headRow_1 = sheet.createRow(0);
                     XSSFCell headRow_1_cell = headRow_1.createCell(0);
-                    headRow_1_cell.setCellValue(new XSSFRichTextString("2016年" + provinceStr + "在线培训学员报名情况汇总表"));
+                    StringBuilder headRowCellStr = new StringBuilder();
+                    headRowCellStr.append(startDate.substring(0, 4)).append("年").append(provinceStr).append("在线培训学员报名情况汇总表");
+                    headRow_1_cell.setCellValue(new XSSFRichTextString(headRowCellStr.toString()));
                     headRow_1_cell.setCellStyle(cellStyle);
                     XSSFRow headRow_2 = sheet.createRow(1);
                     XSSFCell headRow_2_cell = headRow_2.createCell(0);
@@ -248,21 +248,17 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     }
 
     public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData, List<LinkedHashMap<String, String>> province, String myFilePath, String nowTime, String startDate, String endDate) throws IOException {
-        String fileName = myFilePath + "all.xlsx";
+        String fileName = myFilePath + "各省学员报名情况统计汇总表.xlsx";
         String dirs = myFilePath;
         FileUtilitys.makeDir(myFilePath);
         XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet("tmp");
+        StringBuilder sheetStr = new StringBuilder();
+        XSSFSheet sheet = wb.createSheet(sheetStr.append(startDate).append("_").append(endDate).toString());
         XSSFRow headRow = sheet.createRow(0);
-        headRow.createCell(0).setCellValue("省");
-        headRow.createCell(1).setCellValue("市");
-        headRow.createCell(2).setCellValue("县");
-        headRow.createCell(3).setCellValue("总人数");
-        headRow.createCell(4).setCellValue("高教人数");
-        headRow.createCell(5).setCellValue("中职人数");
-        headRow.createCell(6).setCellValue("基教人数");
-        headRow.createCell(7).setCellValue("科研机构人数");
-        headRow.createCell(8).setCellValue("管理人数");
+        List data= Arrays.asList("省","市","县","总人数","高教人数","中职人数","基教人数","科研机构人数","管理人数");
+        for (int j = 0; j< data.size();j++){
+            headRow.createCell(j).setCellValue(data.get(j).toString());
+        }
 
         for(int i = 0; i < onlineData.size(); ++i) {
             XSSFRow row = sheet.createRow(i + 1);
@@ -284,13 +280,10 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         XSSFWorkbook wbProvince = new XSSFWorkbook();
         XSSFSheet sheetProvince = wbProvince.createSheet("tmp");
         XSSFRow headRowProvince = sheetProvince.createRow(0);
-        headRowProvince.createCell(0).setCellValue("省");
-        headRowProvince.createCell(1).setCellValue("总人数");
-        headRowProvince.createCell(2).setCellValue("高教人数");
-        headRowProvince.createCell(3).setCellValue("中职人数");
-        headRowProvince.createCell(4).setCellValue("基教人数");
-        headRowProvince.createCell(5).setCellValue("科研机构人数");
-        headRowProvince.createCell(6).setCellValue("管理人数");
+        List headRowProvinceList = Arrays.asList("省","总人数","高教人数","中职人数","基教人数","科研机构人数","管理人数");
+        for (int j=0; j<headRowProvinceList.size(); j++){
+            headRowProvince.createCell(j).setCellValue(headRowProvinceList.get(j).toString());
+        }
         LinkedHashMap<String, Integer> sumMap = new LinkedHashMap<String, Integer>() {
             {
                 this.put("sum", Integer.valueOf(0));
@@ -316,7 +309,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
         sumMap.put("surplus", Integer.valueOf(((Integer)sumMap.get("sum")).intValue() - ((Integer)sumMap.get("hight_edu")).intValue() - ((Integer)sumMap.get("sec_edu")).intValue() - ((Integer)sumMap.get("base_edu")).intValue() - ((Integer)sumMap.get("sci_edu")).intValue()));
         this.createCountryRow(sheetProvince, sumMap);
-        String provinceFileName = myFilePath + "province.xlsx";
+        String provinceFileName = myFilePath + "全国分省学员人数汇总表.xlsx";
         FileOutputStream outStreamProvince = new FileOutputStream(provinceFileName);
         wbProvince.write(outStreamProvince);
         outStreamProvince.flush();
