@@ -235,11 +235,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 sheet.addMergedRegion(new CellRangeAddress(2, 2, 4, 6));
                 model = null;
                 String fileName;
-                if(provinceStr.equals("陕西省")) {
-                    fileName = filepath + "省份统计 - " + provinceStr + ".xlsx";
-                } else {
-                    fileName = filepath + "省份统计 - " +provinceStr + ".xlsx";
-                }
+                fileName = filepath + "省份统计 - " + provinceStr +startDate.replace("-","")+"_"+endDate.replace("-","")+ ".xlsx";
 
                 System.out.println("province文件地址:" + fileName);
                 stream = new FileOutputStream(new File(fileName));
@@ -339,30 +335,8 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     }
 
     public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        String nowTime = format.format(new Date());
-        String datePath = "downloads/" + nowTime;
-        String uuid = UUID.randomUUID().toString();
-        String fileName = datePath + "/" + uuid + "/" + file.getOriginalFilename();
-        String dirs = datePath + "/" + uuid + "/";
-        FileUtilitys.makeDir(dirs);
-        if(!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fileName)));
-                stream.write(bytes);
-                stream.close();
-                this.readExcel(fileName);
-                this.writeExcel(dirs, "", "");
-                FileUtilitys.fileToZip(dirs, dirs, nowTime);
-                this.clearData();
-                return "redirect:/report/" + dirs + nowTime + ".zip";
-            } catch (Exception var11) {
-                return "上传失败 " + fileName + " => " + var11.getMessage();
-            }
-        } else {
-            return "上传失败 " + fileName + " 因为文件为空";
-        }
+        //future to do some thing
+        return null;
     }
 
     public void sumData(LinkedHashMap<String, Integer> sumMap, Map.Entry<String, String> m) {

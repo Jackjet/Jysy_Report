@@ -52,7 +52,7 @@ public class TaskController {
             }
 
             this.logger.info(taskModel.toString());
-            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd-HH-mm-ss");
             String nowTime = format.format(new Date());
             String code = taskModel.getCode();
 

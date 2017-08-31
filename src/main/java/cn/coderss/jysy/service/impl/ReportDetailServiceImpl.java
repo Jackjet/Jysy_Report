@@ -3,36 +3,21 @@ package cn.coderss.jysy.service.impl;
 import cn.coderss.jysy.domain.JysyModel;
 import cn.coderss.jysy.service.ReportDetailService;
 import cn.coderss.jysy.utility.FileUtilitys;
-import com.github.stuxuhai.jpinyin.PinyinFormat;
-import com.github.stuxuhai.jpinyin.PinyinHelper;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
-import java.util.Map.Entry;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
 
 @Service
 public class ReportDetailServiceImpl implements ReportDetailService {
@@ -85,29 +70,10 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     }
 
     public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData, String region, String statistics, String sign_ways, String pay_ways, String startDate, String endDate, String myFilePath, String nowTime) throws Exception {
-        head_title.add("省");
-        head_title.add("市");
-        head_title.add("县");
-        head_title.add("单位");
-        head_title.add("单位类型_1");
-        head_title.add("单位类型_2");
-        head_title.add("用户名");
-        head_title.add("姓名");
-        head_title.add("性别");
-        head_title.add("出生年月");
-        head_title.add("邮箱");
-        head_title.add("职务");
-        head_title.add("报名方式");
-        head_title.add("注册时间");
-        head_title.add("支付状态");
-        head_title.add("支付方式");
-        head_title.add("支付时间");
-        head_title.add("发票信息");
-        head_title.add("详细地址");
-        head_title.add("已完成课时");
-        head_title.add("证书获得状态");
-        head_title.add("证书获得时间");
-        head_title.add("证书编码");
+        head_title.addAll(Arrays.asList("省", "市","县","单位","单位类型_1","单位类型_2",
+                "用户名","姓名","性别","出生年月","邮箱","职务","报名方式","注册时间",
+                "支付状态","支付方式","支付时间","发票信息","详细地址","已完成课时","证书获得状态","证书获得时间","证书编码"));
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("tmp");
@@ -153,7 +119,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         }
 
         this.logger.info("创建相关文件");
-        String filepath = "/var/www/" + myFilePath + "detail.xlsx";
+        //todo 这里要增加一个/var/www
+        String filepath = myFilePath + "detail.xlsx";
         FileOutputStream outStream = new FileOutputStream(filepath);
         wb.write(outStream);
         outStream.flush();
@@ -165,7 +132,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
         try {
             this.readExcel(filepath);
-            this.writeExcel(myFilePath);
+            this.writeExcel(myFilePath,startDate,endDate);
             FileUtilitys.fileToZip(myFilePath, myFilePath, nowTime);
             this.clearData();
             return myFilePath + nowTime + ".zip";
@@ -174,13 +141,12 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         }
     }
 
-    public void writeExcel(String filepath) throws Exception {
+    public void writeExcel(String filepath, String startDate,String endDate) throws Exception {
         FileOutputStream outStream = null;
         Iterator var3 = array_province.iterator();
 
         while(var3.hasNext()) {
             String provinceName = (String)var3.next();
-            this.logger.info("省份:" + provinceName);
             ArrayList<JysyModel> arr = (ArrayList)data.get(provinceName);
             XSSFWorkbook wb = new XSSFWorkbook();
             XSSFSheet sheet = wb.createSheet("tmp");
@@ -200,44 +166,28 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
             for(i = 0; i < arr.size(); ++i) {
                 XSSFRow row = sheet.createRow(i + 2);
-                row.createCell(0).setCellValue(((JysyModel)arr.get(i)).getProvinceName());
-                row.createCell(1).setCellValue(((JysyModel)arr.get(i)).getCityName());
-                row.createCell(2).setCellValue(((JysyModel)arr.get(i)).getCountyName());
-                row.createCell(3).setCellValue(((JysyModel)arr.get(i)).getSchoolName());
-                row.createCell(4).setCellValue(((JysyModel)arr.get(i)).getDanwei_1());
-                row.createCell(5).setCellValue(((JysyModel)arr.get(i)).getDanwei_2());
-                row.createCell(6).setCellValue(((JysyModel)arr.get(i)).getUserName());
-                row.createCell(7).setCellValue(((JysyModel)arr.get(i)).getFullName());
-                row.createCell(8).setCellValue(((JysyModel)arr.get(i)).getSex());
-                row.createCell(9).setCellValue(((JysyModel)arr.get(i)).getBirthDay());
-                row.createCell(10).setCellValue(((JysyModel)arr.get(i)).getMail());
-                row.createCell(11).setCellValue(((JysyModel)arr.get(i)).getZhiWu());
-                row.createCell(12).setCellValue(((JysyModel)arr.get(i)).getSignWays());
-                row.createCell(13).setCellValue(((JysyModel)arr.get(i)).getCreatetime());
-                row.createCell(14).setCellValue(((JysyModel)arr.get(i)).getPaySatatus());
-                row.createCell(15).setCellValue(((JysyModel)arr.get(i)).getPayWays());
-                row.createCell(16).setCellValue(((JysyModel)arr.get(i)).getPayTimes());
-                row.createCell(17).setCellValue(((JysyModel)arr.get(i)).getFapiao());
-                row.createCell(18).setCellValue(((JysyModel)arr.get(i)).getDetailAddress());
-                row.createCell(19).setCellValue(((JysyModel)arr.get(i)).getFinishTime());
-                row.createCell(20).setCellValue(((JysyModel)arr.get(i)).getCerStatus());
-                row.createCell(21).setCellValue(((JysyModel)arr.get(i)).getCerTime());
-                row.createCell(22).setCellValue(((JysyModel)arr.get(i)).getCerCode());
+                JysyModel model = arr.get(i);
+                Class modelClass = model.getClass();
+
+                int fieldIndex = 0;
+                for (Field field:modelClass.getFields()){
+                    row.createCell(fieldIndex).setCellValue(field.get(model).toString());
+                    fieldIndex++;
+                }
             }
 
-            if(provinceName != "省") {
-                if(filepath.charAt(filepath.length() - 1) == 47) {
-                    if(provinceName.equals("陕西省")) {
-                        outStream = new FileOutputStream(filepath + provinceName+ ".xlsx");
-                    } else {
-                        outStream = new FileOutputStream(filepath + provinceName + ".xlsx");
-                    }
-                } else if(provinceName.equals("陕西省")) {
-                    outStream = new FileOutputStream(filepath + "/" + provinceName+ ".xlsx");
-                } else {
-                    outStream = new FileOutputStream(filepath + "/" + provinceName + ".xlsx");
+            if(!provinceName.equals("省") && !provinceName.equals("")) {
+                StringBuilder fileStringBuilder = new StringBuilder();
+                fileStringBuilder.append(filepath);
+                if(filepath.charAt(filepath.length() - 1) != 47) {
+                    fileStringBuilder.append("/");
                 }
-
+                fileStringBuilder.append(provinceName);
+                fileStringBuilder.append(startDate.replace("-",""));
+                fileStringBuilder.append("_");
+                fileStringBuilder.append(endDate.replace("-",""));
+                fileStringBuilder.append(".xlsx");
+                outStream = new FileOutputStream(fileStringBuilder.toString());
                 this.logger.info("文件地址:" + provinceName + ".xlsx -- " + provinceName);
                 wb.write(outStream);
                 outStream.flush();
@@ -248,31 +198,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     }
 
     public String doExcel(MultipartFile file, String myFilePath) throws UnsupportedEncodingException {
-        String fileEncode = System.getProperty("file.encoding");
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        String nowTime = format.format(new Date());
-        String datePath = "downloads/" + nowTime;
-        String uuid = UUID.randomUUID().toString();
-        String fileName = datePath + "/" + uuid + "/" + file.getOriginalFilename();
-        String dirs = datePath + "/" + uuid + "/";
-        FileUtilitys.makeDir(dirs);
-        if(!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fileName)));
-                stream.write(bytes);
-                stream.close();
-                this.readExcel(fileName);
-                this.writeExcel(dirs);
-                FileUtilitys.fileToZip(dirs, dirs, nowTime);
-                this.clearData();
-                return "redirect:/report/" + dirs + nowTime + ".zip";
-            } catch (Exception var12) {
-                return "上传失败 " + fileName + " => " + var12.getMessage();
-            }
-        } else {
-            return "上传失败 " + fileName + " 因为文件为空";
-        }
+        //future to do some thing
+        return null;
     }
 
     public void clearData() {

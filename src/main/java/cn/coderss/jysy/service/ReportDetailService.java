@@ -21,7 +21,7 @@ public interface ReportDetailService {
 
     String readOnlineExcel(List<LinkedHashMap<String, String>> var1, String var2, String var3, String var4, String var5, String var6, String var7, String var8, String var9) throws Exception;
 
-    void writeExcel(String var1) throws Exception;
+    void writeExcel(String var1, String startDate,String endDate) throws Exception;
 
     String doExcel(MultipartFile var1, String var2) throws UnsupportedEncodingException;
 }
