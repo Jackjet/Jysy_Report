@@ -228,17 +228,17 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             if(provinceName != "省") {
                 if(filepath.charAt(filepath.length() - 1) == 47) {
                     if(provinceName.equals("陕西省")) {
-                        outStream = new FileOutputStream(filepath + "Shaanxi.xlsx");
+                        outStream = new FileOutputStream(filepath + provinceName+ ".xlsx");
                     } else {
-                        outStream = new FileOutputStream(filepath + PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE) + ".xlsx");
+                        outStream = new FileOutputStream(filepath + provinceName + ".xlsx");
                     }
                 } else if(provinceName.equals("陕西省")) {
-                    outStream = new FileOutputStream(filepath + "/" + "Shaanxi.xlsx");
+                    outStream = new FileOutputStream(filepath + "/" + provinceName+ ".xlsx");
                 } else {
-                    outStream = new FileOutputStream(filepath + "/" + PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE) + ".xlsx");
+                    outStream = new FileOutputStream(filepath + "/" + provinceName + ".xlsx");
                 }
 
-                this.logger.info("文件地址:" + PinyinHelper.convertToPinyinString(provinceName, "", PinyinFormat.WITHOUT_TONE) + ".xlsx -- " + provinceName);
+                this.logger.info("文件地址:" + provinceName + ".xlsx -- " + provinceName);
                 wb.write(outStream);
                 outStream.flush();
                 outStream.close();

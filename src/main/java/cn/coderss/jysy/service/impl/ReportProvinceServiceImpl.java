@@ -236,9 +236,9 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                 model = null;
                 String fileName;
                 if(provinceStr.equals("陕西省")) {
-                    fileName = filepath + "shengfentongji - " + "Shaanxi.xlsx";
+                    fileName = filepath + "省份统计 - " + provinceStr + ".xlsx";
                 } else {
-                    fileName = filepath + PinyinHelper.convertToPinyinString("省份统计 - " + provinceStr, "", PinyinFormat.WITHOUT_TONE) + ".xlsx";
+                    fileName = filepath + "省份统计 - " +provinceStr + ".xlsx";
                 }
 
                 System.out.println("province文件地址:" + fileName);
