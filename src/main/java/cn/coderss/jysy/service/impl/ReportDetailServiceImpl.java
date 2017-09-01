@@ -135,8 +135,12 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         try {
             this.readExcel(filepath);
             this.writeExcel(myFilePath,startDate,endDate);
+            if(!region.equals("全国")){
+                this.delThreeExcel(myFilePath);
+            }
             FileUtilitys.fileToZip(myFilePath, myFilePath, nowTime);
             this.clearData();
+
             return myFilePath + nowTime + ".zip";
         } catch (Exception var23) {
             return "上传失败 " + filepath + " => " + var23.getMessage();
@@ -205,6 +209,13 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         array_province.clear();
         data.clear();
         head_title.clear();
+    }
+
+    public void delThreeExcel(String filePath){
+        File allFile = new File(filePath+"全国分省学员人数汇总表.xlsx");
+        allFile.delete();
+        File provinceFile = new File(filePath+"各省学员报名情况统计汇总表.xlsx");
+        provinceFile.delete();
     }
 
 
