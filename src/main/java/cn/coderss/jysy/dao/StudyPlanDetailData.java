@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * Blog: http://www.coderss.cn
  */
 @Repository
+@Scope("singleton")
 public class StudyPlanDetailData {
     @Autowired
     @Qualifier("primaryJdbcTemplate")
@@ -34,15 +36,23 @@ public class StudyPlanDetailData {
             "certificate_time", "certificate_code"));
     List<String> fields = new ArrayList<>();
 
+    List<String> codeStudyNameScoreNameNeedFields = Arrays.asList("studyplan_name", "scorm_name");
+    public List<String> outerFields = new ArrayList<>();
+
+    public List<String> getOuterFields() {
+        return outerFields;
+    }
+
+    public void setOuterFields(List<String> outerFields) {
+        this.outerFields = outerFields;
+    }
 
     public List<LinkedHashMap<String,String>> getData(StudyPlanDetailReqModel model){
         //增加编码进去
         studyPlanCodeList.addAll(Arrays.asList(model.getCode().split(",")));
 
-
         String sql = dealSql();
         logger.info(sql);
-
 
         //增加实际的字段
         for (String code:studyPlanCodeList){
@@ -51,7 +61,12 @@ public class StudyPlanDetailData {
                 tmp.append(code).append("_").append(field);
                 fields.add(tmp.toString());
             }
-
+            for (String scormNameStudyNameField : codeStudyNameScoreNameNeedFields){
+                StringBuilder tmp = new StringBuilder();
+                tmp.append(code).append("_").append(scormNameStudyNameField);
+                fields.add(tmp.toString());
+                outerFields.add(tmp.toString());
+            }
         }
 
 
@@ -69,10 +84,10 @@ public class StudyPlanDetailData {
                 for (String field: fields){
                     put(field, rs.getString(field));
                 }
+
             }};
         });
-        fields.clear();
-        logger.info(list.toString());
+        logger.info(outerFields.toString());
         return list;
     }
 

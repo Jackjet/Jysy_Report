@@ -212,32 +212,6 @@ public class ReportServiceImpl implements ReportService {
                 "    GROUP BY `account`.`accountid`\n" +
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT;";
-//        this.logger.info(sql);
-        sql = "SELECT `tmp_jysy_stu`.`province`,\n" +
-                "    `tmp_jysy_stu`.`city`,\n" +
-                "    `tmp_jysy_stu`.`county` as `country`,\n" +
-                "    `tmp_jysy_stu`.`org_custom_name`,\n" +
-                "    `tmp_jysy_stu`.`org_name_second`,\n" +
-                "    `tmp_jysy_stu`.`org_name`,\n" +
-                "    `tmp_jysy_stu`.`name`,\n" +
-                "    `tmp_jysy_stu`.`fullname`,\n" +
-                "    `tmp_jysy_stu`.`sex`,\n" +
-                "    `tmp_jysy_stu`.`birthday`,\n" +
-                "    `tmp_jysy_stu`.`mail`,\n" +
-                "    `tmp_jysy_stu`.`position`,\n" +
-                "    `tmp_jysy_stu`.`sign_ways`,\n" +
-                "    `tmp_jysy_stu`.`createtime`,\n" +
-                "    `tmp_jysy_stu`.`order_states`,\n" +
-                "    `tmp_jysy_stu`.`pay_ways`,\n" +
-                "    `tmp_jysy_stu`.`pay_time`,\n" +
-                "    `tmp_jysy_stu`.`address`,\n" +
-                "    `tmp_jysy_stu`.`periods`,\n" +
-                "    `tmp_jysy_stu`.`cer_states`,\n" +
-                "    `tmp_jysy_stu`.`cer_time`,\n" +
-                "    `tmp_jysy_stu`.`cer_code`,\n" +
-                "    `tmp_jysy_stu`.`mobile`,\n" +
-                "    `tmp_jysy_stu`.`createuser`\n" +
-                "FROM `tempdata`.`tmp_jysy_stu`;\n";
 //        logger.info(sql);
         List<LinkedHashMap<String, String>> data = this.secondJdbcTemplate.query(sql, (rs, num) -> {
             return new LinkedHashMap<String, String>() {
