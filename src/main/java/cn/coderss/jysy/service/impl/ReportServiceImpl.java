@@ -1031,9 +1031,9 @@ public class ReportServiceImpl implements ReportService {
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
-                "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\""+end_date+" 23:59:59\"+" +
+                "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\""+end_date+" 23:59:59\"" +
                 "FROM (\n" + regionSql + "\n)T\n" + "ORDER BY T.`province_id` ,T.`city_id`,T.`county_id`;";
-//        this.logger.info(execSql);
+        this.logger.info(execSql);
         this.jdbcTemplate.update(execSql);
         String getAllSql = "SELECT `province_name` as `province_name`,`city_name` as `city_name`,`county_name` as `county_name`,\nCASE WHEN `city_id` = '0' AND `county_id` = '0'\nTHEN `manager_province`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\nWHEN `county_id` = '0'\nTHEN `manager_city`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\nELSE `manager`+`hight_edu`+`sec_edu`+`base_edu`+`sci_edu`\nEND  as `sum`,\n`hight_edu` as `hight_edu`,`sec_edu` as `sec_edu`,`base_edu` as `base_edu`,`sci_edu` as `sci_edu`,`manager` as `manager`\nFROM `tempdata`.`tmp_jysy_all`;";
         List<LinkedHashMap<String, String>> all = this.secondJdbcTemplate.query(getAllSql, (rs, num) -> {
