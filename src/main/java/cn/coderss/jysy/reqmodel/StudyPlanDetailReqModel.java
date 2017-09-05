@@ -11,6 +11,42 @@ public class StudyPlanDetailReqModel {
     public String startDate;
     public String endDate;
     public String code;
+    public String uuidCode;
+    public String accountid;
+    public String collegeid;
+    public String enterpriseid;
+
+    public String getAccountid() {
+        return accountid;
+    }
+
+    public void setAccountid(String accountid) {
+        this.accountid = accountid;
+    }
+
+    public String getCollegeid() {
+        return collegeid;
+    }
+
+    public void setCollegeid(String collegeid) {
+        this.collegeid = collegeid;
+    }
+
+    public String getEnterpriseid() {
+        return enterpriseid;
+    }
+
+    public void setEnterpriseid(String enterpriseid) {
+        this.enterpriseid = enterpriseid;
+    }
+
+    public String getUuidCode() {
+        return uuidCode;
+    }
+
+    public void setUuidCode(String uuidCode) {
+        this.uuidCode = uuidCode;
+    }
 
     public String getCode() {
         return code;

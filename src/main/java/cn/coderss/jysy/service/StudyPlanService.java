@@ -14,7 +14,7 @@ import java.util.List;
  * Blog: http://www.coderss.cn
  */
 public interface StudyPlanService {
-    public void doExecl(StudyPlanDetailReqModel model, String filePath) throws Exception;
-    public void writeExcel(String filePath) throws IOException;
+    public void doExecl(StudyPlanDetailReqModel model, String fileName) throws Exception;
+    public void writeExcel(String fileName) throws IOException;
     public List<LinkedHashMap<String,String>> doGetExcelData();
 }

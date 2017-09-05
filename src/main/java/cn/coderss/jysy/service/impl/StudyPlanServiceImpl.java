@@ -42,7 +42,7 @@ public class StudyPlanServiceImpl implements StudyPlanService{
     HashMap<String, String> studyPlanName = new HashMap<>();
 
     @Override
-    public void doExecl(StudyPlanDetailReqModel model, String filePath) throws Exception {
+    public void doExecl(StudyPlanDetailReqModel model, String fileName) throws Exception {
         this.model = model;
         userDataList= this.doGetExcelData();
         Iterator<LinkedHashMap<String,String>> mapIterator = userDataList.iterator();
@@ -72,13 +72,13 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         }
 
         //输出文件
-        this.writeExcel(filePath);
+        this.writeExcel(fileName);
     }
 
 
 
     @Override
-    public void writeExcel(String filePath) throws IOException {
+    public void writeExcel(String fileName) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet();
         int index=0;
@@ -106,7 +106,7 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         //头部完善
         buildHeadRow(sheet, workbook);
 
-        FileOutputStream fileOutputStream = new FileOutputStream(filePath+"/tt.xlsx");
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         workbook.write(fileOutputStream);
         fileOutputStream.close();
         logger.info("导出完成");
