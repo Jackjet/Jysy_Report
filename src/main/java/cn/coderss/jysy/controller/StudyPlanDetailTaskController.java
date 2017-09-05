@@ -66,7 +66,7 @@ public class StudyPlanDetailTaskController {
                 String insertCeleryTaskSql = "INSERT INTO `vmobel`.`celery_taskinfo`\n(`code`,\n`type`,\n`states`,\n`createtime`,\n`starttime`,\n`endtime`,\n`import_description`,\n`import_params`,\n`result_description`,\n`result_file`,\n`collegeid`,\n`enterpriseid`,\n`accountid`,\n`import_file`,\n`result_error_stack`,\n`result_states`,\n`domain`)\nVALUES\n('" +
                         uuid + "', '322', '121', \n" + "'" + nowTime + "', '" + nowTime + "', \n" + "'" + nowTime + "', \"" + model.toString() + "\", \n" + "'', \n" + "'', '', '" + model.getCollegeid() + "', '" + model.getEnterpriseid() + "', '" + model.getAccountid() + "', \n" + "'', '', '120', NULL);\n" + "\n";
                 this.primaryJdbcTemplate.execute(insertCeleryTaskSql);
-                service.doExecl(model, "report_down");
+                service.doExecl(model, fileName.toString());
                 String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` SET `result_states`='119',`states`='119',result_file='" + fileName + "' " + "WHERE `code`='" + uuid + "';\n";
                 this.primaryJdbcTemplate.execute(updateCeleryTaskSql);
             } catch (Exception e) {
@@ -74,7 +74,6 @@ public class StudyPlanDetailTaskController {
                 String updateCeleryTaskSqlx = "update vmobel.celery_taskinfo\nset result_error_stack=\"" + FileUtilitys.getStackMsg(e) + "\", result_states=118\n" + "where code=\"" + uuid + "\"";
                 this.primaryJdbcTemplate.execute(updateCeleryTaskSqlx);
             }
-
         }
     };
     {

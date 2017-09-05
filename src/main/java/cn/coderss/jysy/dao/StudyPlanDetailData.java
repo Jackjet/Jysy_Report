@@ -88,6 +88,7 @@ public class StudyPlanDetailData {
             }};
         });
         logger.info(outerFields.toString());
+        clearData();
         return list;
     }
 
@@ -117,8 +118,9 @@ public class StudyPlanDetailData {
         StringBuilder joinSql = new StringBuilder();
         for (String studyPlanCode:studyPlanCodeList){
             joinSql.append("Left join `vmobel`.`cache_jysy_account_studyplan_certificate` as ")
+                    .append("`")
                     .append(studyPlanCode)
-                    .append("   on `").append(studyPlanCode).append("`.`accountid`=`account`.`accountid`\n")
+                    .append("`   on `").append(studyPlanCode).append("`.`accountid`=`account`.`accountid`\n")
                     .append("and `").append(studyPlanCode).append("`.`studyplan_code` = '").append(studyPlanCode).append("' \n");
         }
 
@@ -196,5 +198,11 @@ public class StudyPlanDetailData {
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT group by `TT`.`accountid`";
         return sql;
+    }
+
+    public void clearData(){
+        studyPlanCodeList.clear();
+        fields.clear();
+        outerFields.clear();
     }
 }
