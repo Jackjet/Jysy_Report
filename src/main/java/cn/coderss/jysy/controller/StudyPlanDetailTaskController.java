@@ -89,7 +89,18 @@ public class StudyPlanDetailTaskController {
     )
     public HashMap<String, String> create(StudyPlanDetailReqModel model){
         HashMap<String, String> resultMap = new HashMap();
-        List<String> codeData = Arrays.asList("", "");
+        List<String> codeData = Arrays.asList("yanshi2017061901",
+        "yanshi2017062001",
+        "yanshi2017062002",
+        "yanshi2017062003",
+        "yanshi2017062004",
+        "yanshi2017062005",
+        "yanshi2017062006",
+        "yanshi2017062007",
+        "yanshi2017062008",
+        "yanshi2017062009",
+        "yanshi2017062010",
+        "yanshi2017062011");
         if(codeData.contains(model.getCode())){
             resultMap.put("msg", "学习计划编码必须为如下其中的编码:" + codeData.toString());
             resultMap.put("states", "-1");
