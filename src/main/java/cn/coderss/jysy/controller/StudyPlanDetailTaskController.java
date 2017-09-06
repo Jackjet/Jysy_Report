@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -61,13 +62,15 @@ public class StudyPlanDetailTaskController {
             String nowTime = format.format(new Date());
             String uuid = model.getUuidCode();
             StringBuilder fileName = new StringBuilder();
-            fileName.append("report_down/").append(nowTime).append(".xlsx");
+            fileName.append("report_down/").append(nowTime).append("/").append(nowTime).append(".xlsx");
+            String dirs = "report_down/"+ nowTime;
+            FileUtilitys.makeDir(dirs);
             try {
                 String insertCeleryTaskSql = "INSERT INTO `vmobel`.`celery_taskinfo`\n(`code`,\n`type`,\n`states`,\n`createtime`,\n`starttime`,\n`endtime`,\n`import_description`,\n`import_params`,\n`result_description`,\n`result_file`,\n`collegeid`,\n`enterpriseid`,\n`accountid`,\n`import_file`,\n`result_error_stack`,\n`result_states`,\n`domain`)\nVALUES\n('" +
                         uuid + "', '322', '121', \n" + "'" + nowTime + "', '" + nowTime + "', \n" + "'" + nowTime + "', \"" + model.toString() + "\", \n" + "'', \n" + "'', '', '" + model.getCollegeid() + "', '" + model.getEnterpriseid() + "', '" + model.getAccountid() + "', \n" + "'', '', '120', NULL);\n" + "\n";
                 this.primaryJdbcTemplate.execute(insertCeleryTaskSql);
                 service.doExecl(model, fileName.toString());
-                String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` SET `result_states`='119',`states`='119',result_file='" + fileName + "' " + "WHERE `code`='" + uuid + "';\n";
+                String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` SET `result_states`='119',`states`='119',result_file='" + fileName.toString().replace(".xlsx", ".zip").replace("report_down", "download") + "' " + "WHERE `code`='" + uuid + "';\n";
                 this.primaryJdbcTemplate.execute(updateCeleryTaskSql);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -86,6 +89,12 @@ public class StudyPlanDetailTaskController {
     )
     public HashMap<String, String> create(StudyPlanDetailReqModel model){
         HashMap<String, String> resultMap = new HashMap();
+        List<String> codeData = Arrays.asList("", "");
+        if(codeData.contains(model.getCode())){
+            resultMap.put("msg", "学习计划编码必须为如下其中的编码:" + codeData.toString());
+            resultMap.put("states", "-1");
+            return resultMap;
+        }
         String uuid = UuidStr.getUuidStr();
         model.setUuidCode(uuid);
         boolean result = this.queue.offer(model);

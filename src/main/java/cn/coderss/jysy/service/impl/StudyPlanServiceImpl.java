@@ -3,6 +3,7 @@ package cn.coderss.jysy.service.impl;
 import cn.coderss.jysy.dao.StudyPlanDetailData;
 import cn.coderss.jysy.reqmodel.StudyPlanDetailReqModel;
 import cn.coderss.jysy.service.StudyPlanService;
+import cn.coderss.jysy.utility.FileUtilitys;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -33,7 +35,6 @@ public class StudyPlanServiceImpl implements StudyPlanService{
      * 用户名->学习计划/scorm/证书
      */
     List<LinkedHashMap<String,String>> userDataList = new LinkedList<>();
-    LinkedHashMap<String, String> studyPlanCerDataMap = new LinkedHashMap<>();
 
     Logger logger = LoggerFactory.getLogger(StudyPlanServiceImpl.class);
     StudyPlanDetailReqModel model;
@@ -46,8 +47,11 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         this.model = model;
         userDataList= this.doGetExcelData();
         Iterator<LinkedHashMap<String,String>> mapIterator = userDataList.iterator();
-        List<String> excludeArr = Arrays.asList("studyplan_name", "studyplan_code", "scorm_name");
+        List<String> excludeArr = Arrays.asList("studyplan_name", "studyplan_code", "scorm_name", "pay_time", "createtime");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         while (mapIterator.hasNext()){
+            Date pay_time = null;
+            Date createtime = null;
             LinkedHashMap<String,String> map = mapIterator.next();
             //加入到studyPlanCerDataMap
             for (String field : repository.getOuterFields()){
@@ -60,6 +64,33 @@ public class StudyPlanServiceImpl implements StudyPlanService{
                     studyPlanScormName.put(code, map.get(field));
                 }
             }
+            //清除掉
+            repository.getOuterFields().clear();
+
+            //注册人群过滤
+            if(map.get("createtime") != null) {
+                createtime = new Date(dateFormat.parse((map.get("createtime")).toString()).getTime());
+            }
+            if(createtime == null && model.getPeople().equals("注册用户")) {
+                mapIterator.remove();
+                continue;
+            }
+            if(map.get("pay_time") != null) {
+                pay_time = new Date(dateFormat.parse((map.get("pay_time")).toString()).getTime());
+            }
+
+            if(model.getPeople().equals("支付用户") && pay_time == null) {
+                mapIterator.remove();
+                continue;
+            }
+            if((model.getPeople().equals("支付用户") && (pay_time.compareTo(dateFormat.parse(model.getEndDate())) > 0 ||
+                    pay_time.compareTo(dateFormat.parse(model.getStartDate())) < 0)) || (model.getPeople().equals("注册用户") &&
+                    (createtime.compareTo(dateFormat.parse(model.getEndDate())) > 0 || createtime.compareTo(dateFormat.parse(model.getStartDate())) < 0))) {
+                mapIterator.remove();
+                continue;
+            }
+
+
             Iterator<Map.Entry<String,String>> entryIterator = map.entrySet().iterator();
             while (entryIterator.hasNext()){
                 Map.Entry<String,String> entry = entryIterator.next();
@@ -109,6 +140,12 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         workbook.write(fileOutputStream);
         fileOutputStream.close();
+
+        String needZipDir = fileName.substring(0, fileName.lastIndexOf("/"));
+        fileName = fileName.replace(".xlsx", "");
+        String purpose = fileName.substring(fileName.indexOf("/"), fileName.length());
+
+        FileUtilitys.fileToZip(needZipDir, "report_down", purpose);
         logger.info("导出完成");
     }
 

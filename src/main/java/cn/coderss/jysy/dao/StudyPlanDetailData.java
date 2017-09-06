@@ -51,7 +51,7 @@ public class StudyPlanDetailData {
         //增加编码进去
         studyPlanCodeList.addAll(Arrays.asList(model.getCode().split(",")));
 
-        String sql = dealSql();
+        String sql = dealSql(model);
         logger.info(sql);
 
         //增加实际的字段
@@ -81,6 +81,8 @@ public class StudyPlanDetailData {
                 put("org_name", rs.getString("org_name"));
                 put("name", rs.getString("name"));
                 put("fullname", rs.getString("fullname"));
+                put("createtime", rs.getString("createtime"));
+                put("pay_time", rs.getString("pay_time"));
                 for (String field: fields){
                     put(field, rs.getString(field));
                 }
@@ -92,8 +94,7 @@ public class StudyPlanDetailData {
         return list;
     }
 
-    public String dealSql(){
-
+    public String dealSql(StudyPlanDetailReqModel model){
         List<String> fields = Arrays.asList("account_name", "studyplan_name",
                 "scorm_name", "scorm_score",
                 "certificate_name", "certificate_status",
@@ -123,13 +124,23 @@ public class StudyPlanDetailData {
                     .append("`   on `").append(studyPlanCode).append("`.`accountid`=`account`.`accountid`\n")
                     .append("and `").append(studyPlanCode).append("`.`studyplan_code` = '").append(studyPlanCode).append("' \n");
         }
-
+        
+        
         String sql = "SELECT TT.accountid,TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
-                "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,TT.`name` as `name`,TT.`fullname` as `fullname`,\n" +
+                "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,TT.`pay_time` as `pay_time`,TT.`name` as `name`,TT.`fullname` as `fullname`,TT.`createtime`,\n" +
                 outterSelectSql+
                 " FROM (\n" +
                 "    SELECT \n" +
                 " account.accountid," +
+                "        (\n" +
+                "            SELECT `pay_time`\n" +
+                "            FROM `vmb_order`  as `order`\n" +
+                "            WHERE `order`.`accountid`  = `account`.`accountId` \n" +
+                "            AND `order`.`order_states` = 272 \n" +
+                "            and  `order`.`pay_time` >= \""+model.getStartDate()+" 00:00:00\"\n" +
+                "            AND `order`.`pay_time` <= \""+model.getEndDate()+" 23:59:59\"\n" +
+                "            LIMIT 1\n" +
+                "        ) as `pay_time`,"+
                 "        (SELECT `region_name`\n" +
                 "        FROM `vmb_region` \n" +
                 "        WHERE `regionid` = `org`.`provinceid` ) as `province`,\n" +
@@ -150,7 +161,7 @@ public class StudyPlanDetailData {
                 "        (\n" +
                 "            SELECT `name` FROM `vmb_org` \n" +
                 "            WHERE `orgid` = `member`.`org_second_id`\n" +
-                "        ) as `org_name`,\n" +
+                "        ) as `org_name`,\n `entaccount`.`createtime`  as `createtime`,\n" +
                 "        `member`.`org_custom_name`,\n" +
                 innerSelectSql+
                 "FROM `vmb_account` as `account`\n" +
@@ -172,8 +183,8 @@ public class StudyPlanDetailData {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`ordId`  = `org`.`orgId` \n" +
                 "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        INNER JOIN `vmb_account`  as `account` on `account`.`accountId`  = `member`.`accountId` \n" +
-                "        WHERE `entaccount`.`createtime`>= \"2017-06-01 00:00:00\"\n" +
-                "        AND `entaccount`.`createtime` <= \"2017-09-01 23:59:59\"\n" +
+                "        WHERE `entaccount`.`createtime`>= \""+model.getStartDate()+" 00:00:00\"\n" +
+                "        AND `entaccount`.`createtime` <= \""+model.getEndDate()+" 23:59:59\"\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
                 "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
@@ -187,13 +198,13 @@ public class StudyPlanDetailData {
                 "        from `vmb_order` as `order`\n" +
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        where `pay_time` > \"2017-06-01 00:00:00\"\n" +
-                "        and `pay_time` <= \"2017-09-01 23:59:59\"\n" +
+                "        where `pay_time` > \""+model.getStartDate()+" 00:00:00\"\n" +
+                "        and `pay_time` <= \""+model.getEndDate()+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "    )\n" +
-                "    and `entaccount`.`createtime` <= \"2017-09-01 23:59:59\"\n" +
+                "    and `entaccount`.`createtime` <= \""+model.getEndDate()+" 23:59:59\"\n" +
                 "    GROUP BY `account`.`accountid`\n" +
                 "    ORDER BY `account`.`createtime` DESC \n" +
                 ")TT group by `TT`.`accountid`";
@@ -203,6 +214,5 @@ public class StudyPlanDetailData {
     public void clearData(){
         studyPlanCodeList.clear();
         fields.clear();
-        outerFields.clear();
     }
 }

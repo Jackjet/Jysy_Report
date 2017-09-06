@@ -15,6 +15,15 @@ public class StudyPlanDetailReqModel {
     public String accountid;
     public String collegeid;
     public String enterpriseid;
+    public String people;
+
+    public String getPeople() {
+        return people;
+    }
+
+    public void setPeople(String people) {
+        this.people = people;
+    }
 
     public String getAccountid() {
         return accountid;
