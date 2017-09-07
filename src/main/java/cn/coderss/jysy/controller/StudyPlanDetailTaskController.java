@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
@@ -67,7 +65,7 @@ public class StudyPlanDetailTaskController {
             FileUtilitys.makeDir(dirs);
             try {
                 String insertCeleryTaskSql = "INSERT INTO `vmobel`.`celery_taskinfo`\n(`code`,\n`type`,\n`states`,\n`createtime`,\n`starttime`,\n`endtime`,\n`import_description`,\n`import_params`,\n`result_description`,\n`result_file`,\n`collegeid`,\n`enterpriseid`,\n`accountid`,\n`import_file`,\n`result_error_stack`,\n`result_states`,\n`domain`)\nVALUES\n('" +
-                        uuid + "', '322', '121', \n" + "'" + nowTime + "', '" + nowTime + "', \n" + "'" + nowTime + "', \"" + model.toString() + "\", \n" + "'', \n" + "'', '', '" + model.getCollegeid() + "', '" + model.getEnterpriseid() + "', '" + model.getAccountid() + "', \n" + "'', '', '120', NULL);\n" + "\n";
+                        uuid + "', '323', '121', \n" + "'" + nowTime + "', '" + nowTime + "', \n" + "'" + nowTime + "', \"" + model.toString() + "\", \n" + "'', \n" + "'', '', '" + model.getCollegeid() + "', '" + model.getEnterpriseid() + "', '" + model.getAccountid() + "', \n" + "'', '', '120', NULL);\n" + "\n";
                 this.primaryJdbcTemplate.execute(insertCeleryTaskSql);
                 service.doExecl(model, fileName.toString());
                 String updateCeleryTaskSql = "UPDATE `vmobel`.`celery_taskinfo` SET `result_states`='119',`states`='119',result_file='" + fileName.toString().replace(".xlsx", ".zip").replace("report_down", "download") + "' " + "WHERE `code`='" + uuid + "';\n";
@@ -89,20 +87,18 @@ public class StudyPlanDetailTaskController {
     )
     public HashMap<String, String> create(StudyPlanDetailReqModel model){
         HashMap<String, String> resultMap = new HashMap();
-        List<String> codeData = Arrays.asList("yanshi2017061901",
-        "yanshi2017062001",
-        "yanshi2017062002",
-        "yanshi2017062003",
-        "yanshi2017062004",
-        "yanshi2017062005",
-        "yanshi2017062006",
-        "yanshi2017062007",
-        "yanshi2017062008",
-        "yanshi2017062009",
-        "yanshi2017062010",
-        "yanshi2017062011");
-        if(codeData.contains(model.getCode())){
-            resultMap.put("msg", "学习计划编码必须为如下其中的编码:" + codeData.toString());
+        List<String> codeData = new ArrayList<String>(){{
+            addAll(Arrays.asList("yanshi2017061901", "yanshi2017062001", "yanshi2017062002",
+                    "yanshi2017062003", "yanshi2017062004", "yanshi2017062005",
+                    "yanshi2017062006", "yanshi2017062007", "yanshi2017062008",
+                    "yanshi2017062009", "yanshi2017062010", "yanshi2017062011"));
+        }};
+        ArrayList<String> codes = new ArrayList<String>(){{
+            addAll(Arrays.asList(model.getCode().split(",")));
+        }};
+        if(!codeData.containsAll(codes)){
+            codes.removeAll(codeData);
+            resultMap.put("msg", "有误的学习计划编码:" + codes.toString());
             resultMap.put("states", "-1");
             return resultMap;
         }
