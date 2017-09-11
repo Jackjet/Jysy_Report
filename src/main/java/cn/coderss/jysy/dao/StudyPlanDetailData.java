@@ -207,7 +207,7 @@ public class StudyPlanDetailData {
                 "    and `entaccount`.`createtime` <= \""+model.getEndDate()+" 23:59:59\"\n" +
                 "    GROUP BY `account`.`accountid`\n" +
                 "    ORDER BY `account`.`createtime` DESC \n" +
-                ")TT group by `TT`.`accountid`";
+                ")TT group by `TT`.`accountid` order by TT.`createtime` asc; ";
         return sql;
     }
 

@@ -1,5 +1,7 @@
 package cn.coderss.jysy.reqmodel;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created with report.
  * User: shenwei
@@ -8,14 +10,39 @@ package cn.coderss.jysy.reqmodel;
  * Blog: http://www.coderss.cn
  */
 public class StudyPlanDetailReqModel {
-    public String startDate;
-    public String endDate;
-    public String code;
-    public String uuidCode;
-    public String accountid;
-    public String collegeid;
-    public String enterpriseid;
-    public String people;
+    @NotNull(message="开始日期不能为空")
+    private String startDate;
+
+    @NotNull(message="截止日期不能为空")
+    private String endDate;
+
+    @NotNull(message="学习计划编码不能为空")
+    private String code;
+
+    private String uuidCode;
+
+    @NotNull(message="用户唯一主键不能为空")
+    private String accountid;
+
+    @NotNull(message="学院唯一主键不能为空")
+    private String collegeid;
+
+    @NotNull(message="企业唯一主键不能为空")
+    private String enterpriseid;
+
+    @NotNull(message="统计人群不能为空")
+    private String people;
+
+    @NotNull(message="地区不能为空")
+    private String region;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
     public String getPeople() {
         return people;

@@ -1,11 +1,13 @@
 package cn.coderss.jysy.service.impl;
 
 import cn.coderss.jysy.dao.StudyPlanDetailData;
+import cn.coderss.jysy.dao.StudyPlanNameCode;
 import cn.coderss.jysy.reqmodel.StudyPlanDetailReqModel;
 import cn.coderss.jysy.service.StudyPlanService;
 import cn.coderss.jysy.utility.FileUtilitys;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
@@ -29,6 +31,9 @@ import java.util.*;
 public class StudyPlanServiceImpl implements StudyPlanService{
     @Autowired
     StudyPlanDetailData repository;
+
+    @Autowired
+    StudyPlanNameCode nameCodeRepository;
 
     /**
      * 存储相关
@@ -91,6 +96,13 @@ public class StudyPlanServiceImpl implements StudyPlanService{
             }
 
 
+            //排除省份
+            if(!model.getRegion().equals("全国")&& (map.get("province") == null || !map.get("province").equals(model.getRegion()))){
+                mapIterator.remove();
+                continue;
+            }
+
+
             Iterator<Map.Entry<String,String>> entryIterator = map.entrySet().iterator();
             while (entryIterator.hasNext()){
                 Map.Entry<String,String> entry = entryIterator.next();
@@ -104,8 +116,29 @@ public class StudyPlanServiceImpl implements StudyPlanService{
 
         //输出文件
         this.writeExcel(fileName);
+
+        clearData();
     }
 
+
+    public void initStudyPlanAndScormName(){
+        LinkedHashMap<String,String> data = nameCodeRepository.getNameAndCode();
+        for (String code: this.model.getCode().split(",")){
+            if (data.get(code) == null) continue;
+            String[] value = data.get(code).split(",");
+            if(value.length == 1) {
+                value = Arrays.copyOf(value, value.length+1);
+                value[value.length-1] = "";
+            };
+            if(!studyPlanName.containsKey(code) || studyPlanName.get(code) == null){
+                studyPlanName.put(code, value[0]);
+            }
+            if(!studyPlanScormName.containsKey(code) || studyPlanScormName.get(code) == null){
+                studyPlanScormName.put(code, value[1]);
+            }
+        }
+
+    }
 
 
     @Override
@@ -124,7 +157,10 @@ public class StudyPlanServiceImpl implements StudyPlanService{
                 Map.Entry<String,String> entry = entryIterator.next();
                 StringBuilder value = new StringBuilder();
                 if(entry.getValue() != null && entry.getKey().contains("certificate_status")){
-                    value.append(entry.getValue().equals("0")?"未获得":"获得");
+                    value.append(entry.getValue().equals("0")?"未获得":"已获得");
+                }
+                else if(entry.getValue() == null && entry.getKey().contains("certificate_status")){
+                    value.append("未获得");
                 }
                 else if(entry.getValue()!=null){
                     value.append(entry.getValue());
@@ -153,11 +189,16 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         //将后面的空行移动到前方
         int emptyLine = 3;
         for (int i=0; i<emptyLine;i++){
-            sheet.shiftRows(i, sheet.getLastRowNum(), 1,true,false);
+            if(i>sheet.getLastRowNum()){
+                sheet.createRow(i);
+            }
+            else{
+                sheet.shiftRows(i, sheet.getLastRowNum(), 1,true,false);
+            }
         }
 
         //处理学习计划编码头部
-        writeHeadRowStudyPlanCode(sheet);
+        writeHeadRowStudyPlanCode(sheet, workbook);
         //处理详情信息
         wirteDetailRow(sheet, workbook);
         //处理顶部头部信息
@@ -168,18 +209,24 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         sheet.addMergedRegion(new CellRangeAddress(firstRow,lastRow,firstCol,lastCol));
     }
 
-    public void writeHeadRowStudyPlanCode(XSSFSheet sheet){
+    public void writeHeadRowStudyPlanCode(XSSFSheet sheet, XSSFWorkbook workbook){
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        style.setWrapText(true);
         List<String> codeList = Arrays.asList(model.getCode().split(","));
         int i=0;
         for (String code:codeList){
             if(i==0){
+                if(!studyPlanName.containsKey(code) || studyPlanName.get(code) == null)
+                    initStudyPlanAndScormName();
                 dealMerge(sheet, 1, 1, (i*4+8),(i*4+11));
-                dealCell(sheet, 1, (i*4+8), studyPlanName.get(code), null);
+                dealCell(sheet, 1, (i*4+8), studyPlanName.get(code), style);
                 wirteScormCerRow(sheet.createRow(2), i, code);
             }
             else{
                 dealMerge(sheet, 1, 1, (i*4+8),(i*4+11));
-                dealCellWithRow(sheet.getRow(1),  1, (i*4+8), studyPlanName.get(code), null);
+                dealCellWithRow(sheet.getRow(1),  1, (i*4+8), studyPlanName.get(code), style);
                 wirteScormCerRow(sheet.getRow(2), i, code);
             }
             i ++;
@@ -187,6 +234,8 @@ public class StudyPlanServiceImpl implements StudyPlanService{
     }
 
     public void wirteScormCerRow(XSSFRow row, int i, String code){
+        if(!studyPlanScormName.containsKey(code) || studyPlanScormName.get(code) == null)
+            initStudyPlanAndScormName();
         String scormName = studyPlanScormName.get(code);
         dealCellWithRow(row,2, (i*4+8), scormName, null);
         dealCellWithRow(row,2, (i*4+9), "证书获得状态", null);
@@ -243,5 +292,12 @@ public class StudyPlanServiceImpl implements StudyPlanService{
     @Override
     public List<LinkedHashMap<String,String>> doGetExcelData() {
         return repository.getData(this.model);
+    }
+
+
+    void clearData(){
+        studyPlanScormName.clear();
+        studyPlanScormName.clear();
+        userDataList.clear();
     }
 }

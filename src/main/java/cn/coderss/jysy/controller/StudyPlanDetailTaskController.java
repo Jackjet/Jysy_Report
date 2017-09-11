@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -60,7 +61,14 @@ public class StudyPlanDetailTaskController {
             String nowTime = format.format(new Date());
             String uuid = model.getUuidCode();
             StringBuilder fileName = new StringBuilder();
-            fileName.append("report_down/").append(nowTime).append("/").append(nowTime).append(".xlsx");
+            fileName.append("report_down/").append(nowTime).append("/")
+                    .append("学习计划考核成绩");
+            //判断是否有省份
+            if(!model.getRegion().equals("全国")){
+                fileName.append("-").append(model.getRegion()).append("-");
+            }
+            fileName.append(model.getStartDate()).append("_")
+                    .append(model.getEndDate()).append(".xlsx");
             String dirs = "report_down/"+ nowTime;
             FileUtilitys.makeDir(dirs);
             try {
@@ -75,6 +83,9 @@ public class StudyPlanDetailTaskController {
                 String updateCeleryTaskSqlx = "update vmobel.celery_taskinfo\nset result_error_stack=\"" + FileUtilitys.getStackMsg(e) + "\", result_states=118\n" + "where code=\"" + uuid + "\"";
                 this.primaryJdbcTemplate.execute(updateCeleryTaskSqlx);
             }
+            finally {
+                isReady = true;
+            }
         }
     };
     {
@@ -85,39 +96,59 @@ public class StudyPlanDetailTaskController {
     @CrossOrigin(
             origins = {"*"}
     )
-    public HashMap<String, String> create(StudyPlanDetailReqModel model){
+    public HashMap<String, String> create(@Valid StudyPlanDetailReqModel model, BindingResult resultBind){
         HashMap<String, String> resultMap = new HashMap();
-        List<String> codeData = new ArrayList<String>(){{
-            addAll(Arrays.asList("yanshi2017061901", "yanshi2017062001", "yanshi2017062002",
-                    "yanshi2017062003", "yanshi2017062004", "yanshi2017062005",
-                    "yanshi2017062006", "yanshi2017062007", "yanshi2017062008",
-                    "yanshi2017062009", "yanshi2017062010", "yanshi2017062011"));
-        }};
-        ArrayList<String> codes = new ArrayList<String>(){{
-            addAll(Arrays.asList(model.getCode().split(",")));
-        }};
+        //判断数据是否有问题
+        if(resultBind.hasErrors()){
+            List<ObjectError> errorList = resultBind.getAllErrors();
+            for(ObjectError error : errorList){
+                resultMap.put("msg", error.getDefaultMessage());
+                resultMap.put("states", "-1");
+                return resultMap;
+            }
+        }
+        if(model.getCode().split(",").length > 20){
+            return doSetResultMap(null, "-1", "学习编码数据不能超过20个");
+        }
+
+        //编码校验
+        List<String> codeData = this.primaryJdbcTemplate.query("select `lear`.`code`\n" +
+                "from vmobel.vmb_dictionaryitem as `item`\n" +
+                "inner join vmobel.vmb_learningactivity as `lear` on `lear`.`actType`=`item`.`itemid`\n" +
+                "inner join (\n" +
+                "select `ship`.`learningactivityid`\n" +
+                "from vmobel.vmb_activityownership as `ship` \n" +
+                "where `ship`.`collegeid`=94\n" +
+                "union all\n" +
+                "select `orgdis`.`learningactivityid`\n" +
+                "from vmobel.vmb_activityorgdistrib as `orgdis`\n" +
+                "where `orgdis`.`destcollegeid`=94\n" +
+                ") as `data`\n" +
+                "on `data`.`learningactivityid` = `lear`.`learningactivityid`\n" +
+                "where `item`.`code`=\"studyplanactivity\";", (rs, num)->{
+            return rs.getString("code");
+        });
+
+
+        ArrayList<String> codes = new ArrayList<String>(){{addAll(new LinkedHashSet<String>(Arrays.asList(model.getCode().split(","))));}};
+
+        //重新放入model
+        model.setCode(String.join(",", codes));
         if(!codeData.containsAll(codes)){
             codes.removeAll(codeData);
-            resultMap.put("msg", "有误的学习计划编码:" + codes.toString());
-            resultMap.put("states", "-1");
-            return resultMap;
+            return doSetResultMap(null, "-1", "有误的学习计划编码:" + codes.toString());
         }
         String uuid = UuidStr.getUuidStr();
         model.setUuidCode(uuid);
-        boolean result = this.queue.offer(model);
-        if(result) {
+        if(this.queue.offer(model)) {
             StringBuilder resultOut = new StringBuilder();
             resultOut.append("系统处理中，任务编号:");
             resultOut.append(uuid);
             resultOut.append("预计10分钟后可在任务管理查看处理结果");
-            resultMap.put("msg", resultOut.toString());
-            resultMap.put("states", "1");
+            return doSetResultMap(null, "1", resultOut.toString());
         } else {
-            resultMap.put("msg", "任务创建失败");
-            resultMap.put("states", "-1");
+            return doSetResultMap(null, "-1", "任务创建失败");
         }
-
-        return resultMap;
     }
 
     @RequestMapping({"/states"})
@@ -125,22 +156,27 @@ public class StudyPlanDetailTaskController {
             origins = {"*"}
     )
     public HashMap<String, String> states() {
-        HashMap<String, String> result = new HashMap();
         if(!isReady) {
-            result.put("states", "-1");
-            result.put("msg", "请稍后导出,上一任务进行中");
+            return doSetResultMap(null, "-1", "请稍后导出,上一任务进行中");
         } else {
-            result.put("states", "1");
-            result.put("msg", "无任务");
+            return doSetResultMap(null, "1", "无任务");
         }
-
-        return result;
     }
 
     @RequestMapping("/test")
     public String test(){
         String encoding = System.getProperty("sun.jnu.encoding");
         return encoding;
+    }
+
+
+    HashMap<String, String> doSetResultMap(HashMap<String,String> map, String states, String msg){
+        if (map == null){
+            map = new HashMap<String,String>();
+        }
+        map.put("states", states);
+        map.put("msg", msg);
+        return map;
     }
 
 }
