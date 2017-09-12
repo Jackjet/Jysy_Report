@@ -69,7 +69,8 @@ public class StudyPlanNameCode {
                 newData.put(entry.getKey(), entry.getValue());
             }
         });
-
+        data = null;
+        Runtime.getRuntime().gc();
         return newData;
     }
 }

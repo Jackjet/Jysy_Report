@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * Created with report.
@@ -25,7 +26,7 @@ public class DataSourceConfig {
 
     @Bean(name = "primaryDataSource")
     @Qualifier("primaryDataSource")
-    public DruidDataSource primaryDataSource() {
+    public DruidDataSource primaryDataSource() throws SQLException {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(env.getProperty("spring.datasource.primary.url"));
         dataSource.setUsername(env.getProperty("spring.datasource.primary.username"));//用户名
@@ -44,12 +45,13 @@ public class DataSourceConfig {
         dataSource.setTestOnBorrow(true);
         dataSource.setTestWhileIdle(true);
         dataSource.setPoolPreparedStatements(false);
+        dataSource.setFilters("stat,wall");
         return dataSource;
     }
 
     @Bean(name = "thirdDataSource")
     @Qualifier("thirdDataSource")
-    public DruidDataSource thridDataSource() {
+    public DruidDataSource thridDataSource() throws SQLException {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(env.getProperty("spring.datasource.third.url"));
         dataSource.setUsername(env.getProperty("spring.datasource.third.username"));//用户名
@@ -68,13 +70,14 @@ public class DataSourceConfig {
         dataSource.setTestOnBorrow(true);
         dataSource.setTestWhileIdle(true);
         dataSource.setPoolPreparedStatements(false);
+        dataSource.setFilters("stat,wall");
         return dataSource;
     }
 
     @Bean(name = "secondaryDataSource")
     @Qualifier("secondaryDataSource")
     @Primary
-    public DruidDataSource secondaryDataSource() {
+    public DruidDataSource secondaryDataSource() throws SQLException {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(env.getProperty("spring.datasource.secondary.url"));
         dataSource.setUsername(env.getProperty("spring.datasource.secondary.username"));//用户名
@@ -93,6 +96,7 @@ public class DataSourceConfig {
         dataSource.setTestOnBorrow(true);
         dataSource.setTestWhileIdle(true);
         dataSource.setPoolPreparedStatements(false);
+        dataSource.setFilters("stat,wall");
         return dataSource;
     }
 

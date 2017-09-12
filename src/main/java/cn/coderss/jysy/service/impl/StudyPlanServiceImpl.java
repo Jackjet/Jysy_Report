@@ -53,14 +53,20 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         userDataList= this.doGetExcelData();
         Iterator<LinkedHashMap<String,String>> mapIterator = userDataList.iterator();
         List<String> excludeArr = Arrays.asList("studyplan_name", "studyplan_code", "scorm_name", "pay_time", "createtime");
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date pay_time = null;
+        Date createtime = null;
+        String code ;
+        LinkedHashMap<String,String> map;
+        Iterator<Map.Entry<String,String>> entryIterator;
+        Map.Entry<String,String> entry;
+
         while (mapIterator.hasNext()){
-            Date pay_time = null;
-            Date createtime = null;
-            LinkedHashMap<String,String> map = mapIterator.next();
+            map = mapIterator.next();
             //加入到studyPlanCerDataMap
             for (String field : repository.getOuterFields()){
-                String code = field.substring(0, field.indexOf("_"));
+                code = field.substring(0, field.indexOf("_"));
                 if(field.contains("studyplan_name") && !studyPlanName.containsKey(code)){
                     map.get(field);
                     studyPlanName.put(code, map.get(field));
@@ -103,9 +109,9 @@ public class StudyPlanServiceImpl implements StudyPlanService{
             }
 
 
-            Iterator<Map.Entry<String,String>> entryIterator = map.entrySet().iterator();
+             entryIterator = map.entrySet().iterator();
             while (entryIterator.hasNext()){
-                Map.Entry<String,String> entry = entryIterator.next();
+                entry = entryIterator.next();
                 for (String excludeStr: excludeArr){
                     if(entry.getKey().contains(excludeStr)){
                         entryIterator.remove();
@@ -116,7 +122,6 @@ public class StudyPlanServiceImpl implements StudyPlanService{
 
         //输出文件
         this.writeExcel(fileName);
-
         clearData();
     }
 
@@ -166,12 +171,19 @@ public class StudyPlanServiceImpl implements StudyPlanService{
                     value.append(entry.getValue());
                 }
                 row.createCell(indexCell).setCellValue(value.toString());
+                entryIterator.remove();
                 indexCell ++;
             }
+            mapIterator.remove();
             index++;
         }
+        //强制一下gc
+        Runtime.getRuntime().gc();
         //头部完善
         buildHeadRow(sheet, workbook);
+
+        //检测内存是否需要继续下去
+        detectionOfMemory();
 
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         workbook.write(fileOutputStream);
@@ -183,6 +195,12 @@ public class StudyPlanServiceImpl implements StudyPlanService{
 
         FileUtilitys.fileToZip(needZipDir, "report_down", purpose);
         logger.info("导出完成");
+    }
+
+    public void detectionOfMemory(){
+        long totalMemory = Runtime.getRuntime().totalMemory() / 1024 / 1024;
+        long freeMemory = Runtime.getRuntime().freeMemory() / 1024 / 1024;
+        logger.info("totalMemory:"+totalMemory+",freeMemory:"+freeMemory);
     }
 
     public void buildHeadRow(XSSFSheet sheet, XSSFWorkbook workbook){
@@ -300,5 +318,6 @@ public class StudyPlanServiceImpl implements StudyPlanService{
         studyPlanScormName.clear();
         studyPlanScormName.clear();
         userDataList.clear();
+        Runtime.getRuntime().gc();
     }
 }

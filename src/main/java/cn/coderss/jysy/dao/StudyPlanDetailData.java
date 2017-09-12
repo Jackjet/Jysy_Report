@@ -214,5 +214,6 @@ public class StudyPlanDetailData {
     public void clearData(){
         studyPlanCodeList.clear();
         fields.clear();
+        Runtime.getRuntime().gc();
     }
 }
