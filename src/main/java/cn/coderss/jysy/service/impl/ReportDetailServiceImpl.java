@@ -216,7 +216,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         allFile.delete();
         File provinceFile = new File(filePath+"各省学员报名情况统计汇总表.xlsx");
         provinceFile.delete();
+        File detailFile = new File(filePath+"分省学员情况统计表.xlsx");
+        detailFile.delete();
     }
-
 
 }

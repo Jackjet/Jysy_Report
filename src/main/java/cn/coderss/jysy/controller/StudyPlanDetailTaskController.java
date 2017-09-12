@@ -1,6 +1,7 @@
 package cn.coderss.jysy.controller;
 
 import cn.coderss.jysy.reqmodel.StudyPlanDetailReqModel;
+import cn.coderss.jysy.service.ReportStopService;
 import cn.coderss.jysy.service.StudyPlanService;
 import cn.coderss.jysy.utility.FileUtilitys;
 import cn.coderss.jysy.utility.UuidStr;
@@ -36,17 +37,20 @@ import java.util.concurrent.SynchronousQueue;
 public class StudyPlanDetailTaskController {
     Logger logger = LoggerFactory.getLogger(StudyPlanDetailTaskController.class);
     SynchronousQueue<StudyPlanDetailReqModel> queue = new SynchronousQueue<>();
-    ExecutorService pool = Executors.newFixedThreadPool(1);
+    ExecutorService pool = Executors.newSingleThreadExecutor();
 
 
     @Autowired
-    @Qualifier("primaryJdbcTemplate")
+    @Qualifier("thirdJdbcTemplate")
     JdbcTemplate primaryJdbcTemplate;
 
     boolean isReady = true;
 
     @Autowired
     StudyPlanService service;
+
+    @Autowired
+    ReportStopService reportStopService;
 
     Runnable task = ()->{
         while (true){
@@ -57,6 +61,9 @@ public class StudyPlanDetailTaskController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            //停止掉之前的服务
+            reportStopService.stopReportService();
+
             SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd-HH-mm-ss");
             String nowTime = format.format(new Date());
             String uuid = model.getUuidCode();
@@ -147,6 +154,7 @@ public class StudyPlanDetailTaskController {
             resultOut.append("预计10分钟后可在任务管理查看处理结果");
             return doSetResultMap(null, "1", resultOut.toString());
         } else {
+            isReady = false;
             return doSetResultMap(null, "-1", "任务创建失败");
         }
     }
@@ -156,10 +164,10 @@ public class StudyPlanDetailTaskController {
             origins = {"*"}
     )
     public HashMap<String, String> states() {
-        if(!isReady) {
-            return doSetResultMap(null, "-1", "请稍后导出,上一任务进行中");
-        } else {
+        if(isReady) {
             return doSetResultMap(null, "1", "无任务");
+        } else {
+            return doSetResultMap(null, "-1", "请稍后导出,上一任务进行中");
         }
     }
 

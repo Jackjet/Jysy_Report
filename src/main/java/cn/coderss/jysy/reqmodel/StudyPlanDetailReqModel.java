@@ -108,4 +108,18 @@ public class StudyPlanDetailReqModel {
         this.endDate = endDate;
     }
 
+    @Override
+    public String toString() {
+        return "StudyPlanDetailReqModel{" +
+                "startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", code='" + code + '\'' +
+                ", uuidCode='" + uuidCode + '\'' +
+                ", accountid='" + accountid + '\'' +
+                ", collegeid='" + collegeid + '\'' +
+                ", enterpriseid='" + enterpriseid + '\'' +
+                ", people='" + people + '\'' +
+                ", region='" + region + '\'' +
+                '}';
+    }
 }

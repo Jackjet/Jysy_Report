@@ -11,14 +11,14 @@ spring:
     suffix: .ftl
   datasource:
     primary:
-      url: jdbc:mysql://vmobel003.mysql.rds.aliyuncs.com/vmobel
-      username: testdb
-      password: vmobel2015
+      url: jdbc:mysql://rm-bp1x467d7h08xi13d.mysql.rds.aliyuncs.com/vmobel
+      username: vmobel
+      password: 3JRL9jtR
       driver-class-name: com.mysql.jdbc.Driver
     secondary:
-      url: jdbc:mysql://vmobel003.mysql.rds.aliyuncs.com/vmobel
-      username: testdb
-      password: vmobel2015
+      url: jdbc:mysql://rm-bp1x467d7h08xi13d.mysql.rds.aliyuncs.com/vmobel
+      username: vmobel
+      password: 3JRL9jtR
       driver-class-name: com.mysql.jdbc.Driver
     third:
       url: jdbc:mysql://vmobel003.mysql.rds.aliyuncs.com/vmobel

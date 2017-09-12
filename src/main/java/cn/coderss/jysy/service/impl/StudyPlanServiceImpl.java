@@ -220,6 +220,7 @@ public class StudyPlanServiceImpl implements StudyPlanService{
             if(i==0){
                 if(!studyPlanName.containsKey(code) || studyPlanName.get(code) == null)
                     initStudyPlanAndScormName();
+                logger.info("studyPlanName:"+studyPlanName.toString());
                 dealMerge(sheet, 1, 1, (i*4+8),(i*4+11));
                 dealCell(sheet, 1, (i*4+8), studyPlanName.get(code), style);
                 wirteScormCerRow(sheet.createRow(2), i, code);

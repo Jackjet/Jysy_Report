@@ -10,6 +10,7 @@ package cn.coderss.jysy.controller;
 
 import cn.coderss.jysy.reqmodel.JysyReqModel;
 import cn.coderss.jysy.service.ReportService;
+import cn.coderss.jysy.service.ReportStopService;
 import cn.coderss.jysy.utility.DateUtil;
 import cn.coderss.jysy.utility.FileUtilitys;
 import cn.coderss.jysy.utility.UuidStr;
@@ -41,6 +42,10 @@ public class TaskController {
     JdbcTemplate jdbcTemplate;
     boolean isReady = true;
     SynchronousQueue<JysyReqModel> queue = new SynchronousQueue<>();
+
+    @Autowired
+    ReportStopService reportStopService;
+
     Runnable consumer = () -> {
         while(true) {
             JysyReqModel taskModel = null;
@@ -50,6 +55,8 @@ public class TaskController {
             } catch (InterruptedException var13) {
                 var13.printStackTrace();
             }
+            //停止掉之前的服务
+            reportStopService.stopReportService();
 
             this.logger.info(taskModel.toString());
             SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd-HH-mm-ss");

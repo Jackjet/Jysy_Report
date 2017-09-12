@@ -317,12 +317,12 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         outStreamProvince.close();
         onlineData.clear();
         Runtime.getRuntime().gc();
-        dealHead(provinceFileName);
+        dealHead(provinceFileName, startDate);
         try {
             this.readExcel(fileName);
             this.writeExcel(dirs, startDate, endDate);
             this.clearData();
-            dealHeadWithAll(fileName);
+            dealHeadWithAll(fileName, startDate);
             return "redirect:/report/" + dirs + nowTime + ".zip";
         } catch (Exception var23) {
             return "上传失败 " + fileName + " => " + var23.getMessage();
@@ -369,7 +369,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     }
 
 
-    public void dealHead(String fileName) throws IOException {
+    public void dealHead(String fileName, String startDate) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(fileName)));
         XSSFSheet sheet = workbook.getSheetAt(0);
 
@@ -399,7 +399,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         Font font = workbook.createFont();
         font.setFontHeightInPoints((short) 13);
         rowFirstStyle.setFont(font);
-        dealCell(sheet, 0, 0, "2017年全国教育事业统计在线培训 \n 全国分省学员人数汇总表", rowFirstStyle);
+        dealCell(sheet, 0, 0, startDate.substring(0,4)+"年全国教育事业统计在线培训 \n 全国分省学员人数汇总表", rowFirstStyle);
 
 
         StringBuilder time = new StringBuilder(sheet.getSheetName());
@@ -441,7 +441,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
     }
 
 
-    public  void dealHeadWithAll(String fileName) throws IOException {
+    public  void dealHeadWithAll(String fileName,String startDate) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(fileName)));
         XSSFSheet sheet = workbook.getSheetAt(0);
 
@@ -469,7 +469,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
         Font font = workbook.createFont();
         font.setFontHeightInPoints((short) 13);
         rowFirstStyle.setFont(font);
-        dealCell(sheet, 0, 0, "2017年全国教育事业统计在线培训 \n 各省学员报名情况统计汇总表", rowFirstStyle);
+        dealCell(sheet, 0, 0, startDate.substring(0,4)+"年全国教育事业统计在线培训 \n 各省学员报名情况统计汇总表", rowFirstStyle);
 
 
         StringBuilder time = new StringBuilder(sheet.getSheetName());
