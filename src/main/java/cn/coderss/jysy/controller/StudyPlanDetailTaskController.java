@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -103,7 +104,7 @@ public class StudyPlanDetailTaskController {
     @CrossOrigin(
             origins = {"*"}
     )
-    public HashMap<String, String> create(@Valid StudyPlanDetailReqModel model, BindingResult resultBind){
+    public HashMap<String, String> create(@Valid StudyPlanDetailReqModel model, BindingResult resultBind) throws ParseException {
         HashMap<String, String> resultMap = new HashMap();
         //判断数据是否有问题
         if(resultBind.hasErrors()){
@@ -113,6 +114,9 @@ public class StudyPlanDetailTaskController {
                 resultMap.put("states", "-1");
                 return resultMap;
             }
+        }
+        if(isTimeInterval(model.getStartDate(), model.getEndDate())){
+            return doSetResultMap(null, "-1", "时间范围不可超过6个月");
         }
         if(model.getCode().split(",").length > 20){
             return doSetResultMap(null, "-1", "学习编码数据不能超过20个");
@@ -185,6 +189,15 @@ public class StudyPlanDetailTaskController {
         map.put("states", states);
         map.put("msg", msg);
         return map;
+    }
+
+    public boolean isTimeInterval(String startDate, String endDate) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startTime = dateFormat.parse(startDate);
+        Date endTime = dateFormat.parse(endDate);
+        long diff = endTime.getTime() - startTime.getTime();
+        long days = diff / (1000 * 60 * 60 * 24);
+        return days > 186? true:false;
     }
 
 }

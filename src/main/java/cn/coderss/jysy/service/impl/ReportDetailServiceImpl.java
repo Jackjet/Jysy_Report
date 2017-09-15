@@ -106,16 +106,13 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                     continue;
                 }
 
-                if((pay_time == null || !statistics.equals("支付用户") || pay_time.compareTo(dateFormat.parse(endDate)) < 0 && pay_time.compareTo(dateFormat.parse(startDate)) > 0) && (createtime == null || !statistics.equals("注册用户") || createtime.compareTo(dateFormat.parse(endDate)) < 0 && createtime.compareTo(dateFormat.parse(startDate)) > 0)) {
-                    row = sheet.createRow(row_index + 1);
-                    ++row_index;
-                    int index = 0;
-                    Iterator var21 = map.entrySet().iterator();
-
-                    while(var21.hasNext()) {
-                        Entry<String, String> m = (Entry)var21.next();
-                        row.createCell(index++).setCellValue((String)m.getValue());
-                    }
+                row = sheet.createRow(row_index + 1);
+                ++row_index;
+                int index = 0;
+                Iterator var21 = map.entrySet().iterator();
+                while(var21.hasNext()) {
+                    Entry<String, String> m = (Entry)var21.next();
+                    row.createCell(index++).setCellValue((String)m.getValue());
                 }
             }
         }

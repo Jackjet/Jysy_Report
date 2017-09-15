@@ -82,7 +82,7 @@ public class StudyPlanServiceImpl implements StudyPlanService{
             if(map.get("createtime") != null) {
                 createtime = new Date(dateFormat.parse((map.get("createtime")).toString()).getTime());
             }
-            if(createtime == null && model.getPeople().equals("注册用户")) {
+            if(map.get("createtime") == null && model.getPeople().equals("注册用户")) {
                 mapIterator.remove();
                 continue;
             }
@@ -90,7 +90,7 @@ public class StudyPlanServiceImpl implements StudyPlanService{
                 pay_time = new Date(dateFormat.parse((map.get("pay_time")).toString()).getTime());
             }
 
-            if(model.getPeople().equals("支付用户") && pay_time == null) {
+            if(model.getPeople().equals("支付用户") && map.get("pay_time") == null) {
                 mapIterator.remove();
                 continue;
             }
@@ -101,7 +101,6 @@ public class StudyPlanServiceImpl implements StudyPlanService{
                 continue;
             }
 
-
             //排除省份
             if(!model.getRegion().equals("全国")&& (map.get("province") == null || !map.get("province").equals(model.getRegion()))){
                 mapIterator.remove();
@@ -109,7 +108,7 @@ public class StudyPlanServiceImpl implements StudyPlanService{
             }
 
 
-             entryIterator = map.entrySet().iterator();
+            entryIterator = map.entrySet().iterator();
             while (entryIterator.hasNext()){
                 entry = entryIterator.next();
                 for (String excludeStr: excludeArr){
@@ -142,7 +141,6 @@ public class StudyPlanServiceImpl implements StudyPlanService{
                 studyPlanScormName.put(code, value[1]);
             }
         }
-
     }
 
 

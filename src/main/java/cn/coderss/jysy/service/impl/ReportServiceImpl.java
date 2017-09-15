@@ -201,10 +201,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "    )\n" +
@@ -319,10 +321,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "    )\n" +
@@ -366,10 +370,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -414,10 +420,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -462,10 +470,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -511,10 +521,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -559,10 +571,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -607,10 +621,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -656,10 +672,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -707,10 +725,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -757,10 +777,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -804,10 +826,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -853,10 +877,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -899,10 +925,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -949,10 +977,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
@@ -998,10 +1028,12 @@ public class ReportServiceImpl implements ReportService {
                 "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
                 "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
                 "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
                 "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
                 "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `pay_ways`  !=275 AND `order_states` =272\n" +
                 "        AND `colorg`.`collegeId` =94\n" +
+                "        AND `entaccount`.`states` <> 58        \n" +
                 "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
                 "        GROUP BY `order`.`accountid`\n" +
                 "        )\n" +
