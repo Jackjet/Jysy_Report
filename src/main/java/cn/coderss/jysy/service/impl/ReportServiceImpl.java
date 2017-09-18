@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -37,15 +38,16 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public String detail(String start_date, String end_date, String region, String regionId, String statistics, String sign_ways, String pay_ways, String myFilePath, String nowTime) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
-                "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,concat(\"'\",TT.`name`) as `name`,TT.`fullname` as `fullname`,\n" +
-                "TT.`sex` as `sex`,concat(\"'\",TT.`birthday` )as `birthday`,concat(\"'\",TT.`mail`) as `mail`,\n" +
+                "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,TT.`name` as `name`,TT.`fullname` as `fullname`,\n" +
+                "TT.`sex` as `sex`,TT.`birthday` as `birthday`,TT.`mail` as `mail`,\n" +
                 "TT.`position` as `position`,TT.`sign_ways` as `sign_ways`,TT.`createtime` as `createtime`,TT.`order_states` as `order_states`,\n" +
                 "TT.`pay_ways` as `pay_ways`,TT.`pay_time` as `pay_time`,\n" +
                 "TT.`org_custom_name` as `org_custom_name`,TT.`address` as `address`,\n" +
                 "CASE WHEN TT.`periods` is null THEN 0 ELSE TT.`periods` END  as `periods`,\n" +
                 "TT.`cer_states` as `cer_states`,TT.`cer_time` as `cer_time`,\n" +
-                "concat(\"'\",TT.`cer_code`) as `cer_code`\n" +
+                "TT.`cer_code` as `cer_code`\n" +
                 "FROM (\n" +
                 "    SELECT \n" +
                 "        (SELECT `region_name`\n" +

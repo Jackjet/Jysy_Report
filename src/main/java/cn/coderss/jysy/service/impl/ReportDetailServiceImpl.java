@@ -87,6 +87,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         }
 
         row_index = 0;
+        String value = null;
 
         for(int i = 0; i < onlineData.size(); ++i) {
             LinkedHashMap<String, String> map = (LinkedHashMap)onlineData.get(i);
@@ -112,7 +113,11 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                 Iterator var21 = map.entrySet().iterator();
                 while(var21.hasNext()) {
                     Entry<String, String> m = (Entry)var21.next();
-                    row.createCell(index++).setCellValue((String)m.getValue());
+                    value =  m.getValue();
+                    if(value!=null){
+                        value = value.replaceAll(".0", "");
+                    }
+                    row.createCell(index++).setCellValue(value);
                 }
             }
         }
@@ -147,6 +152,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     public void writeExcel(String filepath, String startDate,String endDate) throws Exception {
         FileOutputStream outStream = null;
         Iterator var3 = array_province.iterator();
+        System.out.println("endDate:"+endDate);
 
         while(var3.hasNext()) {
             String provinceName = (String)var3.next();

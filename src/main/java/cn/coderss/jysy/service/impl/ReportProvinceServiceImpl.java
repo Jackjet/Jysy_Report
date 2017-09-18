@@ -111,7 +111,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
                     headRow_1_cell.setCellStyle(cellStyle);
                     XSSFRow headRow_2 = sheet.createRow(1);
                     XSSFCell headRow_2_cell = headRow_2.createCell(0);
-                    headRow_2_cell.setCellValue(new XSSFRichTextString("统计时间为：" + startDate + " 00:00 - " + endDate + " 00:00"));
+                    headRow_2_cell.setCellValue(new XSSFRichTextString("统计时间为：" + startDate + " 00:00 - " + endDate + " 23:59"));
                     XSSFRow headRow_3 = sheet.createRow(2);
                     XSSFCell headRow_3_cell_1 = headRow_3.createCell(3);
                     headRow_3_cell_1.setCellValue(new XSSFRichTextString("合计"));
@@ -404,7 +404,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
         StringBuilder time = new StringBuilder(sheet.getSheetName());
         time.insert(time.indexOf("_"), " 00:00");
-        time.insert(time.length(), " 00:00 ");
+        time.insert(time.length(), " 23:59 ");
         dealCell(sheet, 2, 0 ,"统计时间为:"+time.toString().replace("_","-"), null);
 
 
@@ -474,7 +474,7 @@ public class ReportProvinceServiceImpl implements ReportProvinceService {
 
         StringBuilder time = new StringBuilder(sheet.getSheetName());
         time.insert(time.indexOf("_"), " 00:00");
-        time.insert(time.length(), " 00:00 ");
+        time.insert(time.length(), " 23:59 ");
         dealCell(sheet, 2, 0 ,"统计时间为:"+time.toString().replace("_","-"), null);
 
 

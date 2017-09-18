@@ -1,9 +1,15 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -14,14 +20,9 @@ import java.util.stream.Collectors;
  * Blog: http://www.coderss.cn
  */
 public class AppTest {
-    public static void main(String[] args) {
-        List<Map<String,String>> list = new ArrayList<Map<String, String>>() {{
-            add(new HashMap<String,String>(){{put("code","1");}});
-            add(new HashMap<String,String>(){{put("code","2");}});
-            add(new HashMap<String,String>(){{put("code","3");}});
-        }};
-
-        List<String> newList= list.stream().map(item->item.get("code")).collect(Collectors.toList());
-        System.out.println(newList);
+    public static void main(String[] args) throws IOException {
+        String  a = "a.0";
+        a.replaceAll(".0", "");
+        System.out.println(a);
     }
 }
