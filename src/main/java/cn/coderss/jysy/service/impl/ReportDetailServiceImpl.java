@@ -89,6 +89,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         inputStream.close();
     }
 
+    @Override
     public String readOnlineExcel(List<LinkedHashMap<String, String>> onlineData, String region, String statistics, String sign_ways,
                                   String pay_ways, String startDate, String endDate, String myFilePath, String nowTime) throws Exception {
         head_title.addAll(Arrays.asList("省", "市","县","单位","单位类型_1","单位类型_2",
@@ -139,13 +140,14 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                     }
                     row.createCell(index++).setCellValue(value);
                 }
-                String score = secondJdbcTemplate.queryForMap("SELECT MAX(ifnull(`issue_study`.score,0)) as `score`\n" +
+                String score = secondJdbcTemplate.queryForMap("SELECT MAX(`issue_study`.score) as `score`\n" +
                         "  FROM(\n" +
                         "SELECT `study`.`accountid`, `study`.`learningactivityid`, `study`.`starttime`,`study`.`collegeid` \n" +
                         "  FROM `vmobel`.`vmb_studyrecorde` as `study`\n" +
                         "  INNER JOIN `vmobel`.`vmb_learningactivity` as `lear` on `lear`.`learningActivityId`= `study`.`learningactivityid`\n" +
+                        "      INNER JOIN `vmobel`.`vmb_account` as `account` on `account`.`accountId`  = `study`.`accountid` \n" +
                         " WHERE `lear`.`actType` =196\n" +
-                        "   AND `study`.`accountid`= 816015\n" +
+                        "   AND `account`.`name`= \'"+map.get("name")+"\'" +
                         "      AND `study`.`sucessfuled` =1\n" +
                         "      AND `study`.`collegeid` =94\n" +
                         " ORDER BY `study`.`starttime`\n" +
