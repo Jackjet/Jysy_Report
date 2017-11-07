@@ -10,6 +10,9 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +28,9 @@ public class ReportDetailServiceImpl implements ReportDetailService {
     public static ArrayList<String> array_province = new ArrayList();
     public static ArrayList<String> head_title = new ArrayList();
     Logger logger = LoggerFactory.getLogger(ReportDetailServiceImpl.class);
+    @Autowired
+    @Qualifier("secondaryJdbcTemplate")
+    JdbcTemplate secondJdbcTemplate;
 
     public ReportDetailServiceImpl() {
     }
@@ -58,7 +64,21 @@ public class ReportDetailServiceImpl implements ReportDetailService {
             while(rows1.hasNext()) {
                 Row row = (Row)rows1.next();
                 if(province_str.equals(row.getCell(0).toString())) {
-                    JysyModel model = new JysyModel(row.getCell(0).toString(), row.getCell(1) == null?"":row.getCell(1).toString(), row.getCell(2) == null?"":row.getCell(2).toString(), row.getCell(3) == null?"":row.getCell(3).toString(), row.getCell(4) == null?"":row.getCell(4).toString(), row.getCell(5) == null?"":row.getCell(5).toString(), row.getCell(6) == null?"":row.getCell(6).toString(), row.getCell(7) == null?"":row.getCell(7).toString(), row.getCell(8) == null?"":row.getCell(8).toString(), row.getCell(9) == null?"":row.getCell(9).toString(), row.getCell(10) == null?"":row.getCell(10).toString(), row.getCell(11) == null?"":row.getCell(11).toString(), row.getCell(12) == null?"":row.getCell(12).toString(), row.getCell(13) == null?"":row.getCell(13).toString(), row.getCell(14) == null?"":row.getCell(14).toString(), row.getCell(15) == null?"":row.getCell(15).toString(), row.getCell(16) == null?"":row.getCell(16).toString(), row.getCell(17) == null?"":row.getCell(17).toString(), row.getCell(18) == null?"":row.getCell(18).toString(), row.getCell(19) == null?"":row.getCell(19).toString(), row.getCell(20) == null?"":row.getCell(20).toString(), row.getCell(21) == null?"":row.getCell(21).toString(), row.getCell(22) == null?"":row.getCell(22).toString());
+                    JysyModel model = new JysyModel(row.getCell(0).toString(),
+                            row.getCell(1) == null?"":row.getCell(1).toString(), row.getCell(2) == null?"":row.getCell(2).toString(),
+                            row.getCell(3) == null?"":row.getCell(3).toString(), row.getCell(4) == null?"":row.getCell(4).toString(),
+                            row.getCell(5) == null?"":row.getCell(5).toString(),
+                            row.getCell(6) == null?"":row.getCell(6).toString(), row.getCell(7) == null?"":row.getCell(7).toString(),
+                            row.getCell(8) == null?"":row.getCell(8).toString(), row.getCell(9) == null?"":row.getCell(9).toString(),
+                            row.getCell(10) == null?"":row.getCell(10).toString(),
+                            row.getCell(11) == null?"":row.getCell(11).toString(), row.getCell(12) == null?"":row.getCell(12).toString(),
+                            row.getCell(13) == null?"":row.getCell(13).toString(), row.getCell(14) == null?"":row.getCell(14).toString(),
+                            row.getCell(15) == null?"":row.getCell(15).toString(),
+                            row.getCell(16) == null?"":row.getCell(16).toString(), row.getCell(17) == null?"":row.getCell(17).toString(),
+                            row.getCell(18) == null?"":row.getCell(18).toString(), row.getCell(19) == null?"":row.getCell(19).toString(),
+                            row.getCell(20) == null?"":row.getCell(20).toString(),
+                            row.getCell(21) == null?"":row.getCell(21).toString(), row.getCell(22) == null?"":row.getCell(22).toString(),
+                            row.getCell(23) == null?"":row.getCell(23).toString());
                     da.add(model);
                 }
             }
@@ -73,7 +93,7 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                                   String pay_ways, String startDate, String endDate, String myFilePath, String nowTime) throws Exception {
         head_title.addAll(Arrays.asList("省", "市","县","单位","单位类型_1","单位类型_2",
                 "用户名","姓名","性别","出生年月","邮箱","职务","报名方式","注册时间",
-                "支付状态","支付方式","支付时间","发票信息","详细地址","已完成课时","证书获得状态","证书获得时间","证书编码"));
+                "支付状态","支付方式","支付时间","发票信息","详细地址","已完成课时","证书获得状态","证书获得时间","证书编码","考试成绩"));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         XSSFWorkbook wb = new XSSFWorkbook();
@@ -88,10 +108,10 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 
         row_index = 0;
         String value = null;
-
+        XSSFRow row = null;
+        LinkedHashMap<String, String> map;
         for(int i = 0; i < onlineData.size(); ++i) {
-            LinkedHashMap<String, String> map = (LinkedHashMap)onlineData.get(i);
-            XSSFRow row = null;
+            map = (LinkedHashMap)onlineData.get(i);
             if((map.get("province") == null || ((String)map.get("province")).equals(region) || region.equals("全国")) && (map.get("sign_ways") == null || ((String)map.get("sign_ways")).equals(sign_ways) || sign_ways.equals("all")) && (map.get("order_states") == null || ((String)map.get("order_states")).equals(pay_ways) || pay_ways.equals("all"))) {
                 Date pay_time = null;
                 Date createtime = null;
@@ -115,10 +135,29 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                     Entry<String, String> m = (Entry)var21.next();
                     value =  m.getValue();
                     if(value!=null){
-                        value = value.replaceAll(".0", "");
+                        value = value.replaceAll("\\.0", "");
                     }
                     row.createCell(index++).setCellValue(value);
                 }
+                String score = secondJdbcTemplate.queryForMap("SELECT MAX(ifnull(`issue_study`.score,0)) as `score`\n" +
+                        "  FROM(\n" +
+                        "SELECT `study`.`accountid`, `study`.`learningactivityid`, `study`.`starttime`,`study`.`collegeid` \n" +
+                        "  FROM `vmobel`.`vmb_studyrecorde` as `study`\n" +
+                        "  INNER JOIN `vmobel`.`vmb_learningactivity` as `lear` on `lear`.`learningActivityId`= `study`.`learningactivityid`\n" +
+                        " WHERE `lear`.`actType` =196\n" +
+                        "   AND `study`.`accountid`= 816015\n" +
+                        "      AND `study`.`sucessfuled` =1\n" +
+                        "      AND `study`.`collegeid` =94\n" +
+                        " ORDER BY `study`.`starttime`\n" +
+                        "  LIMIT 1) T\n" +
+                        "INNER JOIN `vmobel`.`vmb_issue` as `issue` on `issue`.`learningactivityid`  = `T`.`learningactivityid` \n" +
+                        "and `issue`.`code` =\"04\"\n" +
+                        "INNER JOIN `vmobel`.`vmb_issueactivity` as `issue_activity` on `issue_activity`.`issueid`  = `issue`.`issueid` \n" +
+                        "INNER JOIN `vmobel`.`vmb_studyrecorde` as `issue_study` on `issue_study`.`learningactivityid` =`issue_activity`.`rel_activityid` \n" +
+                        "WHERE `issue_study`.`accountid` =T.`accountid`\n" +
+                        "GROUP BY `issue_study`.`learningactivityid` ;").get("score").toString();
+                //todo 额外增加一列考试成绩
+                row.createCell(index).setCellValue(score);
             }
         }
 
@@ -149,7 +188,8 @@ public class ReportDetailServiceImpl implements ReportDetailService {
         }
     }
 
-    public void writeExcel(String filepath, String startDate,String endDate) throws Exception {
+    @Override
+    public void writeExcel(String filepath, String startDate, String endDate) throws Exception {
         FileOutputStream outStream = null;
         Iterator var3 = array_province.iterator();
         System.out.println("endDate:"+endDate);

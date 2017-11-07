@@ -29,6 +29,7 @@ public class JysyModel {
     public String cerStatus;
     public String cerTime;
     public String cerCode;
+    public String score;
 
     public String getProvinceName() {
         return this.provinceName;
@@ -214,7 +215,22 @@ public class JysyModel {
         this.cerCode = cerCode;
     }
 
-    public JysyModel(String provinceName, String cityName, String countyName, String schoolName, String danwei_1, String danwei_2, String userName, String fullName, String sex, String birthDay, String mail, String zhiWu, String signWays, String createtime, String paySatatus, String payWays, String payTimes, String fapiao, String detailAddress, String finishTime, String cerStatus, String cerTime, String cerCode) {
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public JysyModel(String provinceName, String cityName, String countyName,
+                     String schoolName, String danwei_1, String danwei_2,
+                     String userName, String fullName, String sex,
+                     String birthDay, String mail, String zhiWu,
+                     String signWays, String createtime, String paySatatus,
+                     String payWays, String payTimes, String fapiao,
+                     String detailAddress, String finishTime,
+                     String cerStatus, String cerTime, String cerCode, String score) {
         this.provinceName = provinceName;
         this.cityName = cityName;
         this.countyName = countyName;
@@ -238,6 +254,7 @@ public class JysyModel {
         this.cerStatus = cerStatus;
         this.cerTime = cerTime;
         this.cerCode = cerCode;
+        this.score = score;
     }
 
     public String toString() {

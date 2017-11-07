@@ -38,6 +38,22 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public String detail(String start_date, String end_date, String region, String regionId, String statistics, String sign_ways, String pay_ways, String myFilePath, String nowTime) throws Exception {
+        String paySql = "";
+        if(statistics.equals("all") || statistics.equals("支付用户")){
+            paySql = "  union all       select `order`.`accountid`\n" +
+                    "        from `vmb_order` as `order`\n" +
+                    "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                    "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                    "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                    "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                    "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
+                    "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
+                    "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                    "        AND `colorg`.`collegeId` =94\n" +
+                    "        AND `entaccount`.`states` <> 58        \n" +
+                    "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                    "        GROUP BY `order`.`accountid`\n" ;
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String sql = "SELECT TT.`province` as `province`,TT.`city` as `city`,TT.`county` as `country`,TT.`org_custom_name` as `org_custom_name`,\n" +
                 "TT.`org_name_second` as `org_name_second`,TT.`org_name` as `org_name`,TT.`name` as `name`,TT.`fullname` as `fullname`,\n" +
@@ -197,20 +213,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `order_states` =272 \n" +
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
-                "        union all\n" +
-                "        select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "    )\n" +
                 "    and `entaccount`.`createtime` <= \""+end_date+" 23:59:59\"\n" +
                 "    GROUP BY `account`.`accountid`\n" +
@@ -253,6 +256,22 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public String province(String start_date, String end_date, String region, String regionId, String people, String sign_ways, String pay_ways, String myFilePath, String nowTime) throws Exception {
+        String paySql = "";
+        if(people.equals("all") || people.equals("支付用户")){
+            paySql = "        union all   select `order`.`accountid`\n" +
+                    "        from `vmb_order` as `order`\n" +
+                    "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
+                    "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
+                    "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
+                    "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
+                    "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
+                    "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
+                    "        and `pay_ways`  !=275 AND `order_states` =272\n" +
+                    "        AND `colorg`.`collegeId` =94\n" +
+                    "        AND `entaccount`.`states` <> 58        \n" +
+                    "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
+                    "        GROUP BY `order`.`accountid`\n";
+        }
         String delSql = " truncate table tempdata.tmp_jysy_all;";
         this.jdbcTemplate.execute(delSql);
         String regionSql = "SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\n    `county`.`region_name` as `county_name` ,`county`.`regionid`  as `county_id`\n    FROM `vmb_region`  as `province`\n    INNER JOIN `vmb_region`  as `city`\n    on `city`.`parent_id`  = `province`.`regionid` \n    INNER JOIN `vmb_region`  as `county`\n    on `county`.`parent_id`  = `city`.`regionid` \nUNION ALL \n    SELECT `province`.`region_name`  as `province_name`,`province`.`regionid`  as `province_id`,\n    `city`.`region_name`  as `city_name`,`city`.`regionid`  as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n    FROM `vmb_region`  as `province`\n    INNER JOIN `vmb_region`  as `city`\n    on `province`.`regionid`  = `city`.`parent_id`\n    WHERE `province`.`parent_id` =0\nUNION ALL \n    SELECT `province`.`region_name`  as `province_name`,\n    `province`.`regionid`  as `province_id` ,\n    \"\" as `city_name`,\"\" as `city_id`,\"\" as `county_name`, \"\" as `county_id`\n    FROM `vmb_region`  as `province`\n    WHERE `parent_id` =0\n";
@@ -318,19 +337,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "    )\n" +
                 ")\n" +
                 "ELSE 0  END as `hight_edu`,\n" +
@@ -367,19 +374,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "WHEN T.`county_id` = \"\" and T.`city_id` != \"\"\n" +
@@ -417,19 +412,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "WHEN T.`county_id` = \"\" and T.`city_id` = \"\" and T.`province_id` != \"\"\n" +
@@ -467,19 +450,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "ELSE \"\" END as `sec_edu` ,\n" +
@@ -518,19 +489,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "WHEN T.`county_id` = \"\" and T.`city_id` != \"\"\n" +
@@ -568,19 +527,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "WHEN T.`county_id` = \"\" and T.`city_id` = \"\" and T.`province_id` != \"\"\n" +
@@ -618,19 +565,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "ELSE \"\" END as `base_edu`,\n" +
@@ -669,19 +604,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "ELSE 0  END AS `sci_edu`,\n" +
@@ -722,19 +645,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 ")\n" +
                 "WHEN T.`city_id` != \"\"\n" +
@@ -774,19 +685,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 "    AND `sun_org`.`cityid`  = T.`city_id`),'(',(\n" +
                 "    SELECT COUNT(DISTINCT(`member`.`accountId`)) \n" +
@@ -823,19 +722,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 "    AND `sun_org`.`countyid`  = 0 AND `sun_org`.`cityid`  = T.`city_id`),')')\n" +
                 ")\n" +
@@ -874,19 +761,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 "        AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `order`.`pay_time` >= \""+start_date+" 00:00:00\"\n" +
@@ -922,21 +797,8 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
-                "        )\n" +
-                "    AND `order`.`order_states` = 272 \n" +
+                paySql+
+                "     ) AND `order`.`order_states` = 272 \n" +
                 "    AND `order`.`pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "    and `order`.`pay_time` >= \""+start_date+" 00:00:00\"\n" +
                 "    AND `sun_org`.`countyid`  = 0 and `sun_org`.`cityid`  = 0),')')\n" +
@@ -974,19 +836,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 "        AND `order`.`order_states` = 272 AND `order`.`pay_time` <= \""+end_date+" 23:59:59\"\n" +
                 "        and `order`.`pay_time` >= \""+start_date+" 00:00:00\"\n" +
@@ -1025,19 +875,7 @@ public class ReportServiceImpl implements ReportService {
                 "            AND `pay_time` > \"2016-08-18 00:00:00\"\n" +
                 "        )\n" +
                 "        \n" +
-                "        union all   select `order`.`accountid`\n" +
-                "        from `vmb_order` as `order`\n" +
-                "        INNER JOIN `vmb_member`  as `member` on `member`.`accountid`  = `order`.`accountid` \n" +
-                "        INNER JOIN `vmb_org`  as `org` on `org`.`orgId`  = `member`.`ordid` \n" +
-                "        inner join `vmb_collegeorg` as `colorg` on `colorg`.`orgid` = `org`.`orgid`\n" +
-                "        INNER JOIN `vmb_enterpriseaccount`  as `entaccount` on `entaccount`.`accountid`  = `member`.`accountId` \n" +
-                "        where `pay_time` > \""+start_date+" 00:00:00\"\n" +
-                "        and `pay_time` <= \""+end_date+" 23:59:59\"\n" +
-                "        and `pay_ways`  !=275 AND `order_states` =272\n" +
-                "        AND `colorg`.`collegeId` =94\n" +
-                "        AND `entaccount`.`states` <> 58        \n" +
-                "        AND `org`.`name` not in (\"易知\",\"系统管理员\",\"教育事业试用账号\",\"6月28号演示\",\"免费账号\")\n" +
-                "        GROUP BY `order`.`accountid`\n" +
+                paySql+
                 "        )\n" +
                 "    AND `sun_org`.`cityid`  = T.`city_id`) as `manager_city`,\""+end_date+" 23:59:59\"" +
                 "FROM (\n" + regionSql + "\n)T\n" + "ORDER BY T.`province_id` ,T.`city_id`,T.`county_id`;";
