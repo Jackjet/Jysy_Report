@@ -34,8 +34,6 @@ public class ReportServiceImpl implements ReportService {
     @Qualifier("secondaryJdbcTemplate")
     JdbcTemplate secondJdbcTemplate;
 
-    public ReportServiceImpl() {
-    }
 
     public String detail(String start_date, String end_date, String region, String regionId, String statistics, String sign_ways, String pay_ways, String myFilePath, String nowTime) throws Exception {
         String paySql = "";
