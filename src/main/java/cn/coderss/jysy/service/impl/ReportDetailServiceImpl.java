@@ -146,29 +146,37 @@ public class ReportDetailServiceImpl implements ReportDetailService {
                     }
                     row.createCell(index++).setCellValue(value);
                 }
-//                String score = "0";
-//                if(map.get("cer_code") != null && !map.get("cer_code").equals("")){
-//                    score = secondJdbcTemplate.queryForMap("SELECT MAX(`issue_study`.score) as `score`\n" +
-//                            "  FROM(\n" +
-//                            "SELECT `study`.`accountid`, `study`.`learningactivityid`, `study`.`starttime`,`study`.`collegeid` \n" +
-//                            "  FROM `vmobel`.`vmb_studyrecorde` as `study`\n" +
-//                            "  INNER JOIN `vmobel`.`vmb_learningactivity` as `lear` on `lear`.`learningActivityId`= `study`.`learningactivityid`\n" +
-//                            "      INNER JOIN `vmobel`.`vmb_account` as `account` on `account`.`accountId`  = `study`.`accountid` \n" +
-//                            " WHERE `lear`.`actType` =196\n" +
-//                            "   AND `account`.`name`= \'"+map.get("name")+"\'" +
-//                            "      AND `study`.`sucessfuled` =1\n" +
-//                            "      AND `study`.`collegeid` =94\n" +
-//                            " ORDER BY `study`.`starttime`\n" +
-//                            "  LIMIT 1) T\n" +
-//                            "INNER JOIN `vmobel`.`vmb_issue` as `issue` on `issue`.`learningactivityid`  = `T`.`learningactivityid` \n" +
-//                            "and `issue`.`code` =\"04\"\n" +
-//                            "INNER JOIN `vmobel`.`vmb_issueactivity` as `issue_activity` on `issue_activity`.`issueid`  = `issue`.`issueid` \n" +
-//                            "INNER JOIN `vmobel`.`vmb_studyrecorde` as `issue_study` on `issue_study`.`learningactivityid` =`issue_activity`.`rel_activityid` \n" +
-//                            "WHERE `issue_study`.`accountid` =T.`accountid`\n" +
-//                            "GROUP BY `issue_study`.`learningactivityid` ;").get("score").toString();
-//                }
-//                //todo 额外增加一列考试成绩
-//                row.createCell(index).setCellValue(score);
+                String score = "0";
+                if(map.get("cer_code") != null && !map.get("cer_code").equals("")){
+                    try {
+                        score = secondJdbcTemplate.queryForMap("SELECT MAX(T.score) as `score`\n" +
+                                "FROM (\n" +
+                                "SELECT MAX(`issue_study`.score) as `score`\n" +
+                                "  FROM(\n" +
+                                "SELECT `study`.`accountid`, `study`.`learningactivityid`, `study`.`starttime`,`study`.`collegeid` \n" +
+                                "  FROM `vmobel`.`vmb_studyrecorde` as `study`\n" +
+                                "  INNER JOIN `vmobel`.`vmb_learningactivity` as `lear` on `lear`.`learningActivityId`= `study`.`learningactivityid`\n" +
+                                "      INNER JOIN `vmobel`.`vmb_account` as `account` on `account`.`accountId`  = `study`.`accountid` \n" +
+                                " WHERE `lear`.`actType` =196\n" +
+                                "   AND `account`.`name`= '"+map.get("name")+"'      AND `study`.`sucessfuled` =1\n" +
+                                "      AND `study`.`collegeid` =94\n" +
+                                " ORDER BY `study`.`starttime`\n" +
+                                "  LIMIT 1) T\n" +
+                                "INNER JOIN `vmobel`.`vmb_issue` as `issue` on `issue`.`learningactivityid`  = `T`.`learningactivityid` \n" +
+                                "and `issue`.`code` =\"04\"\n" +
+                                "INNER JOIN `vmobel`.`vmb_issueactivity` as `issue_activity` on `issue_activity`.`issueid`  = `issue`.`issueid` \n" +
+                                "INNER JOIN `vmobel`.`vmb_studyrecorde` as `issue_study` on `issue_study`.`learningactivityid` =`issue_activity`.`rel_activityid` \n" +
+                                "WHERE `issue_study`.`accountid` =T.`accountid`\n" +
+                                "GROUP BY `issue_study`.`learningactivityid` \n" +
+                                "UNION ALL \n" +
+                                "SELECT 0 as `score`)T;").get("score").toString().replace(".0", "");
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                //todo 额外增加一列考试成绩
+                row.createCell(index).setCellValue(score);
             }
         }
 

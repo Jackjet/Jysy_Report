@@ -25,6 +25,7 @@
                 <configuration>
                     <fork>true</fork>
                     <mainClass>cn.coderss.jysy.App</mainClass>
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
                 </configuration>
                 <executions>
                     <execution>
